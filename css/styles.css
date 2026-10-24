@@ -1891,3 +1891,73 @@ textarea:focus-visible {
   }
 }
 
+/* ==========================================================================
+   Customer Account Form Even Alignment Grid
+   ========================================================================== */
+.customer-account-form-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px 20px;
+  align-items: start;
+}
+
+.customer-account-form-grid .col-3 {
+  grid-column: span 2;
+}
+
+.customer-account-form-grid .col-2 {
+  grid-column: span 3;
+}
+
+.form-label-even {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: baseline !important;
+  min-height: 22px;
+  margin-bottom: 8px !important;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.form-label-hint {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: none;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+
+@media (max-width: 960px) {
+  .customer-account-form-grid .col-3 {
+    grid-column: span 3;
+  }
+  .customer-account-form-grid .col-3:nth-child(3) {
+    grid-column: span 6;
+  }
+  .customer-account-form-grid .col-2 {
+    grid-column: span 3;
+  }
+}
+
+@media (max-width: 640px) {
+  .customer-account-form-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .customer-account-form-grid .col-3,
+  .customer-account-form-grid .col-2 {
+    grid-column: span 1;
+  }
+  .form-label-even {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 2px;
+    min-height: auto;
+  }
+}
+
+
