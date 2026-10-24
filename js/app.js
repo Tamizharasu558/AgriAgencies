@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderAll();
   checkInitialWelcomeAuth();
   restoreSavedTabLocation();
+  checkCookieConsent();
 
   // Attach focus listeners to auth screen inputs to strip readonly on click/focus and prevent browser native autofill history popups
   document.querySelectorAll('#authFullPageScreen input').forEach(input => {
@@ -446,6 +447,14 @@ function handleCustomerRegister(e) {
     return;
   }
 
+  // Validation 5B: Form-Level Consent Checkbox
+  const consentBox = document.getElementById('regConsentCheckbox');
+  if (consentBox && !consentBox.checked) {
+    alert(currentLang === 'ta' ? 'தயவுசெய்து விதிமுறைகள் மற்றும் தனியுரிமைக் கொள்கையை ஏற்கவும்.' : 'Please read and agree to the Terms & Conditions and Privacy Policy to register.');
+    consentBox.focus();
+    return;
+  }
+
   // Validation 6: Phone number MUST BE UNIQUE
   const existing = customers.find(c => c.phone.trim() === phone);
   if (existing) {
@@ -598,6 +607,40 @@ function applyLanguageUI() {
 
   const createOrderBtn = document.getElementById('createNewOrderBtn');
   if (createOrderBtn) createOrderBtn.textContent = `🛒 ${cartTitleText}`;
+
+  // Footer Dynamic Translations
+  const footerSubtitleEl = document.getElementById('footerBrandSubtitle');
+  if (footerSubtitleEl) footerSubtitleEl.textContent = t('brandSubtitle');
+  const footerDescEl = document.getElementById('footerAboutDescText');
+  if (footerDescEl) footerDescEl.textContent = t('footerAboutDesc');
+  const footerLegalH = document.getElementById('footerLegalHeader');
+  if (footerLegalH) footerLegalH.textContent = `📜 ${t('footerQuickLinks')}`;
+  const footerCompH = document.getElementById('footerComplianceHeader');
+  if (footerCompH) footerCompH.textContent = `⚖️ ${t('footerComplianceTitle')}`;
+  const footerContH = document.getElementById('footerContactHeader');
+  if (footerContH) footerContH.textContent = `🏬 ${t('footerContactTitle')}`;
+  const footerCopyEl = document.getElementById('footerCopyrightText');
+  if (footerCopyEl) footerCopyEl.textContent = t('footerCopyright');
+
+  // Cookie Banner Dynamic Translations
+  const cookieHeading = document.getElementById('cookieBannerHeading');
+  if (cookieHeading) cookieHeading.textContent = t('cookieBannerTitle');
+  const cookieDesc = document.getElementById('cookieBannerDesc');
+  if (cookieDesc) cookieDesc.textContent = t('cookieBannerText');
+  const cookieAcceptAllBtn = document.getElementById('cookieAcceptAllBtn');
+  if (cookieAcceptAllBtn) cookieAcceptAllBtn.textContent = t('cookieAcceptAll');
+  const cookieEssentialBtn = document.getElementById('cookieEssentialBtn');
+  if (cookieEssentialBtn) cookieEssentialBtn.textContent = t('cookieEssentialOnly');
+  const cookieLearnMoreBtn = document.getElementById('cookieLearnMoreBtn');
+  if (cookieLearnMoreBtn) cookieLearnMoreBtn.textContent = t('cookieViewPolicy');
+
+  // Registration Consent Text
+  const lblRegConsent = document.getElementById('lblRegConsentText');
+  if (lblRegConsent) {
+    lblRegConsent.innerHTML = currentLang === 'ta'
+      ? 'நான் <a href="#" onclick="openPolicyModal(\'terms\'); return false;">விதிமுறைகளையும் நிபந்தனைகளையும்</a> ஏற்றுக்கொள்கிறேன், <a href="#" onclick="openPolicyModal(\'privacy\'); return false;">தனியுரிமைக் கொள்கையை</a> உறுதிப்படுத்துகிறேன்.'
+      : 'I have read and agree to the <a href="#" onclick="openPolicyModal(\'terms\'); return false;">Terms & Conditions</a>, acknowledge the <a href="#" onclick="openPolicyModal(\'privacy\'); return false;">Privacy Policy</a>, and consent to transactional alerts.';
+  }
 
   // Role Alert Text
   const roleAlertMsg = document.getElementById('roleAlertMsg');
@@ -1233,7 +1276,7 @@ function renderStockGrid() {
           <!-- Direct Chemical / Fertilizer Image Display -->
           <div style="width: 100%; height: 180px; border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 14px; border: 1px solid var(--border-color); background: #f5f5f7; position: relative;">
             <img src="${p.imageUrl || 'assets/iffco_urea.jpg'}" 
-                 alt="${prodName}" 
+                 alt="${prodName} - ${p.brand} ${p.category} ${prodUnit}" 
                  style="width: 100%; height: 100%; object-fit: cover;"
                  onerror="this.onerror=null; this.src='assets/iffco_urea.jpg';">
             <span style="position: absolute; bottom: 10px; left: 10px; background: rgba(0,0,0,0.65); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: white; padding: 3px 10px; border-radius: var(--radius-pill); font-size: 11px; font-weight: 600;">
@@ -1300,7 +1343,7 @@ function showProductModal(prodId) {
   document.getElementById('prodModalTitle').textContent = prodName;
   document.getElementById('prodModalBody').innerHTML = `
     <div style="width: 100%; height: 180px; border-radius: var(--radius-md); overflow: hidden; margin-bottom: 16px; border: 1px solid var(--border-color);">
-      <img src="${p.imageUrl}" alt="${prodName}" style="width: 100%; height: 100%; object-fit: cover;">
+      <img src="${p.imageUrl}" alt="${prodName} - ${p.brand} ${p.category} ${prodUnit}" style="width: 100%; height: 100%; object-fit: cover;">
     </div>
 
     <div style="display: flex; gap: 16px; align-items: center; margin-bottom: 16px;">
@@ -1311,13 +1354,19 @@ function showProductModal(prodId) {
     </div>
 
     <div style="background: var(--warning-bg); border: 1px solid #fde68a; padding: 14px; border-radius: var(--radius-sm); margin-bottom: 14px;">
-      <h5 style="color: var(--warning-color); font-size: 13px; font-weight: 600; margin-bottom: 4px;">⚠️ ${currentLang === 'ta' ? 'பாதுகாப்பு வழிமுறைகள்:' : 'Safety Instructions:'}</h5>
-      <p style="font-size: 13px; color: var(--text-secondary);">${p.msdsInfo}</p>
+      <h5 style="color: var(--warning-color); font-size: 13px; font-weight: 600; margin-bottom: 4px;">⚠️ ${currentLang === 'ta' ? 'பாதுகாப்பு & பயன்பாட்டு வழிகாட்டல்:' : 'Safety & Agronomy Advisory:'}</h5>
+      <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">${p.msdsInfo}</p>
+      <div style="font-size: 12px; color: var(--text-muted);"><strong>${currentLang === 'ta' ? 'அளவு விபரம்:' : 'Recommended Dosage:'}</strong> ${prodDosage}</div>
     </div>
 
-    <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border-color); padding-top: 12px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border-color); padding-top: 12px;">
       <span>${currentLang === 'ta' ? 'இருப்பு:' : 'Stock:'} <strong style="color: var(--text-primary);">${p.stock} units</strong></span>
-      <span>${currentLang === 'ta' ? 'மதிப்பீடு:' : 'Rating:'} <strong style="color: var(--warning-color);">⭐ ${p.rating} / 5.0</strong></span>
+      <span>
+        ${currentLang === 'ta' ? 'மதிப்பீடு:' : 'Rating:'} 
+        <button type="button" onclick="openPolicyModal('reviews')" style="background:none; border:none; color: var(--warning-color); font-weight:700; cursor:pointer; text-decoration:underline; font-size: 12px;" title="Click to view verified review policy">
+          ⭐ ${p.rating} / 5.0 (Verified)
+        </button>
+      </span>
     </div>
   `;
 
@@ -1486,6 +1535,14 @@ function renderCartModal() {
       </select>
     </div>
 
+    <!-- Form-Level Reservation & Refund Consent -->
+    <div class="form-consent-box">
+      <input type="checkbox" id="orderConsentCheck" required checked>
+      <label for="orderConsentCheck">
+        ${currentLang === 'ta' ? 'முன்பதிவை உறுதிசெய்து, <a href="#" onclick="openPolicyModal(\'refund\'); return false;">திரும்பப்பெறும் கொள்கை</a> மற்றும் கடன் கணக்கு விதிமுறைகளுக்கு சம்மதிக்கிறேன்.' : 'I confirm this reservation, accept the <a href="#" onclick="openPolicyModal(\'refund\'); return false;">Refund & Return Policy</a>, and authorize ledger accounting.'}
+      </label>
+    </div>
+
     <button class="btn-primary" onclick="submitCustomerOrder()">${t('confirmOrderBtn')}</button>
   `;
 }
@@ -1504,6 +1561,13 @@ function submitCustomerOrder() {
   const fulfillment = document.querySelector('input[name="fulfillment"]:checked').value;
   const address = fulfillment === 'DELIVERY' ? document.getElementById('deliveryAddressInput').value.trim() : 'Shop Counter Pickup';
   const paymentChoice = document.getElementById('cartPaymentChoice').value;
+
+  const consentCheck = document.getElementById('orderConsentCheck');
+  if (consentCheck && !consentCheck.checked) {
+    alert(currentLang === 'ta' ? 'தயவுசெய்து முன்பதிவு மற்றும் திரும்பப்பெறும் கொள்கையை ஏற்கவும்!' : 'Please agree to the Reservation & Refund Policy to confirm.');
+    consentCheck.focus();
+    return;
+  }
 
   if (fulfillment === 'DELIVERY' && !address) {
     alert(currentLang === 'ta' ? 'தயவுசெய்து டெலிவரி முகவரியை உள்ளிடவும்!' : 'Please enter delivery address!');
@@ -2777,3 +2841,117 @@ function showToast(title, message, icon = '🔔') {
     setTimeout(() => toast.remove(), 300);
   }, 4000);
 }
+
+// ============================================================================
+// Legal Compliance & Policy Modal Controller
+// ============================================================================
+let currentActivePolicyKey = 'privacy';
+
+function openPolicyModal(policyKey = 'privacy') {
+  currentActivePolicyKey = policyKey;
+  switchPolicyTab(policyKey);
+  const modal = document.getElementById('policyModal');
+  if (modal) {
+    modal.classList.add('active');
+    // Accessibility: Focus first interactive element or content panel
+    const bodyEl = document.getElementById('policyModalBody');
+    if (bodyEl) bodyEl.scrollTop = 0;
+  }
+}
+
+function closePolicyModal() {
+  const modal = document.getElementById('policyModal');
+  if (modal) modal.classList.remove('active');
+}
+
+function switchPolicyTab(policyKey) {
+  currentActivePolicyKey = policyKey;
+  const tabKeys = ['privacy', 'terms', 'cookie', 'refund', 'datacollection', 'thirdparty', 'copyright', 'reviews'];
+  tabKeys.forEach(k => {
+    const btn = document.getElementById(`polTab_${k}`);
+    if (btn) {
+      const isActive = (k === policyKey);
+      btn.classList.toggle('active', isActive);
+      btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    }
+  });
+
+  renderPolicyContent(policyKey);
+}
+
+function renderPolicyContent(policyKey) {
+  const doc = (typeof policyDocuments !== 'undefined') ? policyDocuments[policyKey] : null;
+  const bodyEl = document.getElementById('policyModalBody');
+  const titleEl = document.getElementById('policyModalTitle');
+  const iconEl = document.getElementById('policyModalIcon');
+  if (!doc || !bodyEl) return;
+
+  if (iconEl) iconEl.textContent = doc.icon || '📜';
+  if (titleEl) titleEl.textContent = (currentLang === 'ta' && doc.titleTa) ? doc.titleTa : doc.title;
+  bodyEl.innerHTML = doc.content;
+}
+
+// ============================================================================
+// Cookie Consent & Local Storage Manager
+// ============================================================================
+function checkCookieConsent() {
+  const consent = localStorage.getItem('kisan_cookie_consent');
+  const banner = document.getElementById('cookieConsentBanner');
+  if (!consent && banner) {
+    setTimeout(() => {
+      banner.classList.add('active');
+    }, 1200);
+  }
+}
+
+function acceptAllCookies() {
+  localStorage.setItem('kisan_cookie_consent', 'all');
+  const banner = document.getElementById('cookieConsentBanner');
+  if (banner) banner.classList.remove('active');
+  showToast(
+    currentLang === 'ta' ? 'விருப்பங்கள் சேமிக்கப்பட்டன' : 'Preferences Saved',
+    currentLang === 'ta' ? 'அனைத்து குக்கீ விருப்பங்களும் ஏற்றுக்கொள்ளப்பட்டன' : 'Cookie and local storage preferences accepted.',
+    '🍪'
+  );
+}
+
+function acceptEssentialCookies() {
+  localStorage.setItem('kisan_cookie_consent', 'essential');
+  const banner = document.getElementById('cookieConsentBanner');
+  if (banner) banner.classList.remove('active');
+  showToast(
+    currentLang === 'ta' ? 'அத்தியாவசியம் மட்டும் சேமிக்கப்பட்டது' : 'Essential Storage Only',
+    currentLang === 'ta' ? 'அத்தியாவசிய அமர்வு சேமிப்பகம் மட்டுமே இயக்கத்தில் உள்ளது' : 'Only strictly essential session keys will be retained.',
+    '🔒'
+  );
+}
+
+function showCookieSettings() {
+  openPolicyModal('cookie');
+  const banner = document.getElementById('cookieConsentBanner');
+  if (banner) banner.classList.add('active');
+}
+
+// ============================================================================
+// Global Keyboard Accessibility & Escape Listener
+// ============================================================================
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    // Close any active modal
+    const activeModals = document.querySelectorAll('.modal-overlay.active');
+    activeModals.forEach(m => m.classList.remove('active'));
+
+    // Close notification drawer if open
+    const notifDrawer = document.getElementById('notifDrawer');
+    if (notifDrawer && notifDrawer.classList.contains('active')) {
+      notifDrawer.classList.remove('active');
+    }
+
+    // Close cookie banner if open
+    const cookieBanner = document.getElementById('cookieConsentBanner');
+    if (cookieBanner && cookieBanner.classList.contains('active')) {
+      cookieBanner.classList.remove('active');
+    }
+  }
+});
+

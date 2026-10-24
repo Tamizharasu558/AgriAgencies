@@ -88,7 +88,22 @@ const translations = {
     stepPacked: "2. 📦 Packed by Shop",
     stepReady: "3. Ready for Pickup / Delivery",
     stepCompleted: "4. ✅ Completed",
-    noActiveOrders: "No active orders currently."
+    noActiveOrders: "No active orders currently.",
+    footerAboutTitle: "KisanAgri Hub & Input Store",
+    footerAboutDesc: "Authorized agro-chemical, certified fertilizer and crop booster distribution hub. Providing live stock availability, digital store credit ledger, and doorstep farm fulfillment with full statutory transparency.",
+    footerQuickLinks: "Legal Policies & Terms",
+    footerComplianceTitle: "Licenses & Verification",
+    footerContactTitle: "Store & Grievance Contact",
+    footerCookieBtn: "🍪 Cookie Settings",
+    footerVerifiedNotice: "100% Genuine Certified Agronomy Inputs • Govt Price Subsidized FCO Compliance",
+    footerCopyright: "© 2026 KisanAgri Agencies Pvt. Ltd. All Rights Reserved. Licensed under FCO 1985 & Insecticides Act 1968.",
+    cookieBannerTitle: "Cookie & Local Storage Preferences",
+    cookieBannerText: "We use essential browser local storage to preserve your language preference, shopping reservations, and secure account session. No invasive third-party tracking or advertising cookies are deployed.",
+    cookieAcceptAll: "Accept All",
+    cookieEssentialOnly: "Essential Only",
+    cookieViewPolicy: "Customize & View Policy",
+    formConsentReg: "I have read and agree to the Terms & Conditions, acknowledge the Privacy Policy, and consent to transactional alerts.",
+    formConsentOrder: "I confirm my reservation, accept the Refund & Return Policy, and authorize adding outstanding dues to my store credit ledger if choosing Pay-Later."
   },
   ta: {
     brandTitle: "கிசான் அக்ரி மையம்",
@@ -179,7 +194,22 @@ const translations = {
     stepPacked: "2. 📦 பேக் செய்யப்பட்டது",
     stepReady: "3. பெற தயார் / டெலிவரி",
     stepCompleted: "4. ✅ முடிந்தது",
-    noActiveOrders: "தற்போது ஆர்டர்கள் எதுவும் இல்லை."
+    noActiveOrders: "தற்போது ஆர்டர்கள் எதுவும் இல்லை.",
+    footerAboutTitle: "கிசான் அக்ரி மையம்",
+    footerAboutDesc: "உரிமம் பெற்ற உரம் மற்றும் விவசாய மருந்து விநியோக மையம். நேரடி இருப்பு விபரம், டிஜிட்டல் கடன் கணக்கு மற்றும் பண்ணை டெலிவரி சேவை.",
+    footerQuickLinks: "சட்ட விதிகளும் கொள்கைகளும்",
+    footerComplianceTitle: "உரிமங்கள் & அரசு அங்கீகாரம்",
+    footerContactTitle: "கடை & குறைதீர்க்கும் அதிகாரி",
+    footerCookieBtn: "🍪 குக்கீ விருப்பங்கள்",
+    footerVerifiedNotice: "100% அசல் தர சான்றளிக்கப்பட்ட விவசாய மருந்துகள் மற்றும் உரங்கள் • அரசு FCO விலை நெறிமுறைக்குட்பட்டது",
+    footerCopyright: "© 2026 கிசான் அக்ரி ஏஜென்சீஸ். அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை. FCO 1985 & பூச்சிக்கொல்லி சட்டம் 1968-ன் கீழ் உரிமம் பெற்றது.",
+    cookieBannerTitle: "குக்கீ & சேமிப்பக விருப்பங்கள்",
+    cookieBannerText: "உங்கள் மொழி விருப்பம் மற்றும் கணக்கு விவரங்களை தற்காலிகமாக நினைவில் வைத்திருக்க உலாவி சேமிப்பகத்தை பயன்படுத்துகிறோம். விளம்பர கண்காணிப்பு எதுவும் இல்லை.",
+    cookieAcceptAll: "அனைத்தும் ஏற்க",
+    cookieEssentialOnly: "அவசியம் மட்டும்",
+    cookieViewPolicy: "கொள்கை பார்க்க",
+    formConsentReg: "நான் விதிமுறைகளையும் நிபந்தனைகளையும் ஏற்றுக்கொள்கிறேன், தனியுரிமைக் கொள்கையை உறுதிப்படுத்துகிறேன்.",
+    formConsentOrder: "முன்பதிவை உறுதிசெய்து, திரும்பப்பெறும் கொள்கை மற்றும் கடன் கணக்கு விதிமுறைகளுக்கு சம்மதிக்கிறேன்."
   }
 };
 
@@ -533,3 +563,358 @@ const initialNotifications = [
     read: false
   }
 ];
+
+// ============================================================================
+// Statutory Business Credentials & Compliance Details (Consumer Protection 2020)
+// ============================================================================
+const businessDetails = {
+  legalName: "KisanAgri Agencies Pvt. Ltd.",
+  tradeName: "KisanAgri Hub & Input Center",
+  proprietor: "P. Tamizharasu",
+  fcoLicense: "FCO/TN/ERD/RET-2024/04882",
+  cibrcLicense: "CIB-RC/INSECT/TN-8921/2024",
+  seedLicense: "SDL/ERD/2024/1104",
+  gstin: "33AAACK8821P1ZP",
+  address: "14/B, Main Agricultural Market Road, Near Uzhavar Sandhai, Erode Rural, Tamil Nadu - 638001, India",
+  hours: "Monday – Saturday: 7:00 AM – 8:00 PM | Sunday: 7:00 AM – 1:00 PM (IST)",
+  phone: "+91 98765 43210",
+  email: "contact@kisanagri.in",
+  grievanceOfficer: "P. Tamizharasu (Authorized Nodal & Grievance Officer)",
+  grievanceEmail: "grievance@kisanagri.in"
+};
+
+// ============================================================================
+// Comprehensive Legal Policies, Disclaimers & Compliance Documentation
+// ============================================================================
+const policyDocuments = {
+  privacy: {
+    id: "privacy",
+    title: "🔒 Privacy Policy & Data Protection",
+    titleTa: "🔒 தனியுரிமைக் கொள்கை & தரவு பாதுகாப்பு",
+    icon: "🔒",
+    lastUpdated: "October 2026",
+    content: `
+      <h4>1. Introduction & Statutory Framework</h4>
+      <p>KisanAgri Agencies Pvt. Ltd. ("KisanAgri Hub", "we", "us", or "our") operates this agricultural input stock & credit ledger platform. We are committed to protecting the privacy of farmers, cultivators, and agrarian partners in strict accordance with the <strong>Digital Personal Data Protection Act, 2023 (DPDP Act)</strong>, the <strong>Information Technology Act, 2000</strong> (and Information Technology (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules, 2011), and the <strong>Consumer Protection (E-Commerce) Rules, 2020</strong>.</p>
+
+      <h4>2. Categories of Personal Data Collected</h4>
+      <p>We collect only the minimum necessary information required to maintain genuine cultivator records, fulfill statutory fertilizer subsidy compliances, and manage store credit:</p>
+      <ul>
+        <li><strong>Identity & Contact Data:</strong> Farmer's Full Name, Mobile Phone Number, Farm/Village Location.</li>
+        <li><strong>Agricultural & Delivery Profile:</strong> Approximate acreage, major crops grown (e.g. Paddy, Cotton, Sugarcane), farm delivery address landmarks.</li>
+        <li><strong>Ledger & Transaction Records:</strong> Invoiced products, purchase quantities, payment dates, outstanding dues, payment mode (UPI, card, cash).</li>
+        <li><strong>Authentication Credentials:</strong> 4-digit security PIN (hashed / securely stored locally).</li>
+      </ul>
+
+      <h4>3. Purpose of Data Processing</h4>
+      <p>Your data is processed strictly for legitimate agricultural retail operations:</p>
+      <ul>
+        <li>Authenticating farmer accounts and maintaining individual store credit ledgers.</li>
+        <li>Fulfilling product reservations for shop counter pickup and doorstep farm delivery.</li>
+        <li>Complying with statutory inspections under the Fertilizer Control Order (FCO) 1985 and Insecticides Act 1968.</li>
+        <li>Sending direct SMS/WhatsApp notifications regarding order packing readiness and credit statements.</li>
+      </ul>
+
+      <h4>4. Data Sharing & Third-Party Disclosure Policy</h4>
+      <div class="policy-highlight-card">
+        <strong>Absolute Farmer Privacy Guarantee:</strong> We <u>never</u> sell, monetize, rent, or trade farmer contact numbers, farm locations, or financial balances to any advertising networks, third-party marketing brokers, or data analytics firms.
+      </div>
+      <p>Data is disclosed strictly to statutory agricultural authorities when legally mandated under the Essential Commodities Act, or to authorized banking/UPI channels for processing farmer payments.</p>
+
+      <h4>5. Data Retention & Farmer Rights</h4>
+      <p>Under the DPDP Act 2023, you hold the following rights:</p>
+      <ul>
+        <li><strong>Right to Access:</strong> View itemized purchase invoices, paid amounts, and credit balances at any time via the "My Ledger" portal.</li>
+        <li><strong>Right to Correction:</strong> Request immediate correction of phone numbers, spelling, or village details by contacting the store.</li>
+        <li><strong>Right to Erasure:</strong> Settle outstanding dues and request closure and purging of your digital profile.</li>
+      </ul>
+
+      <h4>6. Grievance Redressal Officer</h4>
+      <p>In accordance with Information Technology Rules and Consumer Protection Rules, our designated Grievance Officer details are:</p>
+      <div class="license-info-card">
+        <strong>Grievance Redressal Officer:</strong> ${businessDetails.grievanceOfficer}<br>
+        <strong>Email:</strong> <a href="mailto:${businessDetails.grievanceEmail}">${businessDetails.grievanceEmail}</a><br>
+        <strong>Phone / WhatsApp:</strong> ${businessDetails.phone}<br>
+        <strong>Office Address:</strong> ${businessDetails.address}<br>
+        <em>Response Time: Within 48 hours; resolution guaranteed within 15 working days.</em>
+      </div>
+    `
+  },
+
+  terms: {
+    id: "terms",
+    title: "📜 Terms & Conditions of Agricultural Input Sales",
+    titleTa: "📜 விதிமுறைகள் மற்றும் நிபந்தனைகள்",
+    icon: "📜",
+    lastUpdated: "October 2026",
+    content: `
+      <h4>1. Agreement of Sale & Eligibility</h4>
+      <p>By registering on KisanAgri Hub, placing reservations, or managing pay-later credit ledgers, you affirm that you are an adult cultivator or bona fide farmer engaging in agricultural operations. All sales are governed by the Indian Contract Act, 1872, the Sale of Goods Act, 1930, and the Essential Commodities Act, 1955.</p>
+
+      <h4>2. Statutory Price & Subsidy Compliance (FCO 1985)</h4>
+      <p>In accordance with the <strong>Fertilizer (Inorganic, Organic or Mixed) (Control) Order, 1985 (FCO)</strong> and directives issued by the Department of Fertilizers, Ministry of Chemicals & Fertilizers:</p>
+      <ul>
+        <li>All subsidized fertilizers (such as Neem Coated Urea) are distributed strictly at or below Government Statutory Maximum Retail Prices (MRP).</li>
+        <li>No retail price gouging, unauthorized black-marketing, or mandatory bundling of non-essential products is permitted.</li>
+        <li>Farmers are encouraged to present their Aadhaar / farmer identity at the shop counter in compliance with Direct Benefit Transfer (DBT) POS machine verification where applicable.</li>
+      </ul>
+
+      <h4>3. Agrochemical & Insecticide Retail Regulations</h4>
+      <p>Sale of registered plant protection chemicals is conducted under <strong>Insecticides Act, 1968 and Insecticides Rules, 1971</strong>:</p>
+      <ul>
+        <li>Chemicals must be utilized strictly in accordance with manufacturer technical leaflets approved by the <strong>Central Insecticides Board & Registration Committee (CIB&RC)</strong>.</li>
+        <li>Store reserves the right to decline chemical dispensing if the intended crop or pest application violates registered safe label directions.</li>
+      </ul>
+
+      <h4>4. Pay-Later Store Credit Ledger Facility</h4>
+      <p>The Pay-Later Ledger is an in-house mutual trust credit facility provided exclusively by the shop owner:</p>
+      <ul>
+        <li>Credit limits are sanctioned at the sole discretion of the proprietor based on landholding and historical payment conduct.</li>
+        <li>Farmers undertake to settle outstanding balances within the agreed billing term (e.g. 14 to 30 days or post-harvest).</li>
+        <li>Payments may be executed securely online via UPI, debit/credit cards, or in cash at the store counter against official digital receipts.</li>
+      </ul>
+
+      <h4>5. Limitation of Agronomic Liability</h4>
+      <p>Agricultural crop growth, pest control efficacy, and yield outcomes depend fundamentally upon unpredictable natural variables including ambient temperature, monsoon timing, soil pH, irrigation water quality, seed viability, and application dosage precision. KisanAgri Hub warrants genuine factory-sealed input quality from licensed manufacturers but shall not be held liable for crop failures caused by adverse weather, drought, pest resistance, or off-label improper application.</p>
+
+      <h4>6. Dispute Jurisdiction</h4>
+      <p>Any legal dispute arising from transactions on this platform shall be subject exclusively to the competent courts of <strong>Erode District, Tamil Nadu, India</strong>.</p>
+    `
+  },
+
+  cookie: {
+    id: "cookie",
+    title: "🍪 Cookie & Local Storage Policy",
+    titleTa: "🍪 குக்கீ & சேமிப்பகக் கொள்கை",
+    icon: "🍪",
+    lastUpdated: "October 2026",
+    content: `
+      <h4>1. What Technologies We Use</h4>
+      <p>KisanAgri Hub utilizes modern HTML5 Local Storage and Session Storage rather than invasive third-party tracking cookies. These local browser keys allow our web application to deliver a fast, responsive, and personalized experience for farmers across reloads and visits.</p>
+
+      <h4>2. Detailed Storage Inventory</h4>
+      <table class="custom-table" style="font-size: 12.5px; margin: 12px 0;">
+        <thead>
+          <tr>
+            <th>Key Name</th>
+            <th>Type</th>
+            <th>Lifespan</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>kisan_auth_user</code></td>
+            <td>Strictly Essential</td>
+            <td>Session</td>
+            <td>Stores active customer index for authenticated ledger access.</td>
+          </tr>
+          <tr>
+            <td><code>kisan_auth_role</code></td>
+            <td>Strictly Essential</td>
+            <td>Session</td>
+            <td>Distinguishes farmer view from authorized shop owner administrative mode.</td>
+          </tr>
+          <tr>
+            <td><code>kisan_lang_pref</code></td>
+            <td>Preference</td>
+            <td>Persistent</td>
+            <td>Remembers your chosen language (English or தமிழ்) across visits.</td>
+          </tr>
+          <tr>
+            <td><code>kisan_cart_items</code></td>
+            <td>Functional</td>
+            <td>Session</td>
+            <td>Maintains your reserved fertilizer sacks and chemical bottles prior to confirmation.</td>
+          </tr>
+          <tr>
+            <td><code>kisan_cookie_consent</code></td>
+            <td>Compliance</td>
+            <td>Persistent</td>
+            <td>Records whether you accepted or customized your storage preferences.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h4>3. Zero Third-Party Advertising Trackers</h4>
+      <p>We do not integrate Google DoubleClick, Meta Pixel, ad retargeters, or behavioral fingerprinting scripts. Your browsing activity on our fertilizer catalog is never transmitted to data brokers.</p>
+
+      <h4>4. How to Manage or Clear Local Data</h4>
+      <p>You can revoke or clear stored preferences at any time using the <strong>Cookie Settings</strong> link in our footer, or directly through your web browser's Clear Browsing Data / Site Settings settings panel.</p>
+    `
+  },
+
+  refund: {
+    id: "refund",
+    title: "🔄 Agricultural Goods Refund & Cancellation Policy",
+    titleTa: "🔄 திரும்பப்பெறுதல் & ரத்து செய்தல் கொள்கை",
+    icon: "🔄",
+    lastUpdated: "October 2026",
+    content: `
+      <h4>1. Reservation Cancellations (Pre-Dispatch)</h4>
+      <p>Farmers may cancel reserved orders at <strong>100% zero cancellation fee</strong> at any point prior to physical shop packing and vehicle dispatch. Reserved quantities are immediately released back into the live public inventory catalog.</p>
+
+      <h4>2. Returns of Physical Agricultural Inputs</h4>
+      <p>To balance farmer convenience with strict agronomic safety regulations:</p>
+      <ul>
+        <li><strong>Return Window:</strong> Unopened products may be returned within <strong>48 hours</strong> of physical receipt at the shop counter or farm doorstep.</li>
+        <li><strong>Mandatory Verification:</strong> The product must be accompanied by the original printed tax invoice or digital invoice number.</li>
+        <li><strong>Original Packaging:</strong> Bag stitching, tamper-evident seals, manufacturing batch numbers, and holographic company seals must be completely intact and free from moisture damage.</li>
+      </ul>
+
+      <h4>3. Non-Returnable Items (Statutory Biosafety Restrictions)</h4>
+      <div class="policy-highlight-card">
+        <strong>Safety Advisory under Insecticides Act 1968:</strong> Any pesticide, insecticide, fungicide, or liquid booster bottle whose cap seal has been broken, punctured, or partially dispensed is <u>strictly non-returnable</u>. This policy safeguards cultivators against chemical contamination and counterfeit re-packaging risks.
+      </div>
+
+      <h4>4. Refund Processing Timelines & Modes</h4>
+      <ul>
+        <li><strong>Online Digital Payments (UPI / Card):</strong> Refunds are initiated within 24 hours of item return and credited back to the original funding account within <strong>2 to 4 banking business days</strong>.</li>
+        <li><strong>Store Credit Ledger:</strong> When items purchased on credit are returned, the invoice amount is immediately credited against the customer's ledger, reducing outstanding dues instantly.</li>
+        <li><strong>Cash Payments:</strong> Cash refunds are disbursed across the shop counter upon inspection of the return batch.</li>
+      </ul>
+    `
+  },
+
+  datacollection: {
+    id: "datacollection",
+    title: "🛡️ What User Data We Collect & Farmer Rights",
+    titleTa: "🛡️ பயனர் தரவு சேகரிப்பு விபரம்",
+    icon: "🛡️",
+    lastUpdated: "October 2026",
+    content: `
+      <h4>1. Transparent Data Collection Matrix</h4>
+      <p>As mandated by the Consumer Protection (E-Commerce) Rules 2020 and DPDP Act 2023, the table below articulates every data element collected and its clear justification:</p>
+      
+      <table class="custom-table" style="font-size: 12.5px; margin: 12px 0;">
+        <thead>
+          <tr>
+            <th>Data Point</th>
+            <th>Source</th>
+            <th>Operational Purpose</th>
+            <th>Retention Period</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Full Name</strong></td>
+            <td>Registration Form</td>
+            <td>Account identification, invoice generation, statutory GST billing.</td>
+            <td>Duration of active account + statutory tax audit period (7 yrs).</td>
+          </tr>
+          <tr>
+            <td><strong>Phone Number (10 Digits)</strong></td>
+            <td>Login / Sign In</td>
+            <td>Primary account key, SMS/WhatsApp order status updates, credit reminders.</td>
+            <td>Duration of active account.</td>
+          </tr>
+          <tr>
+            <td><strong>Village / Farm Location</strong></td>
+            <td>Registration / Order</td>
+            <td>Logistical route planning for tractor/van doorstep farm deliveries.</td>
+            <td>Duration of active account.</td>
+          </tr>
+          <tr>
+            <td><strong>Ledger Bills & Dues</strong></td>
+            <td>In-Store Purchases</td>
+            <td>Accounting ledger, seasonal harvest settlement tracking, credit limit control.</td>
+            <td>Statutory mercantile period (7 yrs).</td>
+          </tr>
+          <tr>
+            <td><strong>Delivery Address & Landmark</strong></td>
+            <td>Checkout Form</td>
+            <td>Navigating rural farm roads for accurate delivery of fertilizer sacks.</td>
+            <td>Retained per order transaction.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h4>2. Technical Information Collected Automatically</h4>
+      <p>When you visit KisanAgri Hub, standard server-level operational metrics (HTTP status codes, browser client user-agent for responsive screen fitting, and local storage state) are processed strictly for session delivery and security firewalls. No geolocation tracking or biometric data is collected.</p>
+    `
+  },
+
+  thirdparty: {
+    id: "thirdparty",
+    title: "🌐 Third-Party Embeds & Services Notice",
+    titleTa: "🌐 மூன்றாம் தரப்பு சேவைகள் விபரம்",
+    icon: "🌐",
+    lastUpdated: "October 2026",
+    content: `
+      <h4>1. Inventory of External Network Connections</h4>
+      <p>To ensure maximum interface legibility, speed, and standard UPI compatibility, our application references the following secure, TLS-encrypted external CDNs and endpoints:</p>
+
+      <ul>
+        <li><strong>Google Fonts CDN (fonts.googleapis.com / fonts.gstatic.com):</strong> Serves the highly readable typography faces <em>Plus Jakarta Sans</em> and <em>Inter</em>, optimized for multi-lingual Tamil and English rendering.</li>
+        <li><strong>Unsplash CDN (images.unsplash.com):</strong> Serves high-resolution, un-copyrighted botanical imagery for visual crop identification.</li>
+        <li><strong>National Payments Corporation of India (NPCI) UPI Protocol:</strong> Employs standard <code>upi://pay</code> URI intent protocols to initiate secure payment routing through farmer-approved UPI apps (Google Pay, PhonePe, Paytm, BHIM). No payment PIN or banking password ever touches our servers.</li>
+        <li><strong>WhatsApp Web / Intent Hooks:</strong> Used strictly upon manual button click by the shop owner to compose pre-filled ledger statement text messages directly in the farmer's personal WhatsApp app.</li>
+      </ul>
+
+      <h4>2. Zero Script Injection or External Analytics</h4>
+      <p>KisanAgri Hub does not embed third-party advertising SDKs, invisible analytics pixels, or social media tracking beacons. All database operations execute locally in your secure client environment.</p>
+    `
+  },
+
+  copyright: {
+    id: "copyright",
+    title: "⚖️ Trademarks, Copyright & Statutory Disclaimers",
+    titleTa: "⚖️ வர்த்தக முத்திரை & சட்ட மறுப்பு",
+    icon: "⚖️",
+    lastUpdated: "October 2026",
+    content: `
+      <h4>1. Trademark Attribution & Fair Use Disclaimer</h4>
+      <p>All brand names, registered company trademarks, logos, and product trade dress displayed on this website—including but not limited to <strong>IFFCO®</strong>, <strong>Coromandel Gromor®</strong>, <strong>Bayer CropScience®</strong>, <strong>Syngenta®</strong>, <strong>UPL®</strong>, and <strong>Indian Potash Limited (IPL)®</strong>—are the exclusive intellectual property of their respective manufacturer corporations.</p>
+      <div class="policy-highlight-card">
+        <strong>Statutory Notice under Section 30 of the Trade Marks Act, 1999 (India):</strong> The depiction of registered trademarks and brand packaging on this portal is conducted strictly for the purpose of truthful, factual, and descriptive identification of genuine goods legally sourced, stocked, and offered for retail sale by an authorized input dealer. No corporate sponsorship, endorsement, or joint venture is implied.
+      </div>
+
+      <h4>2. Compliance with Statutory Fertilizer & Pesticide Laws</h4>
+      <ul>
+        <li><strong>Fertilizer Control Order, 1985 (FCO):</strong> All chemical and organic fertilizers stocked conform strictly to the specifications laid down in Schedule I of the FCO 1985. Fertilizer sacks are procured exclusively through licensed wholesale distributors against genuine manufacturer invoices.</li>
+        <li><strong>Insecticides Act, 1968:</strong> All pesticide containers bear statutory warning symbols (Red / Yellow / Blue / Green triangles) indicating toxicity categories. Cultivators must inspect cautionary leaflets prior to handling.</li>
+      </ul>
+
+      <h4>3. Digital Copyright</h4>
+      <p>The layout, software code, custom CSS stylesheets, user interface designs, and localized bilingual translations of KisanAgri Hub are copyrighted © 2026 KisanAgri Agencies Pvt. Ltd. Unauthorized commercial scraping or reproduction is prohibited.</p>
+    `
+  },
+
+  reviews: {
+    id: "reviews",
+    title: "⭐ Verified Reviews, Advertising Transparency & Business Verification",
+    titleTa: "⭐ சரிபார்க்கப்பட்ட மதிப்பீடுகள் & கடை விபரம்",
+    icon: "⭐",
+    lastUpdated: "October 2026",
+    content: `
+      <h4>1. Strict Policy Against Fake or Bot Reviews</h4>
+      <p>In compliance with <strong>Consumer Protection (E-Commerce) Rules, 2020</strong> and Bureau of Indian Standards <strong>IS 19000:2022 (Online Consumer Reviews)</strong>:</p>
+      <ul>
+        <li><strong>Zero Fake Reviews:</strong> We prohibit artificial, paid, incentivized, or automated bot star ratings.</li>
+        <li><strong>Verified Farmer Feedback:</strong> Product performance ratings reflect aggregate feedback collected exclusively from bona fide registered cultivators who have purchased the specific input at our shop or through our ledger.</li>
+        <li><strong>Unbiased Scoring:</strong> Ratings are computed transparently without algorithmic suppression of critical or low reviews.</li>
+      </ul>
+
+      <h4>2. Prohibition of Miracle or Unsupported Yield Claims</h4>
+      <p>In accordance with the <em>Guidelines for Prevention and Regulation of Misleading Advertisements, 2022</em> issued by the Central Consumer Protection Authority (CCPA):</p>
+      <div class="policy-highlight-card">
+        <strong>Scientific Agronomy Standard:</strong> KisanAgri Hub makes <u>no unsubstantiated claims</u> of "100% bumper harvest guarantees" or "miracle pest eradication." All application dosages, dilution rates, and crop suitability tags are sourced strictly from laboratory-certified manufacturer labels approved by the CIB&RC and State Agricultural Universities.
+      </div>
+
+      <h4>3. Verifiable Business Identification & Credentials</h4>
+      <div class="license-info-card">
+        <strong>Legal Enterprise Name:</strong> ${businessDetails.legalName}<br>
+        <strong>Commercial Brand:</strong> ${businessDetails.tradeName}<br>
+        <strong>Authorized Dealer / Proprietor:</strong> ${businessDetails.proprietor}<br>
+        <strong>Fertilizer Retail License (FCO 1985):</strong> <span class="license-badge-pill">📄 ${businessDetails.fcoLicense}</span><br>
+        <strong>Pesticide Retail License (CIB&RC 1968):</strong> <span class="license-badge-pill">🧪 ${businessDetails.cibrcLicense}</span><br>
+        <strong>Seeds Distribution License:</strong> <span class="license-badge-pill">🌱 ${businessDetails.seedLicense}</span><br>
+        <strong>Goods & Services Tax (GSTIN):</strong> <strong>${businessDetails.gstin}</strong><br>
+        <strong>Registered Physical Retail Store:</strong> ${businessDetails.address}<br>
+        <strong>Customer Helpdesk & Order Helpline:</strong> ${businessDetails.phone} | <a href="mailto:${businessDetails.email}">${businessDetails.email}</a><br>
+        <strong>Store Working Hours:</strong> ${businessDetails.hours}
+      </div>
+    `
+  }
+};
+

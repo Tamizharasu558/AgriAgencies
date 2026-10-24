@@ -14,11 +14,11 @@
   --bg-glass: rgba(255, 255, 255, 0.82);
   --bg-glass-dark: rgba(29, 29, 31, 0.85);
 
-  /* Apple Typography Scale */
+  /* Apple Typography Scale (WCAG AA Contrast Compliant: >= 4.5:1 on light backgrounds) */
   --text-primary: #1d1d1f;
-  --text-secondary: #424245;
-  --text-muted: #86868b;
-  --text-tertiary: #a1a1a6;
+  --text-secondary: #374151;
+  --text-muted: #4b5563;
+  --text-tertiary: #6b7280;
   --text-on-primary: #ffffff;
 
   /* Brand Accents — Organic Alpine Emerald & iOS System Tones */
@@ -1457,3 +1457,437 @@ main {
     top: 70px;
   }
 }
+
+/* ==========================================================================
+   Accessibility: Skip Link, Focus Visible & Keyboard-Friendly Form Controls
+   ========================================================================== */
+.skip-link {
+  position: absolute;
+  top: -60px;
+  left: 20px;
+  background: var(--primary-color);
+  color: #ffffff !important;
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 13.5px;
+  z-index: 100000;
+  transition: top 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+.skip-link:focus {
+  top: 16px;
+  outline: 3px solid #ffffff;
+}
+
+:focus-visible {
+  outline: 2.5px solid var(--primary-color) !important;
+  outline-offset: 2.5px !important;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2.5px solid var(--primary-color) !important;
+  outline-offset: 2px !important;
+}
+
+/* Form Consent Checkboxes & Disclosures */
+.form-consent-box {
+  background: #f8fafc;
+  border: 1px solid var(--border-color);
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  margin: 14px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+.form-consent-box input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+  margin-top: 2px;
+  accent-color: var(--primary-color);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.form-consent-box a {
+  color: var(--primary-color);
+  text-decoration: underline;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   Cookie Consent Banner (Apple Minimalist Glass)
+   ========================================================================== */
+.cookie-banner {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(140%);
+  max-width: 680px;
+  width: calc(100% - 32px);
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 20px 48px -8px rgba(0, 0, 0, 0.22), 0 4px 12px rgba(0, 0, 0, 0.06);
+  border-radius: 22px;
+  padding: 20px 24px;
+  z-index: 99998;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cookie-banner.active {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cookie-banner-content {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cookie-banner-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cookie-banner-icon {
+  font-size: 22px;
+}
+
+.cookie-banner-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.cookie-banner-text {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.cookie-banner-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding-top: 4px;
+}
+
+.cookie-btn-primary {
+  background: var(--primary-color);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+.cookie-btn-primary:hover {
+  background: var(--primary-hover);
+}
+
+.cookie-btn-secondary {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-pill);
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+.cookie-btn-secondary:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.cookie-btn-text {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 8px 10px;
+}
+
+/* ==========================================================================
+   Comprehensive Site Footer (Business Details, Licenses, Policies & Compliance)
+   ========================================================================== */
+.site-footer {
+  background: #ffffff;
+  border-top: 1px solid var(--border-color);
+  margin-top: 48px;
+  padding: 48px 24px 32px;
+  color: var(--text-secondary);
+}
+
+.footer-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.3fr;
+  gap: 36px;
+  margin-bottom: 40px;
+}
+
+.footer-col h4 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.015em;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-col p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.footer-links-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.footer-links-list a,
+.footer-links-list button {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-align: left;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.15s ease;
+}
+
+.footer-links-list a:hover,
+.footer-links-list button:hover {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+.license-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--primary-tint);
+  border: 1px solid rgba(21, 128, 61, 0.2);
+  color: var(--primary-color);
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 11.5px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.license-info-card {
+  background: #f8fafc;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.footer-trust-banner {
+  background: linear-gradient(135deg, rgba(21, 128, 61, 0.05) 0%, rgba(21, 128, 61, 0.02) 100%);
+  border: 1px solid rgba(21, 128, 61, 0.18);
+  border-radius: var(--radius-lg);
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.footer-trust-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 220px;
+}
+
+.footer-trust-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  flex-shrink: 0;
+}
+
+.footer-trust-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.footer-trust-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.footer-bottom-bar {
+  border-top: 1px solid var(--border-color);
+  padding-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   Policy & Legal Compliance Modal (Interactive Multi-Tab)
+   ========================================================================== */
+.policy-tabs-bar {
+  display: flex;
+  background: rgba(0, 0, 0, 0.04);
+  padding: 4px;
+  border-radius: var(--radius-pill);
+  gap: 4px;
+  overflow-x: auto;
+  margin-bottom: 20px;
+  border: 1px solid var(--border-color);
+}
+
+.policy-tab-btn {
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: var(--transition-fast);
+}
+
+.policy-tab-btn.active {
+  background: #ffffff;
+  color: var(--primary-color);
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.policy-content-body {
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: 8px;
+  color: var(--text-secondary);
+  font-size: 13.5px;
+  line-height: 1.65;
+}
+
+.policy-content-body h4 {
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 700;
+  margin: 18px 0 8px;
+}
+
+.policy-content-body h4:first-child {
+  margin-top: 0;
+}
+
+.policy-content-body ul {
+  padding-left: 20px;
+  margin: 10px 0 14px;
+}
+
+.policy-content-body li {
+  margin-bottom: 6px;
+}
+
+.policy-highlight-card {
+  background: #f8fafc;
+  border-left: 4px solid var(--primary-color);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  margin: 14px 0;
+  font-size: 13px;
+}
+
+@media (max-width: 900px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .cookie-banner {
+    bottom: 12px;
+    width: calc(100% - 24px);
+    padding: 16px;
+  }
+  .cookie-banner-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .cookie-banner-actions button {
+    width: 100%;
+    text-align: center;
+  }
+  .footer-bottom-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
