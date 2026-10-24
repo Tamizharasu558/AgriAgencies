@@ -18,7 +18,7 @@
     <div class="top-bar">
       <div style="display: flex; flex-direction: column; gap: 4px;">
         <a href="#" class="brand">
-          <div class="brand-icon">🌾</div>
+          <div class="brand-icon" style="font-size: 13px; font-weight: 800; background: var(--primary-color); color: #fff; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; letter-spacing: -0.02em;">KA</div>
           <div class="brand-text">
             <h1 id="brandTitle">KisanAgri Hub</h1>
             <p id="brandSubtitle">Agro Chemical & Fertilizer Store</p>
@@ -28,10 +28,10 @@
         <!-- Positioned Below Company Logo & Name: Active Account Badge / Admin Label -->
         <div id="headerProfileSubBar">
           <div id="activeProfileBadge">
-            <!-- Rendered dynamically: "👑 Admin" or "👤 Customer Name" -->
+            <!-- Rendered dynamically: " Admin" or " Customer Name" -->
           </div>
           <button class="btn-action" id="headerAuthActionBtn" onclick="handleHeaderAuthAction()">
-            <span id="switchProfileBtnIcon">🚪</span> <span id="switchProfileBtnText">Log Out</span>
+            <span id="switchProfileBtnText">Log Out</span>
           </button>
         </div>
       </div>
@@ -41,20 +41,20 @@
         <!-- Language Switcher Pill (English / தமிழ்) -->
         <div class="role-switcher-container">
           <button id="langEnBtn" class="role-btn active" onclick="setLanguage('en')">
-            🌐 English
+            English
           </button>
           <button id="langTaBtn" class="role-btn" onclick="setLanguage('ta')">
-            🇮🇳 தமிழ்
+            தமிழ்
           </button>
         </div>
 
         <!-- Role Switcher (Hidden for Customer Login; Visible ONLY for Admin Login) -->
         <div class="role-switcher-container" id="adminRoleSwitcherContainer" style="display: none;">
           <button id="roleCustomerBtn" class="role-btn active" onclick="switchRole('customer')">
-            👨‍🌾 Customer View
+            Customer View
           </button>
           <button id="roleOwnerBtn" class="role-btn" onclick="switchRole('owner')">
-            👨‍💼 Shop Owner View
+            Shop Owner View
           </button>
         </div>
       </div>
@@ -63,12 +63,12 @@
       <div class="header-actions">
         <!-- Cart Button -->
         <button class="notif-btn" id="cartBtn" title="Shopping Cart / Order List" onclick="openCartModal()" style="width: auto; padding: 0 16px; gap: 8px;">
-          🛒 <span id="cartBtnText" style="font-size: 13px; font-weight: 600;">Cart</span>
+          <span id="cartBtnText" style="font-size: 13px; font-weight: 600;">Cart</span>
           <span class="notif-badge" id="cartCountBadge">0</span>
         </button>
 
-        <button class="notif-btn" id="notifBellBtn" title="Process Notifications" onclick="toggleNotifDrawer()">
-          🔔
+        <button class="notif-btn" id="notifBellBtn" title="Notifications" aria-label="Notifications" onclick="toggleNotifDrawer()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
           <span class="notif-badge" id="notifCountBadge">0</span>
         </button>
       </div>
@@ -77,20 +77,20 @@
     <!-- Main Navigation Tabs -->
     <div class="nav-tabs">
       <button class="tab-btn active" id="tabStockBtn" data-tab="tabStock" onclick="setActiveTab('tabStock')">
-        📦 Stock Availability
+        Stock Availability
       </button>
       <button class="tab-btn" id="tabOrdersBtn" data-tab="tabOrders" onclick="setActiveTab('tabOrders')">
-        🛍️ My Orders & Packing
+        My Orders & Packing
       </button>
       <button class="tab-btn" id="tabLedgerBtn" data-tab="tabLedger" onclick="setActiveTab('tabLedger')">
-        📜 My Ledger & Pay-Later
+        My Ledger & Pay-Later
       </button>
       <!-- Owner Control Center Tab (1st Priority in Admin View over Notifications) -->
       <button class="tab-btn owner-only-tab" id="tabOwnerBtn" data-tab="tabOwner" onclick="setActiveTab('tabOwner')" style="display: none;">
-        ⚡ Admin Center
+        Admin Center
       </button>
       <button class="tab-btn" id="tabNotifsBtn" data-tab="tabNotifs" onclick="setActiveTab('tabNotifs')">
-        🔔 Notifications
+        Notifications
       </button>
     </div>
   </header>
@@ -102,7 +102,7 @@
       <!-- Fertilizer & Chemical Stock Availability Banner (Exclusive to Stock Tab) -->
       <div class="hero-banner" id="heroBanner">
         <div class="hero-content">
-          <h2 id="heroTitle">🌾 Live Fertilizer & Chemical Stock Availability</h2>
+          <h2 id="heroTitle">Live Fertilizer & Chemical Stock Availability</h2>
           <p id="heroSubtitle">Check real-time stock levels of genuine fertilizers, pesticides & crop boosters. View product photos, reserve online for shop pickup or farm delivery, track packing status, and pay online or later.</p>
         </div>
         <div class="hero-stats">
@@ -123,7 +123,7 @@
 
       <div class="controls-bar">
         <div class="search-box">
-          <span class="search-icon">🔍</span>
+          <span class="search-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
           <input type="text" id="stockSearchInput" placeholder="Search fertilizer, chemical name, or brand..." oninput="renderStockGrid()">
         </div>
         <div class="filter-group">
@@ -161,8 +161,8 @@
     <!-- Tab 2: Customer Orders & Packing Status -->
     <section id="tabOrders" class="tab-content">
       <div class="section-title">
-        <span id="tabOrdersTitle">🛍️ Track My Orders, Packing & Pickup / Delivery Status</span>
-        <button class="btn-action" id="createNewOrderBtn" onclick="openCartModal()">🛒 Create New Order</button>
+        <span id="tabOrdersTitle">Track My Orders, Packing & Pickup / Delivery Status</span>
+        <button class="btn-action" id="createNewOrderBtn" onclick="openCartModal()">Create New Order</button>
       </div>
       <div id="customerOrdersContainer" style="display: flex; flex-direction: column; gap: 16px;">
         <!-- Rendered dynamically -->
@@ -178,8 +178,8 @@
 
       <!-- Itemized Purchase History -->
       <div class="section-title">
-        <span id="purchasedItemsTitle">📄 Purchased Items & Bill Breakdown</span>
-        <button class="btn-action" id="printStatementBtn" onclick="printLedgerReceipt()">🖨️ Print Statement</button>
+        <span id="purchasedItemsTitle">Purchased Items & Bill Breakdown</span>
+        <button class="btn-action" id="printStatementBtn" onclick="printLedgerReceipt()">Print Statement</button>
       </div>
 
       <div class="table-card">
@@ -206,7 +206,7 @@
     <!-- Tab 4: Process Notifications Center -->
     <section id="tabNotifs" class="tab-content">
       <div class="section-title">
-        <span id="tabNotifsTitle">⚡ Process Notifications & Event Logs</span>
+        <span id="tabNotifsTitle">Process Notifications & Event Logs</span>
         <button class="btn-action" id="markAllReadBtn" onclick="clearAllNotifications()">Mark All as Read</button>
       </div>
       <div id="fullNotifContainer" style="display: flex; flex-direction: column; gap: 12px;">
@@ -220,13 +220,13 @@
       <div class="controls-bar" style="background: #ffffff;">
         <div style="display: flex; gap: 10px; flex-wrap: wrap;">
           <button class="btn-action active" id="crudTabProductsBtn" onclick="switchCrudSubTab('products')" style="font-weight: 700; background: var(--primary-light); color: var(--primary-color); border-color: #a7f3d0;">
-            📦 Product Catalog
+            Product Catalog
           </button>
           <button class="btn-action" id="crudTabCustomersBtn" onclick="switchCrudSubTab('customers')" style="font-weight: 700;">
-            👤 Customer Accounts
+            Customer Accounts
           </button>
           <button class="btn-action" id="crudTabOrdersBtn" onclick="switchCrudSubTab('orders')" style="font-weight: 700;">
-            🛍️ Orders & Billing
+            Orders & Billing
           </button>
         </div>
       </div>
@@ -236,7 +236,7 @@
         <!-- Create Product Form with Image Upload -->
         <div class="admin-card" style="margin-bottom: 24px;">
           <div class="section-title">
-            <span>➕ Create New Product Item</span>
+            <span>Create New Product Item</span>
           </div>
 
           <form id="addProductPhotoForm" onsubmit="handleAddProductWithPhoto(event)">
@@ -267,7 +267,7 @@
                 <input type="number" id="newProdStock" class="form-control" placeholder="e.g. 40" required min="1">
               </div>
               <div class="form-group" style="grid-column: 1 / -1;">
-                <label>🌾 Target Crop Type (Select preset or type custom crop)</label>
+                <label>Target Crop Type (Select preset or type custom crop)</label>
                 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                   <select id="newProdCropSelect" class="form-control" style="flex: 1; min-width: 200px;" onchange="handleCropSelectChange()">
                     <option value="" disabled selected>-- Select Target Crop Type --</option>
@@ -279,7 +279,7 @@
                     <option value="Groundnut">Groundnut & Pulses (நிலக்கடலை)</option>
                     <option value="Fruits">Fruits & Horticulture (பழங்கள்)</option>
                     <option value="All Crops">All Crops (அனைத்து பயிர்கள்)</option>
-                    <option value="CUSTOM">✍️ Enter Custom Crop Type Manually...</option>
+                    <option value="CUSTOM">Enter Custom Crop Type Manually...</option>
                   </select>
                   <input type="text" id="newProdCropManual" class="form-control" style="flex: 1; min-width: 220px;" placeholder="Or type crop manually e.g. Paddy & Maize, Chilli, Sugarcane..." required>
                 </div>
@@ -288,7 +288,7 @@
 
             <!-- Direct Image File Picker & Live Preview -->
             <div class="form-group" style="margin-top: 10px;">
-              <label style="font-weight: 700; color: var(--primary-color);">🖼️ Select Direct Chemical Image File</label>
+              <label style="font-weight: 700; color: var(--primary-color);">Select Direct Chemical Image File</label>
               <input type="file" id="newProdImageFile" accept="image/*" class="form-control" onchange="previewProductImageFile(event)" required>
 
               <!-- Live Upload Preview Container -->
@@ -297,20 +297,20 @@
                   <img id="imagePreviewImg" style="width: 100%; height: 100%; object-fit: cover;" alt="Chemical Preview">
                 </div>
                 <div>
-                  <div style="font-size: 13px; font-weight: 700; color: var(--success-color);">✅ Image Selected & Ready</div>
+                  <div style="font-size: 13px; font-weight: 700; color: var(--success-color);">Image Selected & Ready</div>
                   <div style="font-size: 11px; color: var(--text-muted);">This direct image will be attached to the product item.</div>
                 </div>
               </div>
             </div>
 
-            <button type="submit" class="btn-primary" style="margin-top: 14px; background: linear-gradient(135deg, #0f766e, #16a34a); padding: 12px; font-size: 15px;">➕ Save New Product to Catalog</button>
+            <button type="submit" class="btn-primary" style="margin-top: 14px; background: linear-gradient(135deg, #0f766e, #16a34a); padding: 12px; font-size: 15px;">Save New Product to Catalog</button>
           </form>
         </div>
 
         <!-- Read, Update & Delete Products Table -->
         <div class="admin-card">
           <div class="section-title">
-            <span>📋 Inventory Items</span>
+            <span>Inventory Items</span>
             <span style="font-size: 12px; color: var(--text-muted);">Shop Owner inventory management</span>
           </div>
 
@@ -339,7 +339,7 @@
         <!-- Add Customer Account Form -->
         <div class="admin-card" style="margin-bottom: 24px;">
           <div class="section-title">
-            <span>➕ Add New Customer Account</span>
+            <span>Add New Customer Account</span>
           </div>
           <form id="ownerAddCustForm" onsubmit="handleOwnerAddCustomer(event)" autocomplete="off">
             <div class="customer-account-form-grid">
@@ -366,14 +366,14 @@
               </div>
               <div class="form-group col-2" style="margin-bottom: 0;">
                 <label for="ownerCustPin" class="form-label-even">
-                  <span>🔑 Set 4-Digit Security PIN</span>
+                  <span>Set 4-Digit Security PIN</span>
                   <span class="form-label-hint">(4 Digits)</span>
                 </label>
                 <input type="password" id="ownerCustPin" class="form-control" placeholder="Create 4-digit PIN" required pattern="[0-9]{4}" maxlength="4" minlength="4" inputmode="numeric" title="Must be exactly 4 digits" autocomplete="new-password">
               </div>
               <div class="form-group col-2" style="margin-bottom: 0;">
                 <label for="ownerCustConfirmPin" class="form-label-even">
-                  <span>🔒 Confirm 4-Digit Security PIN</span>
+                  <span>Confirm 4-Digit Security PIN</span>
                   <span class="form-label-hint">(Must Match PIN)</span>
                 </label>
                 <input type="password" id="ownerCustConfirmPin" class="form-control" placeholder="Re-enter 4-digit PIN" required pattern="[0-9]{4}" maxlength="4" minlength="4" inputmode="numeric" title="Must match set PIN" autocomplete="new-password">
@@ -381,7 +381,7 @@
             </div>
             <div style="display: flex; justify-content: flex-start; margin-top: 18px;">
               <button type="submit" class="btn-primary" style="padding: 12px 24px; font-size: 14px; font-weight: 600; border-radius: var(--radius-pill); box-shadow: 0 4px 14px rgba(21, 128, 61, 0.25);">
-                ➕ Register New Customer Account
+                Register New Customer Account
               </button>
             </div>
           </form>
@@ -390,7 +390,7 @@
         <!-- Read, Edit & Delete Customers Table -->
         <div class="admin-card">
           <div class="section-title">
-            <span>👥 Customer Directory</span>
+            <span>Customer Directory</span>
           </div>
           <div class="table-card">
             <table class="custom-table">
@@ -414,7 +414,7 @@
         <!-- Overdue Receivables & Reminders Panel -->
         <div class="admin-card" style="margin-top: 24px;">
           <div class="section-title">
-            <span id="overdueTitle">🔔 Overdue Balances & Payment Reminders</span>
+            <span id="overdueTitle">Overdue Balances & Payment Reminders</span>
           </div>
           
           <div class="table-card">
@@ -443,7 +443,7 @@
       <div id="crudOrdersSection" class="crud-sub-section" style="display: none;">
         <!-- Card 1: Record Offline Customer Bill -->
         <div class="admin-card" style="margin-bottom: 24px;">
-          <h3 class="section-title" id="logOfflineTitle" style="margin-bottom: 12px;">✍️ Log Offline Purchase</h3>
+          <h3 class="section-title" id="logOfflineTitle" style="margin-bottom: 12px;">Log Offline Purchase</h3>
           <p id="logOfflineSub" style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">Record offline purchases made at your shop. Updates stock and appends bill to customer credit ledger.</p>
           
           <form id="offlineBillForm" onsubmit="handleLogOfflineBill(event)">
@@ -492,14 +492,14 @@
               </div>
             </div>
 
-            <button type="submit" class="btn-primary" id="btnCreateBill">📄 Create Bill & Add to Ledger</button>
+            <button type="submit" class="btn-primary" id="btnCreateBill">Create Bill & Add to Ledger</button>
           </form>
         </div>
 
         <!-- Orders Packing Station & Update/Delete Controls -->
         <div class="admin-card">
           <div class="section-title">
-            <span id="ownerPackingStationTitle">📦 Order Fulfillment & Packing Control Center</span>
+            <span id="ownerPackingStationTitle">Order Fulfillment & Packing Control Center</span>
             <span id="ownerPackingSub" style="font-size: 12px; color: var(--primary-color);">Update status or delete customer orders</span>
           </div>
 
@@ -517,21 +517,21 @@
       <!-- Statutory Trust & Authentic Agronomy Banner -->
       <div class="footer-trust-banner">
         <div class="footer-trust-item">
-          <div class="footer-trust-icon">🌱</div>
+          <div class="footer-trust-icon" style="font-weight: 700; color: var(--primary-color);"></div>
           <div>
             <div class="footer-trust-title">100% Genuine Certified Stock</div>
             <div class="footer-trust-desc">Direct authorized sourcing: IFFCO, Coromandel, Bayer, Syngenta, UPL</div>
           </div>
         </div>
         <div class="footer-trust-item">
-          <div class="footer-trust-icon">⚖️</div>
+          <div class="footer-trust-icon" style="font-weight: 700; color: var(--primary-color);"></div>
           <div>
             <div class="footer-trust-title">Subsidized & FCO Compliant</div>
             <div class="footer-trust-desc">Government MRP compliance under Fertilizer Control Order 1985</div>
           </div>
         </div>
         <div class="footer-trust-item">
-          <div class="footer-trust-icon">⭐</div>
+          <div class="footer-trust-icon" style="font-weight: 700; color: var(--primary-color);"></div>
           <div>
             <div class="footer-trust-title">Zero Fake Reviews Guarantee</div>
             <div class="footer-trust-desc">Ratings reflect authentic purchases by verified regional cultivators</div>
@@ -544,7 +544,7 @@
         <!-- Col 1: Store & Entity Information -->
         <div class="footer-col">
           <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
-            <span style="font-size: 24px;">🌾</span>
+            <div style="width: 32px; height: 32px; background: var(--primary-color); color: #fff; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800;">KA</div>
             <div>
               <h3 style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin: 0;" id="footerBrandTitle">KisanAgri Hub</h3>
               <p style="font-size: 12px; color: var(--text-muted); margin: 0;" id="footerBrandSubtitle">Agro Chemical & Fertilizer Store</p>
@@ -562,39 +562,39 @@
 
         <!-- Col 2: Legal Policies & Agreements -->
         <div class="footer-col">
-          <h4 id="footerLegalHeader">📜 Legal & Policies</h4>
+          <h4 id="footerLegalHeader">Legal & Policies</h4>
           <ul class="footer-links-list">
-            <li><button type="button" onclick="openPolicyModal('privacy')">🔒 Privacy Policy (DPDP 2023)</button></li>
-            <li><button type="button" onclick="openPolicyModal('terms')">📜 Terms & Conditions (FCO)</button></li>
-            <li><button type="button" onclick="openPolicyModal('cookie')">🍪 Cookie & Storage Policy</button></li>
-            <li><button type="button" onclick="openPolicyModal('refund')">🔄 Refund & Return Policy</button></li>
-            <li><button type="button" onclick="openPolicyModal('datacollection')">🛡️ What User Data We Collect</button></li>
-            <li><button type="button" onclick="openPolicyModal('thirdparty')">🌐 Third-Party Embeds Notice</button></li>
+            <li><button type="button" onclick="openPolicyModal('privacy')">Privacy Policy (DPDP 2023)</button></li>
+            <li><button type="button" onclick="openPolicyModal('terms')">Terms & Conditions (FCO)</button></li>
+            <li><button type="button" onclick="openPolicyModal('cookie')">Cookie & Storage Policy</button></li>
+            <li><button type="button" onclick="openPolicyModal('refund')">Refund & Return Policy</button></li>
+            <li><button type="button" onclick="openPolicyModal('datacollection')">What User Data We Collect</button></li>
+            <li><button type="button" onclick="openPolicyModal('thirdparty')">Third-Party Embeds Notice</button></li>
           </ul>
         </div>
 
         <!-- Col 3: Compliance & Consumer Standards -->
         <div class="footer-col">
-          <h4 id="footerComplianceHeader">⚖️ Trust & Verification</h4>
+          <h4 id="footerComplianceHeader">Trust & Verification</h4>
           <ul class="footer-links-list">
-            <li><button type="button" onclick="openPolicyModal('reviews')">⭐ Verified Customer Ratings</button></li>
-            <li><button type="button" onclick="openPolicyModal('copyright')">⚖️ Trademarks & Fair Use</button></li>
-            <li><button type="button" onclick="openPolicyModal('reviews')">📋 Business License Details</button></li>
-            <li><button type="button" onclick="showCookieSettings()">🍪 Manage Cookie Preferences</button></li>
-            <li><a href="tel:+919876543210">📞 Farmer Helpdesk</a></li>
+            <li><button type="button" onclick="openPolicyModal('reviews')">Verified Customer Ratings</button></li>
+            <li><button type="button" onclick="openPolicyModal('copyright')">Trademarks & Fair Use</button></li>
+            <li><button type="button" onclick="openPolicyModal('reviews')">Business License Details</button></li>
+            <li><button type="button" onclick="showCookieSettings()">Manage Cookie Preferences</button></li>
+            <li><a href="tel:+919876543210">Farmer Helpdesk</a></li>
           </ul>
         </div>
 
         <!-- Col 4: Business Location & Grievance Contact -->
         <div class="footer-col">
-          <h4 id="footerContactHeader">🏬 Store & Grievance</h4>
+          <h4 id="footerContactHeader">Store & Grievance</h4>
           <div class="license-info-card">
             <strong>KisanAgri Agencies Pvt. Ltd.</strong><br>
             Proprietor: P. Tamizharasu<br>
-            📍 14/B, Main Agricultural Market Road, Near Uzhavar Sandhai, Erode Rural, Tamil Nadu - 638001<br>
-            ⏰ Mon - Sat: 7:00 AM - 8:00 PM<br>
-            📞 +91 98765 43210<br>
-            ✉️ <a href="mailto:contact@kisanagri.in" style="color: var(--primary-color);">contact@kisanagri.in</a><br>
+            14/B, Main Agricultural Market Road, Near Uzhavar Sandhai, Erode Rural, Tamil Nadu - 638001<br>
+            Hours: Mon - Sat: 7:00 AM - 8:00 PM<br>
+            Phone: +91 98765 43210<br>
+            Email: <a href="mailto:contact@kisanagri.in" style="color: var(--primary-color);">contact@kisanagri.in</a><br>
             <div style="margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--border-color); font-size: 11px;">
               <strong>Grievance Officer:</strong> P. Tamizharasu (<a href="mailto:grievance@kisanagri.in" style="color: var(--primary-color);">grievance@kisanagri.in</a>)
             </div>
@@ -611,7 +611,7 @@
           <button type="button" onclick="openPolicyModal('privacy')" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:12px; text-decoration:underline;">Privacy</button>
           <button type="button" onclick="openPolicyModal('terms')" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:12px; text-decoration:underline;">Terms</button>
           <button type="button" onclick="openPolicyModal('refund')" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:12px; text-decoration:underline;">Refunds</button>
-          <button type="button" onclick="showCookieSettings()" style="background:none; border:none; color:var(--primary-color); cursor:pointer; font-size:12px; font-weight:600;">🍪 Cookie Settings</button>
+          <button type="button" onclick="showCookieSettings()" style="background:none; border:none; color:var(--primary-color); cursor:pointer; font-size:12px; font-weight:600;">Cookie Settings</button>
         </div>
       </div>
     </div>
@@ -623,7 +623,7 @@
     <!-- Top Branding Bar -->
     <div style="max-width: 440px; width: 100%; display: flex; justify-content: center; align-items: center; margin-bottom: 24px; text-align: center;">
       <div style="display: flex; align-items: center; gap: 12px;">
-        <div style="width: 48px; height: 48px; background: rgba(255, 255, 255, 0.95); color: #15803d; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 700; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);">🌾</div>
+        <div style="width: 48px; height: 48px; background: var(--primary-color); color: #ffffff; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; letter-spacing: -0.03em; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);">KA</div>
         <div style="text-align: left;">
           <h2 style="color: #ffffff; font-size: 21px; font-weight: 700; letter-spacing: -0.024em; margin: 0; line-height: 1.2;">KisanAgri Hub</h2>
           <p style="color: rgba(255, 255, 255, 0.65); font-size: 13px; font-weight: 500; margin: 0;">Agro Chemical & Fertilizer Store</p>
@@ -634,20 +634,20 @@
     <!-- Fresh Auth Card Container -->
     <div class="modal-card" style="max-width: 440px; width: 100%; padding: 32px 34px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(30px) saturate(190%); -webkit-backdrop-filter: blur(30px) saturate(190%); border-radius: 28px; box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35); border: 1px solid rgba(255, 255, 255, 0.8);">
       <div style="margin-bottom: 22px; text-align: center;">
-        <h3 id="authPageTitle" style="font-size: 21px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.025em;">🌾 KisanAgri Portal Sign In</h3>
+        <h3 id="authPageTitle" style="font-size: 21px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.025em;">KisanAgri Portal Sign In</h3>
         <p id="authPageSub" style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">Select Customer Sign In or Admin Login</p>
       </div>
 
       <!-- Apple Segmented Control Tab Switcher: Login vs Register vs Admin Login -->
       <div class="role-switcher-container" style="display: flex; background: rgba(120, 120, 128, 0.08); padding: 3px; border-radius: var(--radius-pill); margin-bottom: 22px; gap: 3px; border: 1px solid rgba(0,0,0,0.04);">
         <button id="authTabSignInBtn" class="role-btn active" style="flex: 1; justify-content: center; font-size: 12.5px; padding: 8px 6px; font-weight: 600;" onclick="switchAuthTab('signin')">
-          🔓 Login
+          Login
         </button>
         <button id="authTabRegisterBtn" class="role-btn" style="flex: 1; justify-content: center; font-size: 12.5px; padding: 8px 6px; font-weight: 600;" onclick="switchAuthTab('register')">
-          📝 Register
+          Register
         </button>
         <button id="authTabAdminBtn" class="role-btn" style="flex: 1; justify-content: center; font-size: 12.5px; padding: 8px 6px; font-weight: 600;" onclick="switchAuthTab('admin')">
-          🔐 Admin
+          Admin
         </button>
       </div>
 
@@ -663,7 +663,7 @@
           </div>
 
           <div class="form-group">
-            <label for="signInPinInput" id="lblSignInPin">🔑 4-Digit Security PIN</label>
+            <label for="signInPinInput" id="lblSignInPin">4-Digit Security PIN</label>
             <input type="password" id="signInPinInput" name="kisan_pin_no_autofill" class="form-control" placeholder="Enter 4-digit PIN (e.g. 1234)" required pattern="[0-9]{4}" maxlength="4" minlength="4" inputmode="numeric" title="Must be exactly 4 digits" readonly onfocus="this.removeAttribute('readonly')" autocomplete="one-time-code">
             <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 5px;" id="signInPinHint">Default PIN for sample accounts: <strong style="color: var(--primary-color);">1234</strong></div>
           </div>
@@ -672,7 +672,7 @@
             By signing in, you agree to our <a href="#" onclick="openPolicyModal('terms'); return false;" style="color: var(--primary-color); text-decoration: underline;">Terms & Conditions</a> and <a href="#" onclick="openPolicyModal('privacy'); return false;" style="color: var(--primary-color); text-decoration: underline;">Privacy Policy</a>.
           </div>
 
-          <button type="submit" id="btnSignInSubmit" class="btn-primary" style="margin-top: 8px; padding: 12px 20px; font-size: 14.5px; font-weight: 600; border-radius: var(--radius-pill);">🔓 Login & Enter Store</button>
+          <button type="submit" id="btnSignInSubmit" class="btn-primary" style="margin-top: 8px; padding: 12px 20px; font-size: 14.5px; font-weight: 600; border-radius: var(--radius-pill);">Login & Enter Store</button>
         </form>
       </div>
 
@@ -699,12 +699,12 @@
 
           <div style="display: flex; gap: 10px; flex-wrap: wrap;">
             <div class="form-group" style="flex: 1; min-width: 150px;">
-              <label for="regPinInput" id="lblRegPin">🔑 Set 4-Digit PIN</label>
+              <label for="regPinInput" id="lblRegPin">Set 4-Digit PIN</label>
               <input type="password" id="regPinInput" name="kisan_reg_pin_no_autofill" class="form-control" placeholder="Create 4-digit PIN" required pattern="[0-9]{4}" maxlength="4" minlength="4" inputmode="numeric" title="Must be exactly 4 digits" readonly onfocus="this.removeAttribute('readonly')" autocomplete="one-time-code">
             </div>
 
             <div class="form-group" style="flex: 1; min-width: 150px;">
-              <label for="regConfirmPinInput" id="lblRegConfirmPin">🔒 Confirm PIN</label>
+              <label for="regConfirmPinInput" id="lblRegConfirmPin">Confirm PIN</label>
               <input type="password" id="regConfirmPinInput" name="kisan_reg_confirm_pin_no_autofill" class="form-control" placeholder="Re-enter PIN" required pattern="[0-9]{4}" maxlength="4" minlength="4" inputmode="numeric" title="Must match set PIN" readonly onfocus="this.removeAttribute('readonly')" autocomplete="one-time-code">
             </div>
           </div>
@@ -717,7 +717,7 @@
             </label>
           </div>
 
-          <button type="submit" id="btnRegSubmit" class="btn-primary" style="margin-top: 10px; padding: 12px 20px; font-size: 14.5px; font-weight: 600; border-radius: var(--radius-pill);">✨ Register & Enter Store</button>
+          <button type="submit" id="btnRegSubmit" class="btn-primary" style="margin-top: 10px; padding: 12px 20px; font-size: 14.5px; font-weight: 600; border-radius: var(--radius-pill);">Register & Enter Store</button>
         </form>
       </div>
 
@@ -725,7 +725,7 @@
       <div id="authAdminView" style="display: none;">
         <form onsubmit="handleAdminSignIn(event)" autocomplete="off">
           <div style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.2); padding: 12px 14px; border-radius: var(--radius-md); margin-bottom: 16px;">
-            <div style="font-size: 12.5px; font-weight: 700; color: #dc2626;" id="adminNoticeTitle">👑 Only for Admin Access</div>
+            <div style="font-size: 12.5px; font-weight: 700; color: #dc2626;" id="adminNoticeTitle">Only for Admin Access</div>
             <div style="font-size: 11.5px; color: #991b1b; margin-top: 2px;" id="adminNoticeSub">Enter Admin passcode to access Admin Center.</div>
           </div>
 
@@ -735,7 +735,7 @@
             <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 5px;" id="adminPasscodeHint">Default Admin Passcode: <strong style="color: var(--primary-color);">1234</strong></div>
           </div>
 
-          <button type="submit" id="btnAdminSignInSubmit" class="btn-primary" style="margin-top: 16px; padding: 12px 20px; font-size: 14.5px; font-weight: 600; background: linear-gradient(135deg, #1d1d1f, #2d2d30); box-shadow: 0 4px 14px rgba(0,0,0,0.25); border-radius: var(--radius-pill);">🔐 Sign In as Admin</button>
+          <button type="submit" id="btnAdminSignInSubmit" class="btn-primary" style="margin-top: 16px; padding: 12px 20px; font-size: 14.5px; font-weight: 600; background: linear-gradient(135deg, #1d1d1f, #2d2d30); box-shadow: 0 4px 14px rgba(0,0,0,0.25); border-radius: var(--radius-pill);">Sign In as Admin</button>
         </form>
       </div>
     </div>
@@ -745,7 +745,7 @@
   <div class="modal-overlay" id="editProductModal">
     <div class="modal-card" style="max-width: 500px;">
       <div class="modal-header">
-        <h3 class="modal-title">✏️ Edit Product Details</h3>
+        <h3 class="modal-title">Edit Product Details</h3>
         <button class="close-btn" onclick="closeEditProductModal()">✕</button>
       </div>
 
@@ -782,7 +782,7 @@
           </div>
         </div>
 
-        <button type="submit" class="btn-primary" style="margin-top: 10px;">💾 Update Product</button>
+        <button type="submit" class="btn-primary" style="margin-top: 10px;">Update Product</button>
       </form>
     </div>
   </div>
@@ -791,7 +791,7 @@
   <div class="modal-overlay" id="editCustomerModal">
     <div class="modal-card" style="max-width: 450px;">
       <div class="modal-header">
-        <h3 class="modal-title">✏️ Edit Customer Profile</h3>
+        <h3 class="modal-title">Edit Customer Profile</h3>
         <button class="close-btn" onclick="closeEditCustomerModal()">✕</button>
       </div>
 
@@ -810,7 +810,7 @@
           <input type="text" id="editCustVillage" class="form-control" required>
         </div>
 
-        <button type="submit" class="btn-primary" style="margin-top: 10px;">💾 Update Customer Account</button>
+        <button type="submit" class="btn-primary" style="margin-top: 10px;">Update Customer Account</button>
       </form>
     </div>
   </div>
@@ -819,7 +819,7 @@
   <div class="modal-overlay" id="cartModal">
     <div class="modal-card" style="max-width: 550px;">
       <div class="modal-header">
-        <h3 class="modal-title" id="cartModalTitle">🛒 Customer Product Order & Reservation</h3>
+        <h3 class="modal-title" id="cartModalTitle">Customer Product Order & Reservation</h3>
         <button class="close-btn" onclick="closeCartModal()">✕</button>
       </div>
 
@@ -833,7 +833,7 @@
   <div class="modal-overlay" id="paymentModal">
     <div class="modal-card">
       <div class="modal-header">
-        <h3 class="modal-title" id="payModalTitle">💳 Online Balance Payment</h3>
+        <h3 class="modal-title" id="payModalTitle">Online Balance Payment</h3>
         <button class="close-btn" onclick="closePaymentModal()">✕</button>
       </div>
 
@@ -845,9 +845,9 @@
 
       <!-- Payment Method Selection -->
       <div class="payment-options">
-        <button class="pay-opt-btn active" id="optUpi" onclick="setPayMethod('UPI')">📲 UPI (GPay/PhonePe)</button>
-        <button class="pay-opt-btn" id="optCard" onclick="setPayMethod('CARD')">💳 Card</button>
-        <button class="pay-opt-btn" id="optNet" onclick="setPayMethod('NET')">🏛️ Net Banking</button>
+        <button class="pay-opt-btn active" id="optUpi" onclick="setPayMethod('UPI')">UPI (GPay/PhonePe)</button>
+        <button class="pay-opt-btn" id="optCard" onclick="setPayMethod('CARD')">Card</button>
+        <button class="pay-opt-btn" id="optNet" onclick="setPayMethod('NET')">Net Banking</button>
       </div>
 
       <!-- UPI QR Code Simulator View -->
@@ -886,7 +886,7 @@
         <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;" id="payModalMaxHint">Max Outstanding Balance: ₹0.00</div>
       </div>
 
-      <button class="btn-primary" id="btnConfirmPay" onclick="submitOnlinePayment()">✅ Confirm & Complete Payment</button>
+      <button class="btn-primary" id="btnConfirmPay" onclick="submitOnlinePayment()">Confirm & Complete Payment</button>
     </div>
   </div>
 
@@ -908,7 +908,7 @@
   <div class="modal-overlay" id="adminRecordPaymentModal">
     <div class="modal-card">
       <div class="modal-header">
-        <h3 class="modal-title" id="adminPaymentModalTitle">💵 Record Offline Cash Payment</h3>
+        <h3 class="modal-title" id="adminPaymentModalTitle">Record Offline Cash Payment</h3>
         <button class="close-btn" onclick="closeAdminPaymentModal()">✕</button>
       </div>
 
@@ -933,7 +933,7 @@
 
         <div style="display: flex; gap: 10px; margin-top: 20px;">
           <button type="button" class="btn-action" style="flex: 1; padding: 10px;" onclick="closeAdminPaymentModal()">Cancel</button>
-          <button type="submit" class="btn-primary" style="flex: 2;">💵 Mark Paid & Update Account</button>
+          <button type="submit" class="btn-primary" style="flex: 2;">Mark Paid & Update Account</button>
         </div>
       </form>
     </div>
@@ -943,7 +943,7 @@
   <div class="modal-overlay" id="logoutConfirmModal">
     <div class="modal-card" style="max-width: 400px; text-align: center; padding: 24px; position: relative;">
       <div class="modal-header" style="border-bottom: none; padding-bottom: 0; justify-content: space-between;">
-        <h3 class="modal-title" style="font-size: 18px; color: var(--text-primary);" id="logoutConfirmTitle">🚪 Log Out Confirmation</h3>
+        <h3 class="modal-title" style="font-size: 18px; color: var(--text-primary);" id="logoutConfirmTitle">Log Out Confirmation</h3>
         <button class="close-btn" onclick="closeLogoutConfirmModal()" style="font-size: 18px; cursor: pointer;">✕</button>
       </div>
 
@@ -967,7 +967,7 @@
     <div class="modal-card" style="max-width: 820px; width: 92%;">
       <div class="modal-header">
         <div style="display: flex; align-items: center; gap: 8px;">
-          <span id="policyModalIcon" style="font-size: 20px;">📜</span>
+          <span id="policyModalIcon" style="display: none;"></span>
           <h3 class="modal-title" id="policyModalTitle">Legal Compliance & Policies</h3>
         </div>
         <button class="close-btn" onclick="closePolicyModal()" aria-label="Close legal policy dialog">✕</button>
@@ -975,14 +975,14 @@
 
       <!-- Segmented Tabs for Policies -->
       <div class="policy-tabs-bar" role="tablist">
-        <button class="policy-tab-btn active" id="polTab_privacy" role="tab" aria-selected="true" onclick="switchPolicyTab('privacy')">🔒 Privacy</button>
-        <button class="policy-tab-btn" id="polTab_terms" role="tab" aria-selected="false" onclick="switchPolicyTab('terms')">📜 Terms (FCO)</button>
-        <button class="policy-tab-btn" id="polTab_cookie" role="tab" aria-selected="false" onclick="switchPolicyTab('cookie')">🍪 Cookies</button>
-        <button class="policy-tab-btn" id="polTab_refund" role="tab" aria-selected="false" onclick="switchPolicyTab('refund')">🔄 Refunds</button>
-        <button class="policy-tab-btn" id="polTab_datacollection" role="tab" aria-selected="false" onclick="switchPolicyTab('datacollection')">🛡️ Data We Collect</button>
-        <button class="policy-tab-btn" id="polTab_thirdparty" role="tab" aria-selected="false" onclick="switchPolicyTab('thirdparty')">🌐 Third-Party</button>
-        <button class="policy-tab-btn" id="polTab_copyright" role="tab" aria-selected="false" onclick="switchPolicyTab('copyright')">⚖️ Trademarks</button>
-        <button class="policy-tab-btn" id="polTab_reviews" role="tab" aria-selected="false" onclick="switchPolicyTab('reviews')">⭐ Verified Reviews & Business</button>
+        <button class="policy-tab-btn active" id="polTab_privacy" role="tab" aria-selected="true" onclick="switchPolicyTab('privacy')">Privacy</button>
+        <button class="policy-tab-btn" id="polTab_terms" role="tab" aria-selected="false" onclick="switchPolicyTab('terms')">Terms (FCO)</button>
+        <button class="policy-tab-btn" id="polTab_cookie" role="tab" aria-selected="false" onclick="switchPolicyTab('cookie')">Cookies</button>
+        <button class="policy-tab-btn" id="polTab_refund" role="tab" aria-selected="false" onclick="switchPolicyTab('refund')">Refunds</button>
+        <button class="policy-tab-btn" id="polTab_datacollection" role="tab" aria-selected="false" onclick="switchPolicyTab('datacollection')">Data We Collect</button>
+        <button class="policy-tab-btn" id="polTab_thirdparty" role="tab" aria-selected="false" onclick="switchPolicyTab('thirdparty')">Third-Party</button>
+        <button class="policy-tab-btn" id="polTab_copyright" role="tab" aria-selected="false" onclick="switchPolicyTab('copyright')">Trademarks</button>
+        <button class="policy-tab-btn" id="polTab_reviews" role="tab" aria-selected="false" onclick="switchPolicyTab('reviews')">Verified Reviews & Business</button>
       </div>
 
       <!-- Policy Dynamic Body -->
@@ -1001,7 +1001,7 @@
   <aside class="cookie-banner" id="cookieConsentBanner" role="region" aria-label="Cookie and local storage preferences">
     <div class="cookie-banner-content">
       <div class="cookie-banner-header">
-        <span class="cookie-banner-icon">🍪</span>
+        <span class="cookie-banner-icon" style="display:none;"></span>
         <h4 class="cookie-banner-title" id="cookieBannerHeading">Cookie & Local Storage Preferences</h4>
       </div>
       <p class="cookie-banner-text" id="cookieBannerDesc">
@@ -1021,7 +1021,7 @@
   <!-- Notification Drawer -->
   <div class="notif-drawer" id="notifDrawer">
     <div class="notif-drawer-header">
-      <h4 id="notifDrawerTitle">🔔 Process Notifications</h4>
+      <h4 id="notifDrawerTitle">Process Notifications</h4>
       <button class="close-btn" style="width: 24px; height: 24px; font-size: 12px;" onclick="toggleNotifDrawer()">✕</button>
     </div>
     <div class="notif-list" id="notifDrawerList">

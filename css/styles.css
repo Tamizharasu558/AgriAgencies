@@ -161,7 +161,9 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
   box-shadow: 0 4px 12px rgba(21, 128, 61, 0.24);
   flex-shrink: 0;
 }

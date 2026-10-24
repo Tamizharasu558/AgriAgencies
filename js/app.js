@@ -179,7 +179,7 @@ function applyAuthAccessRules() {
     if (ledgerTabBtn) ledgerTabBtn.style.display = 'none';
     if (ownerTabBtn) ownerTabBtn.style.display = 'inline-flex';
 
-    if (authBtnIcon) authBtnIcon.textContent = '🔑';
+    if (authBtnIcon) authBtnIcon.textContent = '';
     if (authBtnText) authBtnText.textContent = currentLang === 'ta' ? 'கணக்கை மாற்று' : 'Switch Account';
 
     const activeTab = document.querySelector('.tab-btn.active');
@@ -188,7 +188,7 @@ function applyAuthAccessRules() {
     }
 
     if (badgeEl) {
-      badgeEl.innerHTML = `👑 <strong>Admin</strong>`;
+      badgeEl.innerHTML = ` <strong>Admin</strong>`;
       badgeEl.style.background = '#fef2f2';
       badgeEl.style.color = '#991b1b';
       badgeEl.style.borderColor = '#fca5a5';
@@ -203,7 +203,7 @@ function applyAuthAccessRules() {
     if (ledgerTabBtn) ledgerTabBtn.style.display = 'inline-flex';
     if (ownerTabBtn) ownerTabBtn.style.display = 'none';
 
-    if (authBtnIcon) authBtnIcon.textContent = '🚪';
+    if (authBtnIcon) authBtnIcon.textContent = '';
     if (authBtnText) authBtnText.textContent = currentLang === 'ta' ? 'வெளியேறு' : 'Log Out';
 
     const activeTab = document.querySelector('.tab-btn.active');
@@ -214,7 +214,7 @@ function applyAuthAccessRules() {
     const activeCust = customers[loggedInCustomerIndex];
     if (badgeEl && activeCust) {
       const cName = (currentLang === 'ta' && activeCust.nameTa) ? activeCust.nameTa : activeCust.name;
-      badgeEl.innerHTML = `👤 <strong>${cName}</strong> (${activeCust.phone})`;
+      badgeEl.innerHTML = `<strong>${cName}</strong> (${activeCust.phone})`;
       badgeEl.style.background = 'var(--primary-light)';
       badgeEl.style.color = 'var(--primary-color)';
       badgeEl.style.borderColor = '#a7f3d0';
@@ -238,7 +238,7 @@ function openLogoutConfirmModal() {
   const yesBtn = document.getElementById('logoutConfirmYesBtn');
   const noBtn = document.getElementById('logoutConfirmNoBtn');
 
-  if (titleEl) titleEl.textContent = currentLang === 'ta' ? '🚪 வெளியேறு உறுதிப்படுத்தல்' : '🚪 Log Out Confirmation';
+  if (titleEl) titleEl.textContent = currentLang === 'ta' ? 'வெளியேறு உறுதிப்படுத்தல்' : 'Log Out Confirmation';
   if (textEl) textEl.textContent = currentLang === 'ta' ? 'நீங்கள் நிச்சயமாக வெளியேற விரும்புகிறீர்களா?' : 'Are you sure want to Log Out?';
   if (yesBtn) yesBtn.textContent = currentLang === 'ta' ? 'ஆம்' : 'Yes';
   if (noBtn) noBtn.textContent = currentLang === 'ta' ? 'இல்லை' : 'No';
@@ -272,7 +272,7 @@ function confirmCustomerLogout() {
   showToast(
     currentLang === 'ta' ? 'வெளியேறப்பட்டது' : 'Logged Out',
     currentLang === 'ta' ? 'நீங்கள் வெற்றிகரமாக வெளியேறிவிட்டீர்கள்.' : 'You have logged out successfully.',
-    '🚪'
+    ''
   );
 }
 
@@ -397,7 +397,7 @@ function handleCustomerSignIn(e) {
     showToast(
       currentLang === 'ta' ? 'உள்நுழைவு வெற்றி' : 'Welcome Back!',
       `Logged in as ${cName} (${cust.phone}).`,
-      '👤'
+      ''
     );
   } else {
     alert(currentLang === 'ta' ? 'இந்த போன் எண் பதிவு செய்யப்படவில்லை. தயவுசெய்து "பதிவு" மூலம் பதிவு செய்யவும்.' : 'Phone number not found! Please click "Register" to create your account.');
@@ -492,7 +492,7 @@ function handleCustomerRegister(e) {
   showToast(
     currentLang === 'ta' ? 'பதிவு வெற்றி!' : 'Account Registered!',
     `Welcome ${name} (${phone}). Your account is active with security PIN.`,
-    '✨'
+    ''
   );
 }
 
@@ -512,7 +512,7 @@ function handleAdminSignIn(e) {
     showToast(
       currentLang === 'ta' ? 'அட்மின் உள்நுழைவு' : 'Admin Login Successful',
       'You are logged in as Admin. Access to both Customer and Shop Owner View enabled.',
-      '👑'
+      ''
     );
   } else {
     alert(currentLang === 'ta' ? 'தவறான பாஸ்கோடு! (1234)' : 'Incorrect Admin Passcode! (Default: 1234)');
@@ -532,7 +532,7 @@ function setLanguage(lang) {
   showToast(
     lang === 'ta' ? 'மொழி மாற்றப்பட்டது' : 'Language Changed',
     lang === 'ta' ? 'தமிழ் மொழி தேர்ந்தெடுக்கப்பட்டது' : 'Simple English language activated',
-    '🌐'
+    ''
   );
 }
 
@@ -555,7 +555,7 @@ function applyLanguageUI() {
 
   const recHeader = document.getElementById('recentAccountHeader');
   if (recHeader) {
-    recHeader.textContent = currentLang === 'ta' ? '💡 சமீபத்திய கணக்கு - விரைவு லாகின் செய்ய பரிந்துரைக்கப்படுகிறது' : '💡 RECENT ACCOUNT SUGGESTED FOR QUICK LOGIN';
+    recHeader.textContent = currentLang === 'ta' ? ' சமீபத்திய கணக்கு - விரைவு லாகின் செய்ய பரிந்துரைக்கப்படுகிறது' : ' RECENT ACCOUNT SUGGESTED FOR QUICK LOGIN';
   }
 
   document.getElementById('statInStockLabel').textContent = t('statInStock');
@@ -603,10 +603,10 @@ function applyLanguageUI() {
   const isOwnerMode = (currentAuthRole === 'admin' || currentRole === 'owner');
   const cartTitleText = isOwnerMode ? t('cartModalTitleOwner') : t('cartModalTitleCustomer');
   const cartTitleEl = document.getElementById('cartModalTitle');
-  if (cartTitleEl) cartTitleEl.textContent = `🛒 ${cartTitleText}`;
+  if (cartTitleEl) cartTitleEl.textContent = `Cart`;
 
   const createOrderBtn = document.getElementById('createNewOrderBtn');
-  if (createOrderBtn) createOrderBtn.textContent = `🛒 ${cartTitleText}`;
+  if (createOrderBtn) createOrderBtn.textContent = `Cart`;
 
   // Footer Dynamic Translations
   const footerSubtitleEl = document.getElementById('footerBrandSubtitle');
@@ -614,11 +614,11 @@ function applyLanguageUI() {
   const footerDescEl = document.getElementById('footerAboutDescText');
   if (footerDescEl) footerDescEl.textContent = t('footerAboutDesc');
   const footerLegalH = document.getElementById('footerLegalHeader');
-  if (footerLegalH) footerLegalH.textContent = `📜 ${t('footerQuickLinks')}`;
+  if (footerLegalH) footerLegalH.textContent = `t('footerQuickLinks')`;
   const footerCompH = document.getElementById('footerComplianceHeader');
-  if (footerCompH) footerCompH.textContent = `⚖️ ${t('footerComplianceTitle')}`;
+  if (footerCompH) footerCompH.textContent = `t('footerComplianceTitle')`;
   const footerContH = document.getElementById('footerContactHeader');
-  if (footerContH) footerContH.textContent = `🏬 ${t('footerContactTitle')}`;
+  if (footerContH) footerContH.textContent = `t('footerContactTitle')`;
   const footerCopyEl = document.getElementById('footerCopyrightText');
   if (footerCopyEl) footerCopyEl.textContent = t('footerCopyright');
 
@@ -648,7 +648,7 @@ function applyLanguageUI() {
     if (currentRole === 'customer') {
       roleAlertMsg.innerHTML = currentLang === 'ta' ? 'ℹ️ <em>உங்கள் சொந்த கடன் விவரங்கள் மட்டுமே காட்டப்படும்</em>' : 'ℹ️ <em>Privacy Protected: Showing ONLY your personal credit ledger</em>';
     } else {
-      roleAlertMsg.innerHTML = currentLang === 'ta' ? '⚡ <em>உரிமையாளர் பக்கம்: பேக்கிங் மற்றும் கடன் நினைவூட்டல்</em>' : '⚡ <em>Shop Owner Mode: Manage order packing, log sales & send reminders</em>';
+      roleAlertMsg.innerHTML = currentLang === 'ta' ? '<em>உரிமையாளர் பக்கம்: பேக்கிங் மற்றும் கடன் நினைவூட்டல்</em>' : '<em>Shop Owner Mode: Manage order packing, log sales & send reminders</em>';
     }
   }
 
@@ -772,7 +772,7 @@ function handleAddProductWithPhoto(e) {
     dosageTa: "விவசாய ஆலோசகரின் பரிந்துரைப்படி இடவும்.",
     msdsInfo: "Store in cool dry place. Keep away from direct sunlight.",
     rating: 5.0,
-    imageIcon: category === 'Fertilizers' ? '🌱' : '🧪',
+    imageIcon: category === 'Fertilizers' ? '' : '',
     imageUrl: tempUploadedImageBase64
   };
 
@@ -784,7 +784,7 @@ function handleAddProductWithPhoto(e) {
   document.getElementById('imagePreviewBox').style.display = 'none';
   tempUploadedImageBase64 = '';
 
-  showToast('Product Saved with Image!', `${name} added to shop catalog (${cropList.join(', ')}).`, '📷');
+  showToast('Product Saved with Image!', `${name} added to shop catalog (${cropList.join(', ')}).`, '');
 }
 
 function renderCrudProductsTable() {
@@ -808,10 +808,10 @@ function renderCrudProductsTable() {
         <td>
           <div style="display: flex; gap: 6px;">
             <button class="btn-action" style="background: var(--primary-light); color: var(--primary-color); border-color: #a7f3d0; font-weight: 600;" onclick="openEditProductModal('${p.id}')">
-              ✏️ Edit
+              Edit
             </button>
             <button class="btn-action" style="background: var(--danger-bg); color: var(--danger-color); border-color: #fecaca; font-weight: 600;" onclick="deleteProductItem('${p.id}')">
-              🗑️ Delete
+              Delete
             </button>
           </div>
         </td>
@@ -869,7 +869,7 @@ function handleSaveEditProduct(e) {
   closeEditProductModal();
   renderAll();
 
-  showToast('Product Updated', `${prod.name} changes saved successfully.`, '✏️');
+  showToast('Product Updated', `${prod.name} changes saved successfully.`, '️');
 }
 
 function deleteProductItem(productId) {
@@ -880,7 +880,7 @@ function deleteProductItem(productId) {
     products = products.filter(p => p.id !== productId);
     saveData();
     renderAll();
-    showToast('Product Deleted', `${prod.name} removed from store catalog.`, '🗑️');
+    showToast('Product Deleted', `${prod.name} removed from store catalog.`, '️');
   }
 }
 
@@ -953,7 +953,7 @@ function handleOwnerAddCustomer(e) {
   showToast(
     currentLang === 'ta' ? 'புதிய வாடிக்கையாளர் கணக்கு பதிவு செய்யப்பட்டது!' : 'New Customer Registered!',
     `${name} (${phone}) registered with PIN. Customer can now log in directly.`,
-    '👤'
+    ''
   );
 }
 
@@ -974,7 +974,7 @@ function renderCrudCustomersTable() {
 
     return `
       <tr>
-        <td><strong>👤 ${cName}</strong></td>
+        <td><strong>${cName}</strong></td>
         <td>${c.phone}</td>
         <td>${cVillage}</td>
         <td>₹${totalPurch.toLocaleString('en-IN')}</td>
@@ -982,10 +982,10 @@ function renderCrudCustomersTable() {
         <td>
           <div style="display: flex; gap: 6px;">
             <button class="btn-action" style="background: var(--primary-light); color: var(--primary-color); border-color: #a7f3d0; font-weight: 600;" onclick="openEditCustomerModal(${idx})">
-              ✏️ Edit Profile
+              Edit Profile
             </button>
             <button class="btn-action" style="background: var(--danger-bg); color: var(--danger-color); border-color: #fecaca; font-weight: 600;" onclick="deleteCustomerAccount(${idx})">
-              🗑️ Delete
+              Delete
             </button>
           </div>
         </td>
@@ -1068,7 +1068,7 @@ function handleSaveEditCustomer(e) {
     'PROFILE_UPDATED',
     'Account Profile Updated by Admin',
     msgEn,
-    '✏️',
+    '️',
     cust.phone,
     'அட்மின் மூலம் சுயவிவரம் புதுப்பிக்கப்பட்டது',
     msgTa
@@ -1078,7 +1078,7 @@ function handleSaveEditCustomer(e) {
   closeEditCustomerModal();
   renderAll();
 
-  showToast('Customer Profile Updated', `${cust.name} changes saved and customer notified.`, '✏️');
+  showToast('Customer Profile Updated', `${cust.name} changes saved and customer notified.`, '️');
 }
 
 function deleteCustomerAccount(custIndex) {
@@ -1092,7 +1092,7 @@ function deleteCustomerAccount(custIndex) {
     }
     saveData();
     renderAll();
-    showToast('Customer Deleted', `${cust.name} removed.`, '🗑️');
+    showToast('Customer Deleted', `${cust.name} removed.`, '️');
   }
 }
 
@@ -1111,7 +1111,7 @@ function deleteOrder(orderId) {
       'ORDER_CANCELLED',
       `Order ${ord.orderId} Cancelled`,
       `Your order has been canceled by Admin.`,
-      '❌',
+      '',
       ord.customerPhone,
       `ஆர்டர் ${ord.orderId} ரத்து செய்யப்பட்டது`,
       `உங்கள் ஆர்டர் அட்மினால் ரத்து செய்யப்பட்டது.`
@@ -1122,7 +1122,7 @@ function deleteOrder(orderId) {
       'ORDER_CANCELLED',
       `Order ${ord.orderId} Cancelled`,
       `You canceled ${cName}'s order (${ord.orderId}).`,
-      '🗑️',
+      '️',
       null,
       `ஆர்டர் ${ord.orderId} ரத்து செய்யப்பட்டது`,
       `நீங்கள் ${cName} அவர்களின் ஆர்டரை (${ord.orderId}) ரத்து செய்தீர்கள்.`
@@ -1144,7 +1144,7 @@ function deleteOrder(orderId) {
     showToast(
       currentLang === 'ta' ? 'ஆர்டர் ரத்து செய்யப்பட்டது' : 'Order Cancelled',
       `Order ${ord.orderId} for ${cName} was cancelled.`,
-      '🗑️'
+      '️'
     );
   }
 }
@@ -1244,7 +1244,7 @@ function renderStockGrid() {
   if (filtered.length === 0) {
     container.innerHTML = `
       <div style="grid-column: 1 / -1; text-align: center; padding: 48px; background: #ffffff; border-radius: var(--radius-md); border: 1px dashed var(--border-color);">
-        <div style="font-size: 36px; margin-bottom: 12px;">🌾</div>
+        
         <h3 style="font-size: 16px; color: var(--text-primary);">${currentLang === 'ta' ? 'பொருட்கள் எதுவும் கிடைக்கவில்லை' : 'No Products Found'}</h3>
       </div>
     `;
@@ -1280,7 +1280,7 @@ function renderStockGrid() {
                  style="width: 100%; height: 100%; object-fit: cover;"
                  onerror="this.onerror=null; this.src='assets/iffco_urea.jpg';">
             <span style="position: absolute; bottom: 10px; left: 10px; background: rgba(0,0,0,0.65); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: white; padding: 3px 10px; border-radius: var(--radius-pill); font-size: 11px; font-weight: 600;">
-              ${p.imageIcon || '🌱'} ${p.category}
+              ${p.category}
             </span>
           </div>
 
@@ -1294,7 +1294,7 @@ function renderStockGrid() {
           <div class="product-details">
             <div><strong>${currentLang === 'ta' ? 'அளவு:' : 'Unit:'}</strong> ${prodUnit}</div>
             <div class="product-crop-tags">
-              ${cropList.map(c => `<span class="crop-chip">🌾 ${c}</span>`).join('')}
+              ${cropList.map(c => `<span class="crop-chip">${c}</span>`).join('')}
             </div>
           </div>
 
@@ -1354,7 +1354,7 @@ function showProductModal(prodId) {
     </div>
 
     <div style="background: var(--warning-bg); border: 1px solid #fde68a; padding: 14px; border-radius: var(--radius-sm); margin-bottom: 14px;">
-      <h5 style="color: var(--warning-color); font-size: 13px; font-weight: 600; margin-bottom: 4px;">⚠️ ${currentLang === 'ta' ? 'பாதுகாப்பு & பயன்பாட்டு வழிகாட்டல்:' : 'Safety & Agronomy Advisory:'}</h5>
+      <h5 style="color: var(--warning-color); font-size: 13px; font-weight: 600; margin-bottom: 4px;">${currentLang === 'ta' ? 'பாதுகாப்பு & பயன்பாட்டு வழிகாட்டல்:' : 'Safety & Agronomy Advisory:'}</h5>
       <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">${p.msdsInfo}</p>
       <div style="font-size: 12px; color: var(--text-muted);"><strong>${currentLang === 'ta' ? 'அளவு விபரம்:' : 'Recommended Dosage:'}</strong> ${prodDosage}</div>
     </div>
@@ -1364,7 +1364,7 @@ function showProductModal(prodId) {
       <span>
         ${currentLang === 'ta' ? 'மதிப்பீடு:' : 'Rating:'} 
         <button type="button" onclick="openPolicyModal('reviews')" style="background:none; border:none; color: var(--warning-color); font-weight:700; cursor:pointer; text-decoration:underline; font-size: 12px;" title="Click to view verified review policy">
-          ⭐ ${p.rating} / 5.0 (Verified)
+          ${p.rating} / 5.0 (Verified)
         </button>
       </span>
     </div>
@@ -1397,7 +1397,7 @@ function addToCart(productId) {
 
   updateCartBadge();
   const prodName = (currentLang === 'ta' && prod.nameTa) ? prod.nameTa : prod.name;
-  showToast(currentLang === 'ta' ? 'கூடையில் சேர்க்கப்பட்டது' : 'Added to Cart', prodName, '🛒');
+  showToast(currentLang === 'ta' ? 'கூடையில் சேர்க்கப்பட்டது' : 'Added to Cart', prodName, '');
 }
 
 function updateCartBadge() {
@@ -1449,7 +1449,7 @@ function renderCartModal() {
   if (cart.length === 0) {
     container.innerHTML = `
       <div style="text-align: center; padding: 32px 16px;">
-        <div style="font-size: 36px; margin-bottom: 12px;">🛒</div>
+        
         <h4 style="font-size: 16px; color: var(--text-primary);">${currentLang === 'ta' ? 'கூடை காலியாக உள்ளது' : 'Your Cart is Empty'}</h4>
         <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">${currentLang === 'ta' ? 'பொருட்களை தேர்வு செய்து முன்பதிவு செய்யவும்.' : 'Browse catalog and click Reserve.'}</p>
         <button class="btn-primary" onclick="goToStockCatalog()">${currentLang === 'ta' ? 'பொருட்களை பார்க்க' : 'Browse Catalog'}</button>
@@ -1504,7 +1504,7 @@ function renderCartModal() {
     <div class="form-group">
       <label>Ordering Account</label>
       <div style="background: var(--primary-light); border: 1px solid #a7f3d0; padding: 10px 14px; border-radius: var(--radius-sm); font-weight: 700; color: var(--primary-color); font-size: 14px;">
-        👤 ${activeCustName} (${activeCust.phone})
+        ${activeCustName} (${activeCust.phone})
       </div>
     </div>
 
@@ -1618,7 +1618,7 @@ function submitCustomerOrder() {
     'ORDER_UPDATE',
     `New Order ${ordId}`,
     `${cName} placed order ${ordId} for ₹${totalOrderAmt}.`,
-    fulfillment === 'PICKUP' ? '🏬' : '🚚',
+    fulfillment === 'PICKUP' ? '' : '',
     cust.phone,
     `புதிய ஆர்டர் ${ordId}`,
     `${cName} ஆர்டர் ${ordId} கொடுத்துள்ளார் (தொகை ₹${totalOrderAmt}).`
@@ -1627,7 +1627,7 @@ function submitCustomerOrder() {
   showToast(
     currentLang === 'ta' ? 'ஆர்டர் உறுதி செய்யப்பட்டது!' : 'Order Placed!',
     `Order ${ordId} reserved.`,
-    '📦'
+    ''
   );
 
   renderAll();
@@ -1651,7 +1651,7 @@ function renderCustomerOrders() {
 
     container.innerHTML = `
       <div style="text-align: center; padding: 40px; background: #ffffff; border-radius: var(--radius-md); border: 1px dashed var(--border-color);">
-        <div style="font-size: 36px; margin-bottom: 12px;">🛍️</div>
+        
         <h4 style="font-size: 16px; color: var(--text-primary);">${t('noActiveOrders')}</h4>
         ${showOrdersForText}
       </div>
@@ -1662,9 +1662,9 @@ function renderCustomerOrders() {
   container.innerHTML = custOrders.map(ord => {
     let statusBadge = `<span class="status-badge status-due-soon">${t('stepPlaced')}</span>`;
     if (ord.status === 'PACKED_READY') {
-      statusBadge = `<span class="status-badge status-paid">📦 ${t('stepPacked')}</span>`;
+      statusBadge = `<span class="status-badge status-paid">${t('stepPacked')}</span>`;
     } else if (ord.status === 'DISPATCHED') {
-      statusBadge = `<span class="status-badge status-paid">🚚 ${t('stepReady')}</span>`;
+      statusBadge = `<span class="status-badge status-paid">${t('stepReady')}</span>`;
     } else if (ord.status === 'COMPLETED') {
       statusBadge = `<span class="status-badge" style="background:#e2e8f0; color:#475569;">${t('stepCompleted')}</span>`;
     }
@@ -1685,9 +1685,9 @@ function renderCustomerOrders() {
         </div>
 
         <div style="display: flex; gap: 8px; margin: 14px 0; background: #f8fafc; padding: 12px; border-radius: var(--radius-sm); font-size: 12px;">
-          <span style="font-weight: 600; color: ${ord.status === 'ORDER_PLACED' ? 'var(--warning-color)' : 'var(--success-color)'};">${t('stepPlaced')}</span> ➔ 
-          <span style="font-weight: 600; color: ${ord.status === 'PACKED_READY' || ord.status === 'DISPATCHED' || ord.status === 'COMPLETED' ? 'var(--success-color)' : 'var(--text-muted)'};">${t('stepPacked')}</span> ➔ 
-          <span style="font-weight: 600; color: ${ord.status === 'DISPATCHED' || ord.status === 'COMPLETED' ? 'var(--success-color)' : 'var(--text-muted)'};">${t('stepReady')}</span> ➔ 
+          <span style="font-weight: 600; color: ${ord.status === 'ORDER_PLACED' ? 'var(--warning-color)' : 'var(--success-color)'};">${t('stepPlaced')}</span> → 
+          <span style="font-weight: 600; color: ${ord.status === 'PACKED_READY' || ord.status === 'DISPATCHED' || ord.status === 'COMPLETED' ? 'var(--success-color)' : 'var(--text-muted)'};">${t('stepPacked')}</span> → 
+          <span style="font-weight: 600; color: ${ord.status === 'DISPATCHED' || ord.status === 'COMPLETED' ? 'var(--success-color)' : 'var(--text-muted)'};">${t('stepReady')}</span> → 
           <span style="font-weight: 600; color: ${ord.status === 'COMPLETED' ? 'var(--success-color)' : 'var(--text-muted)'};">${t('stepCompleted')}</span>
         </div>
 
@@ -1700,8 +1700,8 @@ function renderCustomerOrders() {
             <div>${currentLang === 'ta' ? 'முகவரி:' : 'Address:'} <span style="color: var(--text-primary); font-weight: 500;">${ord.deliveryAddress}</span></div>
             <div style="font-size: 11px; margin-top: 4px;">
               ${ord.paymentChoice === 'ONLINE'
-                ? `<span style="background: #ecfdf5; color: #047857; padding: 2px 8px; border-radius: 4px; font-weight: 600; border: 1px solid #a7f3d0;">💳 ${currentLang === 'ta' ? 'ஆன்லைனில் செலுத்தப்பட்டது' : 'Paid Online'}</span>`
-                : `<span style="background: #fffbeb; color: #b45309; padding: 2px 8px; border-radius: 4px; font-weight: 600; border: 1px solid #fde68a;">📜 ${currentLang === 'ta' ? 'பிறகு செலுத்துதல் (கடன் கணக்கு)' : 'Pay Later (Store Credit)'}</span>`
+                ? `<span style="background: #ecfdf5; color: #047857; padding: 2px 8px; border-radius: 4px; font-weight: 600; border: 1px solid #a7f3d0;">${currentLang === 'ta' ? 'ஆன்லைனில் செலுத்தப்பட்டது' : 'Paid Online'}</span>`
+                : `<span style="background: #fffbeb; color: #b45309; padding: 2px 8px; border-radius: 4px; font-weight: 600; border: 1px solid #fde68a;">${currentLang === 'ta' ? 'பிறகு செலுத்துதல் (கடன் கணக்கு)' : 'Pay Later (Store Credit)'}</span>`
               }
             </div>
           </div>
@@ -1736,10 +1736,10 @@ function renderCustomerLedger() {
   const ledgerCard = document.getElementById('ledgerHeaderCard');
   ledgerCard.innerHTML = `
     <div class="customer-info-box">
-      <h3>👤 ${cName}</h3>
+      <h3>${cName}</h3>
       <div class="customer-meta">
-        <span>📍 <strong>Location / Village:</strong> ${cVillage}</span>
-        <span>📞 <strong>Mobile:</strong> ${cust.phone}</span>
+        <span><strong>Location / Village:</strong> ${cVillage}</span>
+        <span><strong>Mobile:</strong> ${cust.phone}</span>
       </div>
     </div>
 
@@ -1764,7 +1764,7 @@ function renderCustomerLedger() {
       </button>
     ` : `
       <div style="background: var(--success-bg); border: 1px solid #bbf7d0; padding: 10px 16px; border-radius: var(--radius-sm); color: var(--success-color); font-weight: 600; font-size: 13px;">
-        ✅ ${currentLang === 'ta' ? 'அனைத்து நிலுவையும் செலுத்தப்பட்டுவிட்டது!' : 'All Bills Paid! No Balance Due'}
+        ${currentLang === 'ta' ? 'அனைத்து நிலுவையும் செலுத்தப்பட்டுவிட்டது!' : 'All Bills Paid! No Balance Due'}
       </div>
     `}
   `;
@@ -1868,7 +1868,7 @@ function printLedgerReceipt() {
       </style>
     </head>
     <body>
-      <h2>🌾 KisanAgri Hub</h2>
+      <h2>KisanAgri Hub</h2>
       <p class="sub">Agro Chemical & Fertilizer Store — Customer Account Statement</p>
       <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 16px 0;">
       <p><strong>Farmer Name:</strong> ${cName} &nbsp;|&nbsp; <strong>Mobile:</strong> ${cust.phone}<br>
@@ -1907,7 +1907,7 @@ function renderOwnerOrders() {
   if (activeOrders.length === 0) {
     container.innerHTML = `
       <div style="text-align: center; padding: 24px; color: var(--text-muted); font-size: 13px;">
-        ${currentLang === 'ta' ? '✅ அனைத்து ஆர்டர்களும் பேக் செய்யப்பட்டு முடிந்தது!' : '✅ All customer orders have been packed and fulfilled!'}
+        ${currentLang === 'ta' ? ' அனைத்து ஆர்டர்களும் பேக் செய்யப்பட்டு முடிந்தது!' : ' All customer orders have been packed and fulfilled!'}
       </div>
     `;
     return;
@@ -1927,7 +1927,7 @@ function renderOwnerOrders() {
           <div style="display: flex; align-items: center; gap: 10px;">
             <strong style="font-size: 15px; color: var(--text-primary);">${ord.orderId}</strong>
             <span class="status-badge ${ord.status === 'PACKED_READY' ? 'status-paid' : 'status-due-soon'}">${ord.status.replace('_', ' ')}</span>
-            <span style="font-size: 12px; font-weight: 600; color: var(--primary-color);">${ord.fulfillmentType === 'PICKUP' ? '🏬 Shop Pickup' : '🚚 Farm Delivery'}</span>
+            <span style="font-size: 12px; font-weight: 600; color: var(--primary-color);">${ord.fulfillmentType === 'PICKUP' ? 'Shop Pickup' : 'Farm Delivery'}</span>
           </div>
           <div style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">
             <strong>${currentLang === 'ta' ? 'வாடிக்கையாளர்:' : 'Customer:'}</strong> ${cName} (${ord.customerPhone})
@@ -1937,8 +1937,8 @@ function renderOwnerOrders() {
           </div>
           <div style="font-size: 11px; margin-top: 4px;">
             ${ord.paymentChoice === 'ONLINE'
-              ? `<span style="background: #ecfdf5; color: #047857; padding: 2px 6px; border-radius: 4px; font-weight: 600; border: 1px solid #a7f3d0;">💳 ${currentLang === 'ta' ? 'ஆன்லைன் செலுத்துகை (Pre-paid)' : 'Pre-paid Online'}</span>`
-              : `<span style="background: #fffbeb; color: #b45309; padding: 2px 6px; border-radius: 4px; font-weight: 600; border: 1px solid #fde68a;">📜 ${currentLang === 'ta' ? 'கடன் கணக்கில் சேரும்' : 'Pay Later (Credit Tab)'}</span>`
+              ? `<span style="background: #ecfdf5; color: #047857; padding: 2px 6px; border-radius: 4px; font-weight: 600; border: 1px solid #a7f3d0;">${currentLang === 'ta' ? 'ஆன்லைன் செலுத்துகை (Pre-paid)' : 'Pre-paid Online'}</span>`
+              : `<span style="background: #fffbeb; color: #b45309; padding: 2px 6px; border-radius: 4px; font-weight: 600; border: 1px solid #fde68a;">${currentLang === 'ta' ? 'கடன் கணக்கில் சேரும்' : 'Pay Later (Credit Tab)'}</span>`
             }
           </div>
         </div>
@@ -1946,24 +1946,24 @@ function renderOwnerOrders() {
         <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
           ${ord.status === 'ORDER_PLACED' ? `
             <button class="btn-primary" style="padding: 8px 14px; font-size: 12px;" onclick="markOrderPacked('${ord.orderId}')">
-              📦 Mark Packed & Ready
+              Mark Packed & Ready
             </button>
           ` : ''}
 
           ${ord.status === 'PACKED_READY' && ord.fulfillmentType === 'DELIVERY' ? `
             <button class="btn-action" style="background: var(--primary-color); color: white; border: none;" onclick="markOrderOutForDelivery('${ord.orderId}')">
-              🚚 Dispatch Delivery
+              Dispatch Delivery
             </button>
           ` : ''}
 
           <button class="btn-action" style="background: var(--success-bg); color: var(--success-color); border: 1px solid #bbf7d0; font-weight: 600;" onclick="completeCustomerOrder('${ord.orderId}')">
             ${ord.paymentChoice === 'ONLINE'
-              ? (currentLang === 'ta' ? '✅ முடிந்தது (முன்செலுத்தப்பட்டது)' : '✅ Complete Order (Pre-paid)')
-              : (currentLang === 'ta' ? '✅ முடித்து கடனில் சேர்' : '✅ Complete & Add to Credit Tab')
+              ? (currentLang === 'ta' ? 'முடிந்தது (முன்செலுத்தப்பட்டது)' : 'Complete Order (Pre-paid)')
+              : (currentLang === 'ta' ? 'முடித்து கடனில் சேர்' : 'Complete & Add to Credit Tab')
             }
           </button>
           <button class="btn-action" style="background: var(--danger-bg); color: var(--danger-color); border: 1px solid #fecaca; font-weight: 600;" onclick="deleteOrder('${ord.orderId}')">
-            🗑️ Delete
+            Delete
           </button>
         </div>
       </div>
@@ -1984,13 +1984,13 @@ function markOrderPacked(orderId) {
     'ORDER_UPDATE',
     `Order ${ord.orderId} Packed!`,
     `${cName}'s order has been packed by shop staff.`,
-    '📦',
+    '',
     ord.customerPhone,
     `ஆர்டர் ${ord.orderId} பேக் செய்யப்பட்டது!`,
     `${cName} அவர்களின் ஆர்டர் கடை ஊழியர்களால் பேக் செய்யப்பட்டுள்ளது.`
   );
 
-  showToast(currentLang === 'ta' ? 'பேக் செய்யப்பட்டது' : 'Order Packed', `Notified ${cName}`, '📦');
+  showToast(currentLang === 'ta' ? 'பேக் செய்யப்பட்டது' : 'Order Packed', `Notified ${cName}`, '');
 }
 
 function markOrderOutForDelivery(orderId) {
@@ -2005,13 +2005,13 @@ function markOrderOutForDelivery(orderId) {
     'ORDER_UPDATE',
     `Order ${ord.orderId} Out for Delivery`,
     `Order ${ord.orderId} dispatched to farm address.`,
-    '🚚',
+    '',
     ord.customerPhone,
     `ஆர்டர் ${ord.orderId} டெலிவரிக்கு புறப்பட்டது`,
     `ஆர்டர் ${ord.orderId} பண்ணை முகவரிக்கு அனுப்பப்பட்டுள்ளது.`
   );
 
-  showToast(currentLang === 'ta' ? 'டெலிவரிக்கு புறப்பட்டது' : 'Out for Delivery', `En route to ${ord.customerVillage}`, '🚚');
+  showToast(currentLang === 'ta' ? 'டெலிவரிக்கு புறப்பட்டது' : 'Out for Delivery', `En route to ${ord.customerVillage}`, '');
 }
 
 function completeCustomerOrder(orderId) {
@@ -2041,7 +2041,7 @@ function completeCustomerOrder(orderId) {
   saveData();
   renderAll();
 
-  showToast(currentLang === 'ta' ? 'ஆர்டர் முடிந்தது' : 'Order Completed!', `Order ${ord.orderId} fulfilled.`, '✅');
+  showToast(currentLang === 'ta' ? 'ஆர்டர் முடிந்தது' : 'Order Completed!', `Order ${ord.orderId} fulfilled.`, '');
 }
 
 // ----------------------------------------------------
@@ -2053,7 +2053,7 @@ function openPaymentModal(custIndex) {
 
   const totalDue = cust.purchases.reduce((acc, p) => acc + p.balance, 0);
   if (totalDue <= 0) {
-    showToast('No Balance Due', `${cust.name} has no outstanding bills!`, '✅');
+    showToast('No Balance Due', `${cust.name} has no outstanding bills!`, '');
     return;
   }
 
@@ -2121,7 +2121,7 @@ function submitOnlinePayment() {
   renderAll();
 
   const cName = (currentLang === 'ta' && cust.nameTa) ? cust.nameTa : cust.name;
-  showToast(currentLang === 'ta' ? 'பணம் செலுத்தப்பட்டது' : 'Payment Received!', `₹${payAmt} from ${cName}`, '💳');
+  showToast(currentLang === 'ta' ? 'பணம் செலுத்தப்பட்டது' : 'Payment Received!', `₹${payAmt} from ${cName}`, '');
 }
 
 // ----------------------------------------------------
@@ -2331,7 +2331,7 @@ function handleLogOfflineBill(e) {
     'OFFLINE_BILL',
     `New Offline Purchase Bill (${invId})`,
     `Shop owner logged bill ${invId} for your account. Purchase Total: ₹${currentTotal.toLocaleString('en-IN')}, Upfront Paid: ₹${upfront.toLocaleString('en-IN')}. Remaining Total Due: ₹${finalCustomerDue.toLocaleString('en-IN')}.`,
-    '📄',
+    '',
     cust.phone,
     `புதிய கடை பில் (${invId})`,
     `கடை உரிமையாளர் உங்கள் கணக்கில் ${invId} பில் பதிவு செய்துள்ளார். பில் தொகை: ₹${currentTotal.toLocaleString('en-IN')}, செலுத்தப்பட்டது: ₹${upfront.toLocaleString('en-IN')}. மீதமுள்ள மொத்த கடன்: ₹${finalCustomerDue.toLocaleString('en-IN')}.`
@@ -2345,7 +2345,7 @@ function handleLogOfflineBill(e) {
   showToast(
     currentLang === 'ta' ? 'பில் உருவாக்கப்பட்டது' : 'Bill Logged Successfully',
     `${invId} logged for ${cName}. Remaining Due: ₹${finalCustomerDue.toLocaleString('en-IN')}`,
-    '📄'
+    ''
   );
 }
 
@@ -2404,7 +2404,7 @@ function renderOverdueTable() {
 
     return `
       <tr>
-        <td><strong>👤 ${cName}</strong></td>
+        <td><strong>${cName}</strong></td>
         <td>${cust.phone}</td>
         <td>${cVillage}</td>
         <td>₹${totalPurchases.toLocaleString('en-IN')}</td>
@@ -2415,16 +2415,16 @@ function renderOverdueTable() {
           <div style="display: flex; flex-direction: column; gap: 6px; align-items: stretch; min-width: 190px;">
             ${unpaidDue > 0 ? `
               <button type="button" class="btn-action" style="background: linear-gradient(135deg, #059669, #10b981); color: white; border: none; font-weight: 700; font-size: 12px; padding: 7px 12px; width: 100%; text-align: center; border-radius: var(--radius-sm); box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2); cursor: pointer;" onclick="openAdminRecordPaymentModal(${idx})">
-                💵 ${currentLang === 'ta' ? 'பணம் பெறப்பட்டது' : 'Mark Paid / Cash'}
+                ${currentLang === 'ta' ? 'பணம் பெறப்பட்டது' : 'Mark Paid / Cash'}
               </button>
               <div style="display: flex; gap: 4px; width: 100%;">
-                <button type="button" class="btn-action btn-reminder" style="flex: 1; padding: 5px 0; text-align: center; font-size: 11px; font-weight: 600; cursor: pointer;" onclick="sendReminderSMS(${idx})">💬 SMS</button>
-                <button type="button" class="btn-action btn-reminder" style="flex: 1; padding: 5px 0; text-align: center; font-size: 11px; font-weight: 600; cursor: pointer;" onclick="triggerInAppReminder(${idx})">🔔 App</button>
-                <button type="button" class="btn-action btn-reminder" style="flex: 1; padding: 5px 0; text-align: center; font-size: 11px; font-weight: 600; cursor: pointer;" onclick="sendReminderWhatsApp(${idx})">📱 WA</button>
+                <button type="button" class="btn-action btn-reminder" style="flex: 1; padding: 5px 0; text-align: center; font-size: 11px; font-weight: 600; cursor: pointer;" onclick="sendReminderSMS(${idx})">SMS</button>
+                <button type="button" class="btn-action btn-reminder" style="flex: 1; padding: 5px 0; text-align: center; font-size: 11px; font-weight: 600; cursor: pointer;" onclick="triggerInAppReminder(${idx})">App</button>
+                <button type="button" class="btn-action btn-reminder" style="flex: 1; padding: 5px 0; text-align: center; font-size: 11px; font-weight: 600; cursor: pointer;" onclick="sendReminderWhatsApp(${idx})">WA</button>
               </div>
             ` : `
               <span style="font-size: 12px; color: var(--success-color); font-weight: 600; display: inline-flex; align-items: center; gap: 4px; padding: 4px 0;">
-                ✅ ${currentLang === 'ta' ? 'முடிந்தது' : 'Paid'}
+                ${currentLang === 'ta' ? 'முடிந்தது' : 'Paid'}
               </span>
             `}
           </div>
@@ -2456,8 +2456,8 @@ function openAdminRecordPaymentModal(custIndex) {
   const modal = document.getElementById('adminRecordPaymentModal');
 
   if (idxInput) idxInput.value = idx;
-  if (namePhoneElem) namePhoneElem.textContent = `👤 ${cName} (${cust.phone})`;
-  if (villageElem) villageElem.textContent = `📍 Location / Village: ${cVillage}`;
+  if (namePhoneElem) namePhoneElem.textContent = `${cName} (${cust.phone})`;
+  if (villageElem) villageElem.textContent = `Location / Village: ${cVillage}`;
   if (dueElem) dueElem.textContent = `Current Unpaid Due: ₹${totalDue.toLocaleString('en-IN')}`;
   if (amtInput) amtInput.value = totalDue > 0 ? totalDue : '';
 
@@ -2517,7 +2517,7 @@ function handleAdminSubmitOfflinePayment(e) {
     'PAYMENT_RECEIVED',
     `Cash Payment Recorded (₹${payAmt.toLocaleString('en-IN')})`,
     `Shop owner recorded cash payment of ₹${payAmt.toLocaleString('en-IN')} for your account. Remaining balance: ₹${totalRemainingDue.toLocaleString('en-IN')}. Note: ${note}`,
-    '💵',
+    '',
     cust.phone,
     `பணம் பெறப்பட்டது (₹${payAmt.toLocaleString('en-IN')})`,
     `கடை உரிமையாளர் உங்கள் கணக்கில் ₹${payAmt.toLocaleString('en-IN')} பெற்றதாக பதிவு செய்தார். மீதமுள்ள பாக்கி: ₹${totalRemainingDue.toLocaleString('en-IN')}.`
@@ -2530,7 +2530,7 @@ function handleAdminSubmitOfflinePayment(e) {
   showToast(
     currentLang === 'ta' ? 'பணம் பெறப்பட்டது!' : 'Cash Payment Recorded!',
     `Recorded ₹${payAmt.toLocaleString('en-IN')} cash from ${cName}. Remaining due: ₹${totalRemainingDue.toLocaleString('en-IN')}.`,
-    '💵'
+    ''
   );
 }
 
@@ -2567,7 +2567,7 @@ function sendReminderWhatsApp(custIndex) {
     'REMINDER_SENT',
     'Payment Reminder Sent',
     `You have sent a reminder to ${cName} to pay the bill`,
-    '📱',
+    '',
     null,
     'நினைவூட்டல் அனுப்பப்பட்டது',
     `நீங்கள் ${cName} என்பவருக்கு பில் செலுத்த நினைவூட்டல் அனுப்பியுள்ளீர்கள்`
@@ -2576,7 +2576,7 @@ function sendReminderWhatsApp(custIndex) {
   saveData();
   renderOverdueTable();
 
-  showToast(currentLang === 'ta' ? 'வாட்ஸ்அப் நினைவூட்டல் அனுப்பப்பட்டது' : 'WhatsApp Reminder Sent!', `Notified ${cName}`, '📱');
+  showToast(currentLang === 'ta' ? 'வாட்ஸ்அப் நினைவூட்டல் அனுப்பப்பட்டது' : 'WhatsApp Reminder Sent!', `Notified ${cName}`, '');
   window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
@@ -2603,7 +2603,7 @@ function sendReminderSMS(custIndex) {
     'REMINDER_SENT',
     'Payment Reminder Sent',
     `You have sent a reminder to ${cName} to pay the bill`,
-    '💬',
+    '',
     null,
     'நினைவூட்டல் அனுப்பப்பட்டது',
     `நீங்கள் ${cName} என்பவருக்கு பில் செலுத்த நினைவூட்டல் அனுப்பியுள்ளீர்கள்`
@@ -2612,7 +2612,7 @@ function sendReminderSMS(custIndex) {
   saveData();
   renderOverdueTable();
 
-  showToast(currentLang === 'ta' ? 'எஸ்.எம்.எஸ் அனுப்பப்பட்டது' : 'SMS Sent!', `Notified ${cName}`, '💬');
+  showToast(currentLang === 'ta' ? 'எஸ்.எம்.எஸ் அனுப்பப்பட்டது' : 'SMS Sent!', `Notified ${cName}`, '');
 }
 
 function triggerInAppReminder(custIndex) {
@@ -2638,7 +2638,7 @@ function triggerInAppReminder(custIndex) {
     'REMINDER',
     'Payment Reminder Alert',
     `Dear ${cName}, you have a balance due of ₹${totalDue.toLocaleString('en-IN')}. Please pay online or at shop.`,
-    '🔔',
+    '',
     cust.phone,
     'கடன் நிலுவை நினைவூட்டல்',
     `அன்பார்ந்த ${cName}, உங்கள் கடன் பாக்கி ₹${totalDue.toLocaleString('en-IN')}. தயவுசெய்து செலுத்தவும்.`
@@ -2649,7 +2649,7 @@ function triggerInAppReminder(custIndex) {
     'REMINDER_SENT',
     'Payment Reminder Sent',
     `You have sent a reminder to ${cName} to pay the bill`,
-    '🔔',
+    '',
     null,
     'நினைவூட்டல் அனுப்பப்பட்டது',
     `நீங்கள் ${cName} என்பவருக்கு பில் செலுத்த நினைவூட்டல் அனுப்பியுள்ளீர்கள்`
@@ -2658,7 +2658,7 @@ function triggerInAppReminder(custIndex) {
   saveData();
   renderOverdueTable();
 
-  showToast(currentLang === 'ta' ? 'அறிவிப்பு அனுப்பப்பட்டது' : 'In-App Alert Sent!', `Notified ${cName}`, '🔔');
+  showToast(currentLang === 'ta' ? 'அறிவிப்பு அனுப்பப்பட்டது' : 'In-App Alert Sent!', `Notified ${cName}`, '');
 }
 
 // Notifications
@@ -2672,7 +2672,7 @@ function addNotification(type, title, message, icon, targetPhone = null, titleTa
     titleTa: titleTa || title,
     message: message,
     messageTa: messageTa || message,
-    icon: icon || '🔔',
+    icon: icon || '',
     read: false
   };
 
@@ -2817,16 +2817,16 @@ function clearAllNotifications() {
   }
   saveData();
   renderNotifications();
-  showToast(currentLang === 'ta' ? 'அறிவிப்புகள் படிக்கப்பட்டன' : 'Cleared', 'Read all notifications', '✅');
+  showToast(currentLang === 'ta' ? 'அறிவிப்புகள் படிக்கப்பட்டன' : 'Cleared', 'Read all notifications', '');
 }
 
 // Toast
-function showToast(title, message, icon = '🔔') {
+function showToast(title, message, icon = '') {
   const container = document.getElementById('toastContainer');
   const toast = document.createElement('div');
   toast.className = 'toast';
   toast.innerHTML = `
-    <div class="toast-icon">${icon}</div>
+    ${icon ? `<div class="toast-icon">${icon}</div>` : ''}
     <div class="toast-content">
       <h5>${title}</h5>
       <p>${message}</p>
@@ -2886,7 +2886,7 @@ function renderPolicyContent(policyKey) {
   const iconEl = document.getElementById('policyModalIcon');
   if (!doc || !bodyEl) return;
 
-  if (iconEl) iconEl.textContent = doc.icon || '📜';
+  if (iconEl) iconEl.textContent = '';
   if (titleEl) titleEl.textContent = (currentLang === 'ta' && doc.titleTa) ? doc.titleTa : doc.title;
   bodyEl.innerHTML = doc.content;
 }
@@ -2911,7 +2911,7 @@ function acceptAllCookies() {
   showToast(
     currentLang === 'ta' ? 'விருப்பங்கள் சேமிக்கப்பட்டன' : 'Preferences Saved',
     currentLang === 'ta' ? 'அனைத்து குக்கீ விருப்பங்களும் ஏற்றுக்கொள்ளப்பட்டன' : 'Cookie and local storage preferences accepted.',
-    '🍪'
+    ''
   );
 }
 
@@ -2922,7 +2922,7 @@ function acceptEssentialCookies() {
   showToast(
     currentLang === 'ta' ? 'அத்தியாவசியம் மட்டும் சேமிக்கப்பட்டது' : 'Essential Storage Only',
     currentLang === 'ta' ? 'அத்தியாவசிய அமர்வு சேமிப்பகம் மட்டுமே இயக்கத்தில் உள்ளது' : 'Only strictly essential session keys will be retained.',
-    '🔒'
+    ''
   );
 }
 

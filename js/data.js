@@ -4,17 +4,17 @@ const translations = {
   en: {
     brandTitle: "KisanAgri Hub",
     brandSubtitle: "Agro Chemical & Fertilizer Store",
-    roleCustomer: "👨‍🌾 Customer View",
-    roleOwner: "👨‍💼 Shop Owner View",
+    roleCustomer: "Customer View",
+    roleOwner: "Shop Owner View",
     cartLabel: "Cart",
-    tabStock: "📦 Stock Availability",
-    tabOrders: "🛍️ My Orders & Packing",
-    tabLedger: "📜 My Ledger & Pay-Later",
-    tabNotifs: "🔔 Notifications",
-    tabOwner: "⚡ Admin Center",
-    heroCustomerTitle: "🌾 Fertilizer & Chemical Stock Availability",
+    tabStock: "Stock Availability",
+    tabOrders: "My Orders & Packing",
+    tabLedger: "My Ledger & Pay-Later",
+    tabNotifs: "Notifications",
+    tabOwner: "Admin Center",
+    heroCustomerTitle: "Fertilizer & Chemical Stock Availability",
     heroCustomerSubtitle: "Check live stock levels of fertilizers and chemical products. View product photos, reserve items for shop pickup or farm delivery, track packing status, and pay bills online.",
-    heroOwnerTitle: "👨‍💼 Shop Owner Management Dashboard",
+    heroOwnerTitle: "Shop Owner Management Dashboard",
     heroOwnerSubtitle: "Add new products with photos, manage fertilizer stock, pack customer pre-orders, record offline sales, and send payment reminders.",
     statInStock: "In Stock Items",
     statActiveOrders: "Active Orders",
@@ -34,14 +34,14 @@ const translations = {
     badgeInStock: "In Stock",
     badgeLowStock: "Limited Stock",
     badgeOutStock: "Out of Stock",
-    dosageBtn: "📋 Details",
-    reserveBtn: "🛒 Reserve",
+    dosageBtn: "Details",
+    reserveBtn: "Reserve",
     selectCustomer: "SELECT CUSTOMER ACCOUNT:",
     totalPurchases: "Total Purchases",
     amountPaid: "Amount Paid",
     dueBalance: "Remaining Due Balance",
-    payOnlineBtn: "💳 Pay Balance Online",
-    printStatement: "🖨️ Print Statement",
+    payOnlineBtn: "Pay Balance Online",
+    printStatement: "Print Statement",
     invoiceHeader: "Invoice #",
     dateHeader: "Date",
     itemsHeader: "Items Bought",
@@ -53,10 +53,10 @@ const translations = {
     statusPaid: "PAID",
     statusOverdue: "OVERDUE",
     statusDueSoon: "DUE SOON",
-    payBillBtn: "💳 Pay Bill",
+    payBillBtn: "Pay Bill",
     clearedLabel: "Cleared",
     markAllRead: "Mark All as Read",
-    logOfflineTitle: "✍️ Log Offline Purchase (Credit Tab)",
+    logOfflineTitle: "Log Offline Purchase (Credit Tab)",
     logOfflineSub: "Record offline purchases made at your shop. Updates stock and appends bill to customer credit ledger.",
     selectCustomerLabel: "Select Customer",
     selectProductLabel: "Select Product / Fertilizer",
@@ -64,37 +64,37 @@ const translations = {
     upfrontPaidLabel: "Upfront Paid (₹)",
     totalBillLabel: "Total Bill Amount:",
     addedToCreditLabel: "Added to Pay-Later Balance:",
-    createBillBtn: "📄 Create Bill & Add to Ledger",
-    restockTitle: "➕ Quick Inventory Restock",
+    createBillBtn: "Create Bill & Add to Ledger",
+    restockTitle: "Quick Inventory Restock",
     restockSub: "Update stock count when fresh fertilizer shipments arrive at your shop.",
     selectRestockItem: "Select Item to Restock",
     addStockQty: "Add Stock Quantity",
-    updateStockBtn: "📦 Update Stock Level",
-    overdueTitle: "🔔 Overdue Balances & Payment Reminders",
+    updateStockBtn: "Update Stock Level",
+    overdueTitle: "Overdue Balances & Payment Reminders",
     overdueSub: "Click to send instant payment reminder",
     cartModalTitleCustomer: "My Product & Reservation",
     cartModalTitleOwner: "Customer Product Order & Reservation",
     cartModalTitle: "My Product & Reservation",
     fulfillmentLabel: "Fulfillment Preference",
-    pickupOption: "🏬 Visit Shop for Pickup (Packed in Advance)",
-    deliveryOption: "🚚 Farm Home Delivery",
+    pickupOption: "Visit Shop for Pickup (Packed in Advance)",
+    deliveryOption: "Farm Home Delivery",
     farmAddressLabel: "Farm Delivery Address",
     farmAddressPlaceholder: "Enter farm location, village landmark address...",
     paymentChoiceLabel: "Payment Method Choice",
-    payLaterOption: "📜 Pay Later (Add to Store Credit Balance)",
-    payNowOption: "💳 Pay Online Now",
-    confirmOrderBtn: "✅ Confirm Order & Reserve Stock",
-    stepPlaced: "1. 📝 Order Placed",
-    stepPacked: "2. 📦 Packed by Shop",
+    payLaterOption: "Pay Later (Add to Store Credit Balance)",
+    payNowOption: "Pay Online Now",
+    confirmOrderBtn: "Confirm Order & Reserve Stock",
+    stepPlaced: "1. Order Placed",
+    stepPacked: "2. Packed by Shop",
     stepReady: "3. Ready for Pickup / Delivery",
-    stepCompleted: "4. ✅ Completed",
+    stepCompleted: "4. Completed",
     noActiveOrders: "No active orders currently.",
     footerAboutTitle: "KisanAgri Hub & Input Store",
     footerAboutDesc: "Authorized agro-chemical, certified fertilizer and crop booster distribution hub. Providing live stock availability, digital store credit ledger, and doorstep farm fulfillment with full statutory transparency.",
     footerQuickLinks: "Legal Policies & Terms",
     footerComplianceTitle: "Licenses & Verification",
     footerContactTitle: "Store & Grievance Contact",
-    footerCookieBtn: "🍪 Cookie Settings",
+    footerCookieBtn: "Cookie Settings",
     footerVerifiedNotice: "100% Genuine Certified Agronomy Inputs • Govt Price Subsidized FCO Compliance",
     footerCopyright: "© 2026 KisanAgri Agencies Pvt. Ltd. All Rights Reserved. Licensed under FCO 1985 & Insecticides Act 1968.",
     cookieBannerTitle: "Cookie & Local Storage Preferences",
@@ -108,19 +108,19 @@ const translations = {
   ta: {
     brandTitle: "கிசான் அக்ரி மையம்",
     brandSubtitle: "உரம் மற்றும் விவசாய மருந்து கடை",
-    roleCustomer: "👨‍🌾 வாடிக்கையாளர் பார்வை",
-    roleOwner: "👨‍💼 கடை உரிமையாளர் பார்வை",
+    roleCustomer: "வாடிக்கையாளர் பார்வை",
+    roleOwner: "கடை உரிமையாளர் பார்வை",
     roleAlertCustomer: "ℹ️ வாடிக்கையாளர் கணக்கு மற்றும் வாங்கிய விவரங்கள்",
-    roleAlertOwner: "⚡ கடை உரிமையாளர் பக்கம்: பேக்கிங் மற்றும் கடன் நினைவூட்டல்",
+    roleAlertOwner: "கடை உரிமையாளர் பக்கம்: பேக்கிங் மற்றும் கடன் நினைவூட்டல்",
     cartLabel: "கூடை",
-    tabStock: "📦 உரம் & மருந்து இருப்பு",
-    tabOrders: "🛍️ என் ஆர்டர்கள் & பேக்கிங்",
-    tabLedger: "📜 கடன் & நிலுவை கணக்கு",
-    tabNotifs: "🔔 அறிவிப்புகள்",
-    tabOwner: "⚡ அட்மின் மையம்",
-    heroCustomerTitle: "🌾 உரம் மற்றும் பூச்சிக்கொல்லி மருந்து இருப்பு விபரம்",
+    tabStock: "உரம் & மருந்து இருப்பு",
+    tabOrders: "என் ஆர்டர்கள் & பேக்கிங்",
+    tabLedger: "கடன் & நிலுவை கணக்கு",
+    tabNotifs: "அறிவிப்புகள்",
+    tabOwner: "அட்மின் மையம்",
+    heroCustomerTitle: "உரம் மற்றும் பூச்சிக்கொல்லி மருந்து இருப்பு விபரம்",
     heroCustomerSubtitle: "உரம் மற்றும் மருந்துகளின் நேரடி படங்களுடன் இருப்பை பார்க்கவும். முன்பதிவு செய்து கடையில் வந்து பெறலாம் அல்லது பண்ணைக்கு டெலிவரி பெறலாம்.",
-    heroOwnerTitle: "👨‍💼 கடை உரிமையாளர் மேலாண்மை பக்கம்",
+    heroOwnerTitle: "கடை உரிமையாளர் மேலாண்மை பக்கம்",
     heroOwnerSubtitle: "புதிய உரங்கள் மற்றும் மருந்துகளை படத்துடன் சேர்க்கவும், சரக்கு இருப்பை நிர்வகிக்கவும், ஆர்டர்களை பேக் செய்யவும்.",
     statInStock: "இருப்பில் உள்ள பொருட்கள்",
     statActiveOrders: "நடப்பு ஆர்டர்கள்",
@@ -141,13 +141,13 @@ const translations = {
     badgeLowStock: "வரையறுக்கப்பட்ட இருப்பு",
     badgeOutStock: "தீர்ந்துவிட்டது",
     dosageBtn: "அளவு விபரம்",
-    reserveBtn: "🛒 முன்பதிவு",
+    reserveBtn: "முன்பதிவு",
     selectCustomer: "வாடிக்கையாளர் கணக்கை தேர்ந்தெடுக்கவும்:",
     totalPurchases: "மொத்த கொள்முதல்",
     amountPaid: "செலுத்திய தொகை",
     dueBalance: "மீதமுள்ள பாக்கி நிலுவை",
-    payOnlineBtn: "💳 ஆன்லைனில் பணம் செலுத்தவும்",
-    printStatement: "🖨️ கணக்கு நகல் அச்சிடு",
+    payOnlineBtn: "ஆன்லைனில் பணம் செலுத்தவும்",
+    printStatement: "கணக்கு நகல் அச்சிடு",
     invoiceHeader: "பில் எண்",
     dateHeader: "தேதி",
     itemsHeader: "வாங்கிய பொருட்கள்",
@@ -159,10 +159,10 @@ const translations = {
     statusPaid: "செலுத்தப்பட்டது",
     statusOverdue: "காலக்கெடு முடிந்தது",
     statusDueSoon: "விரைவில் செலுத்த வேண்டும்",
-    payBillBtn: "💳 பணம் செலுத்து",
+    payBillBtn: "பணம் செலுத்து",
     clearedLabel: "முடிந்தது",
     markAllRead: "அனைத்தையும் படித்ததாக குறிக்க",
-    logOfflineTitle: "✍️ நேரடி விற்பனை பதிவு (கடன் கணக்கு)",
+    logOfflineTitle: "நேரடி விற்பனை பதிவு (கடன் கணக்கு)",
     logOfflineSub: "கடையில் நேரடியாக வாங்கிய பொருட்களின் விவரங்களை பதிவு செய்து வாடிக்கையாளர் கடன் கணக்கில் சேர்க்கவும்.",
     selectCustomerLabel: "வாடிக்கையாளரை தேர்ந்தெடுக்கவும்",
     selectProductLabel: "உரம் / மருந்தை தேர்ந்தெடுக்கவும்",
@@ -170,37 +170,37 @@ const translations = {
     upfrontPaidLabel: "முன்பணம் (₹)",
     totalBillLabel: "மொத்த பில் தொகை:",
     addedToCreditLabel: "கடன் கணக்கில் சேர்க்கப்பட்ட தொகை:",
-    createBillBtn: "📄 பில் உருவாகி கடனில் சேர்",
-    restockTitle: "➕ புதிய சரக்கு வரவு பதிவு",
+    createBillBtn: "பில் உருவாகி கடனில் சேர்",
+    restockTitle: "புதிய சரக்கு வரவு பதிவு",
     restockSub: "புதிய உர மூட்டைகள் மற்றும் மருந்துகள் வரும்போது இருப்பை புதுப்பிக்கவும்.",
     selectRestockItem: "புதுப்பிக்க வேண்டிய பொருளை தேர்ந்தெடுக்கவும்",
     addStockQty: "சேர்க்க வேண்டிய எண்ணிக்கை",
-    updateStockBtn: "📦 இருப்பை புதுப்பி",
-    overdueTitle: "🔔 கடன் நிலுவை & நினைவூட்டல் அறிவிப்பு",
+    updateStockBtn: "இருப்பை புதுப்பி",
+    overdueTitle: "கடன் நிலுவை & நினைவூட்டல் அறிவிப்பு",
     overdueSub: "நினைவூட்டல் அனுப்ப கிளிக் செய்யவும்",
     cartModalTitleCustomer: "என் பொருட்கள் & முன்பதிவு",
     cartModalTitleOwner: "வாடிக்கையாளர் பொருட்கள் ஆர்டர் & முன்பதிவு",
     cartModalTitle: "என் பொருட்கள் & முன்பதிவு",
     fulfillmentLabel: "பெறும் முறை",
-    pickupOption: "🏬 கடையில் வந்து பெறுதல் (பேக் செய்து வைக்கப்படும்)",
-    deliveryOption: "🚚 பண்ணை / வீட்டிற்கு டெலிவரி",
+    pickupOption: "கடையில் வந்து பெறுதல் (பேக் செய்து வைக்கப்படும்)",
+    deliveryOption: "பண்ணை / வீட்டிற்கு டெலிவரி",
     farmAddressLabel: "டெலிவரி முகவரி",
     farmAddressPlaceholder: "பண்ணை இடம், கிராமம் மற்றும் அடையாளத்தை உள்ளிடவும்...",
     paymentChoiceLabel: "பணம் செலுத்தும் முறை",
-    payLaterOption: "📜 பிறகு செலுத்தலாம் (கடன் கணக்கில் சேர்)",
-    payNowOption: "💳 இப்போது ஆன்லைனில் செலுத்தவும்",
-    confirmOrderBtn: "✅ ஆர்டரை உறுதிசெய்",
-    stepPlaced: "1. 📝 ஆர்டர் செய்யப்பட்டது",
-    stepPacked: "2. 📦 பேக் செய்யப்பட்டது",
+    payLaterOption: "பிறகு செலுத்தலாம் (கடன் கணக்கில் சேர்)",
+    payNowOption: "இப்போது ஆன்லைனில் செலுத்தவும்",
+    confirmOrderBtn: "ஆர்டரை உறுதிசெய்",
+    stepPlaced: "1. ஆர்டர் செய்யப்பட்டது",
+    stepPacked: "2. பேக் செய்யப்பட்டது",
     stepReady: "3. பெற தயார் / டெலிவரி",
-    stepCompleted: "4. ✅ முடிந்தது",
+    stepCompleted: "4. முடிந்தது",
     noActiveOrders: "தற்போது ஆர்டர்கள் எதுவும் இல்லை.",
     footerAboutTitle: "கிசான் அக்ரி மையம்",
     footerAboutDesc: "உரிமம் பெற்ற உரம் மற்றும் விவசாய மருந்து விநியோக மையம். நேரடி இருப்பு விபரம், டிஜிட்டல் கடன் கணக்கு மற்றும் பண்ணை டெலிவரி சேவை.",
     footerQuickLinks: "சட்ட விதிகளும் கொள்கைகளும்",
     footerComplianceTitle: "உரிமங்கள் & அரசு அங்கீகாரம்",
     footerContactTitle: "கடை & குறைதீர்க்கும் அதிகாரி",
-    footerCookieBtn: "🍪 குக்கீ விருப்பங்கள்",
+    footerCookieBtn: "குக்கீ விருப்பங்கள்",
     footerVerifiedNotice: "100% அசல் தர சான்றளிக்கப்பட்ட விவசாய மருந்துகள் மற்றும் உரங்கள் • அரசு FCO விலை நெறிமுறைக்குட்பட்டது",
     footerCopyright: "© 2026 கிசான் அக்ரி ஏஜென்சீஸ். அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை. FCO 1985 & பூச்சிக்கொல்லி சட்டம் 1968-ன் கீழ் உரிமம் பெற்றது.",
     cookieBannerTitle: "குக்கீ & சேமிப்பக விருப்பங்கள்",
@@ -234,7 +234,7 @@ const initialProducts = [
     dosageTa: "ஏக்கருக்கு 45-50 கிலோ பயிர் வளர்ச்சி பருவத்தில் இட வேண்டும்",
     msdsInfo: "Store in a cool dry place away from sunlight. Wear gloves during field broadcasting.",
     rating: 4.8,
-    imageIcon: "🌱",
+    imageIcon: "",
     imageUrl: "assets/iffco_urea.jpg"
   },
   {
@@ -256,7 +256,7 @@ const initialProducts = [
     dosageTa: "வேர் வளர்ச்சிக்கு ஏக்கருக்கு 50 கிலோ அடிஉரமாக இட வேண்டும்",
     msdsInfo: "Keep bag tightly closed. Non-flammable, non-hazardous fertilizer formulation.",
     rating: 4.9,
-    imageIcon: "🌾",
+    imageIcon: "",
     imageUrl: "assets/coromandel_gromor.jpg"
   },
   {
@@ -278,7 +278,7 @@ const initialProducts = [
     dosageTa: "பூக்கும் முன் ஏக்கருக்கு 25-30 கிலோ இட வேண்டும்",
     msdsInfo: "Highly water soluble. Store on wooden pallets elevated from concrete ground.",
     rating: 4.7,
-    imageIcon: "🥔",
+    imageIcon: "",
     imageUrl: "https://images.unsplash.com/photo-1628352081506-83c43123ed6d?w=400&auto=format&fit=crop&q=60" // Red Potash Granules / Bag
   },
   {
@@ -300,7 +300,7 @@ const initialProducts = [
     dosageTa: "ஏக்கருக்கு 50 மி.லி மருந்தை 150-200 லிட்டர் நீரில் கலந்து தெளிக்கவும்",
     msdsInfo: "Warning: Poison Class II. Do not spray against wind. Keep out of reach of children.",
     rating: 4.9,
-    imageIcon: "🛡️",
+    imageIcon: "",
     imageUrl: "assets/agrochemical_bottle.jpg"
   },
   {
@@ -322,7 +322,7 @@ const initialProducts = [
     dosageTa: "ஏக்கருக்கு 200 மி.லி தெளிப்பான் மூலம் தெளிக்கவும்",
     msdsInfo: "Chemical classification: Azoxystrobin + Difenoconazole. Wear eye protection mask.",
     rating: 4.8,
-    imageIcon: "🧪",
+    imageIcon: "",
     imageUrl: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=400&auto=format&fit=crop&q=60" // Agrochemical bottle
   },
   {
@@ -344,7 +344,7 @@ const initialProducts = [
     dosageTa: "ஒரு லிட்டர் தண்ணீருக்கு 2 கிராம் கலந்து தெளிக்கவும்",
     msdsInfo: "Carbendazim 12% + Mancozeb 63% WP. Avoid skin contact.",
     rating: 4.6,
-    imageIcon: "🌿",
+    imageIcon: "",
     imageUrl: "https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=400&auto=format&fit=crop&q=60" // Chemical pack
   },
   {
@@ -366,7 +366,7 @@ const initialProducts = [
     dosageTa: "ஏக்கருக்கு 40 கிராம் 150 லிட்டர் நீரில் கலந்து தெளிக்கவும்",
     msdsInfo: "Systemic insecticide. Avoid spraying during honeybee active hours.",
     rating: 4.5,
-    imageIcon: "🔬",
+    imageIcon: "",
     imageUrl: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&auto=format&fit=crop&q=60"
   },
   {
@@ -388,7 +388,7 @@ const initialProducts = [
     dosageTa: "ஏக்கருக்கு 200-500 கிலோ மண் வளத்திற்கு இட வேண்டும்",
     msdsInfo: "100% Eco-friendly, organic earthworm compost. No chemicals.",
     rating: 4.9,
-    imageIcon: "🍂",
+    imageIcon: "",
     imageUrl: "https://images.unsplash.com/photo-1585314062340-f1a5a7c9328d?w=400&auto=format&fit=crop&q=60"
   },
   {
@@ -410,7 +410,7 @@ const initialProducts = [
     dosageTa: "ஏக்கருக்கு 250 மி.லி தெளிக்கவும்",
     msdsInfo: "Non-toxic phytohormone booster. Store in dark cool area.",
     rating: 4.7,
-    imageIcon: "⚡",
+    imageIcon: "",
     imageUrl: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=400&auto=format&fit=crop&q=60"
   }
 ];
@@ -547,7 +547,7 @@ const initialNotifications = [
     titleTa: "ஆர்டர் ORD-2026-501 பேக் செய்யப்பட்டது!",
     message: "Ramesh Kumar's order of 5x Urea & 1x Bayer Fame has been packed by shop team. Ready for shop pickup.",
     messageTa: "ரமேஷ் குமாரின் ஆர்டர் பேக் செய்யப்பட்டுள்ளது. கடையில் வந்து பெறலாம்.",
-    icon: "📦",
+    icon: "",
     read: false
   },
   {
@@ -559,7 +559,7 @@ const initialNotifications = [
     titleTa: "புதிய பண்ணை டெலிவரி ஆர்டர் வந்தது",
     message: "Anita Devi placed order ORD-2026-502 for farm delivery at Krishi Nagar.",
     messageTa: "அனிதா தேவி பண்ணை டெலிவரி ஆர்டர் கொடுத்துள்ளார்.",
-    icon: "🚚",
+    icon: "",
     read: false
   }
 ];
@@ -589,9 +589,9 @@ const businessDetails = {
 const policyDocuments = {
   privacy: {
     id: "privacy",
-    title: "🔒 Privacy Policy & Data Protection",
-    titleTa: "🔒 தனியுரிமைக் கொள்கை & தரவு பாதுகாப்பு",
-    icon: "🔒",
+    title: "Privacy Policy & Data Protection",
+    titleTa: "தனியுரிமைக் கொள்கை & தரவு பாதுகாப்பு",
+    icon: "",
     lastUpdated: "October 2026",
     content: `
       <h4>1. Introduction & Statutory Framework</h4>
@@ -643,9 +643,9 @@ const policyDocuments = {
 
   terms: {
     id: "terms",
-    title: "📜 Terms & Conditions of Agricultural Input Sales",
-    titleTa: "📜 விதிமுறைகள் மற்றும் நிபந்தனைகள்",
-    icon: "📜",
+    title: "Terms & Conditions of Agricultural Input Sales",
+    titleTa: "விதிமுறைகள் மற்றும் நிபந்தனைகள்",
+    icon: "",
     lastUpdated: "October 2026",
     content: `
       <h4>1. Agreement of Sale & Eligibility</h4>
@@ -684,9 +684,9 @@ const policyDocuments = {
 
   cookie: {
     id: "cookie",
-    title: "🍪 Cookie & Local Storage Policy",
-    titleTa: "🍪 குக்கீ & சேமிப்பகக் கொள்கை",
-    icon: "🍪",
+    title: "Cookie & Local Storage Policy",
+    titleTa: "குக்கீ & சேமிப்பகக் கொள்கை",
+    icon: "",
     lastUpdated: "October 2026",
     content: `
       <h4>1. What Technologies We Use</h4>
@@ -746,9 +746,9 @@ const policyDocuments = {
 
   refund: {
     id: "refund",
-    title: "🔄 Agricultural Goods Refund & Cancellation Policy",
-    titleTa: "🔄 திரும்பப்பெறுதல் & ரத்து செய்தல் கொள்கை",
-    icon: "🔄",
+    title: "Agricultural Goods Refund & Cancellation Policy",
+    titleTa: "திரும்பப்பெறுதல் & ரத்து செய்தல் கொள்கை",
+    icon: "",
     lastUpdated: "October 2026",
     content: `
       <h4>1. Reservation Cancellations (Pre-Dispatch)</h4>
@@ -778,9 +778,9 @@ const policyDocuments = {
 
   datacollection: {
     id: "datacollection",
-    title: "🛡️ What User Data We Collect & Farmer Rights",
-    titleTa: "🛡️ பயனர் தரவு சேகரிப்பு விபரம்",
-    icon: "🛡️",
+    title: "What User Data We Collect & Farmer Rights",
+    titleTa: "பயனர் தரவு சேகரிப்பு விபரம்",
+    icon: "",
     lastUpdated: "October 2026",
     content: `
       <h4>1. Transparent Data Collection Matrix</h4>
@@ -836,9 +836,9 @@ const policyDocuments = {
 
   thirdparty: {
     id: "thirdparty",
-    title: "🌐 Third-Party Embeds & Services Notice",
-    titleTa: "🌐 மூன்றாம் தரப்பு சேவைகள் விபரம்",
-    icon: "🌐",
+    title: "Third-Party Embeds & Services Notice",
+    titleTa: "மூன்றாம் தரப்பு சேவைகள் விபரம்",
+    icon: "",
     lastUpdated: "October 2026",
     content: `
       <h4>1. Inventory of External Network Connections</h4>
@@ -858,9 +858,9 @@ const policyDocuments = {
 
   copyright: {
     id: "copyright",
-    title: "⚖️ Trademarks, Copyright & Statutory Disclaimers",
-    titleTa: "⚖️ வர்த்தக முத்திரை & சட்ட மறுப்பு",
-    icon: "⚖️",
+    title: "Trademarks, Copyright & Statutory Disclaimers",
+    titleTa: "வர்த்தக முத்திரை & சட்ட மறுப்பு",
+    icon: "",
     lastUpdated: "October 2026",
     content: `
       <h4>1. Trademark Attribution & Fair Use Disclaimer</h4>
@@ -882,9 +882,9 @@ const policyDocuments = {
 
   reviews: {
     id: "reviews",
-    title: "⭐ Verified Reviews, Advertising Transparency & Business Verification",
-    titleTa: "⭐ சரிபார்க்கப்பட்ட மதிப்பீடுகள் & கடை விபரம்",
-    icon: "⭐",
+    title: "Verified Reviews, Advertising Transparency & Business Verification",
+    titleTa: "சரிபார்க்கப்பட்ட மதிப்பீடுகள் & கடை விபரம்",
+    icon: "",
     lastUpdated: "October 2026",
     content: `
       <h4>1. Strict Policy Against Fake or Bot Reviews</h4>
@@ -906,9 +906,9 @@ const policyDocuments = {
         <strong>Legal Enterprise Name:</strong> ${businessDetails.legalName}<br>
         <strong>Commercial Brand:</strong> ${businessDetails.tradeName}<br>
         <strong>Authorized Dealer / Proprietor:</strong> ${businessDetails.proprietor}<br>
-        <strong>Fertilizer Retail License (FCO 1985):</strong> <span class="license-badge-pill">📄 ${businessDetails.fcoLicense}</span><br>
-        <strong>Pesticide Retail License (CIB&RC 1968):</strong> <span class="license-badge-pill">🧪 ${businessDetails.cibrcLicense}</span><br>
-        <strong>Seeds Distribution License:</strong> <span class="license-badge-pill">🌱 ${businessDetails.seedLicense}</span><br>
+        <strong>Fertilizer Retail License (FCO 1985):</strong> <span class="license-badge-pill">${businessDetails.fcoLicense}</span><br>
+        <strong>Pesticide Retail License (CIB&RC 1968):</strong> <span class="license-badge-pill">${businessDetails.cibrcLicense}</span><br>
+        <strong>Seeds Distribution License:</strong> <span class="license-badge-pill">${businessDetails.seedLicense}</span><br>
         <strong>Goods & Services Tax (GSTIN):</strong> <strong>${businessDetails.gstin}</strong><br>
         <strong>Registered Physical Retail Store:</strong> ${businessDetails.address}<br>
         <strong>Customer Helpdesk & Order Helpline:</strong> ${businessDetails.phone} | <a href="mailto:${businessDetails.email}">${businessDetails.email}</a><br>
