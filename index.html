@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KisanAgri - Agro Chemical & Fertilizer Stock Availability, Orders & Pay-Later Ledger</title>
+  <meta name="description" content="Check live fertilizer & agro-chemical stock availability, reserve products for shop pickup or farm delivery, manage store credit, and pay online.">
+  <link rel="stylesheet" href="css/styles.css?v=apple2.1">
+</head>
+<body>
+
+  <!-- MAIN APP CONTAINER (Hidden when on fresh authentication page, Visible when logged in) -->
+  <div id="mainAppContainer">
+    <!-- Top Bar & Header -->
+    <header>
+    <div class="top-bar">
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <a href="#" class="brand">
+          <div class="brand-icon">🌾</div>
+          <div class="brand-text">
+            <h1 id="brandTitle">KisanAgri Hub</h1>
+            <p id="brandSubtitle">Agro Chemical & Fertilizer Store</p>
+          </div>
+        </a>
+
+        <!-- Positioned Below Company Logo & Name: Active Account Badge / Admin Label -->
+        <div id="headerProfileSubBar">
+          <div id="activeProfileBadge">
+            <!-- Rendered dynamically: "👑 Admin" or "👤 Customer Name" -->
+          </div>
+          <button class="btn-action" id="headerAuthActionBtn" onclick="handleHeaderAuthAction()">
+            <span id="switchProfileBtnIcon">🚪</span> <span id="switchProfileBtnText">Log Out</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Controls: Role Switcher (Visible ONLY when Admin is logged in) & Language Switcher -->
+      <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+        <!-- Language Switcher Pill (English / தமிழ்) -->
+        <div class="role-switcher-container">
+          <button id="langEnBtn" class="role-btn active" onclick="setLanguage('en')">
+            🌐 English
+          </button>
+          <button id="langTaBtn" class="role-btn" onclick="setLanguage('ta')">
+            🇮🇳 தமிழ்
+          </button>
+        </div>
+
+        <!-- Role Switcher (Hidden for Customer Login; Visible ONLY for Admin Login) -->
+        <div class="role-switcher-container" id="adminRoleSwitcherContainer" style="display: none;">
+          <button id="roleCustomerBtn" class="role-btn active" onclick="switchRole('customer')">
+            👨‍🌾 Customer View
+          </button>
+          <button id="roleOwnerBtn" class="role-btn" onclick="switchRole('owner')">
+            👨‍💼 Shop Owner View
+          </button>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="header-actions">
+        <!-- Cart Button -->
+        <button class="notif-btn" id="cartBtn" title="Shopping Cart / Order List" onclick="openCartModal()" style="width: auto; padding: 0 16px; gap: 8px;">
+          🛒 <span id="cartBtnText" style="font-size: 13px; font-weight: 600;">Cart</span>
+          <span class="notif-badge" id="cartCountBadge">0</span>
+        </button>
+
+        <button class="notif-btn" id="notifBellBtn" title="Process Notifications" onclick="toggleNotifDrawer()">
+          🔔
+          <span class="notif-badge" id="notifCountBadge">0</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Navigation Tabs -->
+    <div class="nav-tabs">
+      <button class="tab-btn active" id="tabStockBtn" data-tab="tabStock" onclick="setActiveTab('tabStock')">
+        📦 Stock Availability
+      </button>
+      <button class="tab-btn" id="tabOrdersBtn" data-tab="tabOrders" onclick="setActiveTab('tabOrders')">
+        🛍️ My Orders & Packing
+      </button>
+      <button class="tab-btn" id="tabLedgerBtn" data-tab="tabLedger" onclick="setActiveTab('tabLedger')">
+        📜 My Ledger & Pay-Later
+      </button>
+      <!-- Owner Control Center Tab (1st Priority in Admin View over Notifications) -->
+      <button class="tab-btn owner-only-tab" id="tabOwnerBtn" data-tab="tabOwner" onclick="setActiveTab('tabOwner')" style="display: none;">
+        ⚡ Admin Center
+      </button>
+      <button class="tab-btn" id="tabNotifsBtn" data-tab="tabNotifs" onclick="setActiveTab('tabNotifs')">
+        🔔 Notifications
+      </button>
+    </div>
+  </header>
+
+  <!-- Main View Container -->
+  <main>
+    <!-- Tab 1: Stock Availability Catalog -->
+    <section id="tabStock" class="tab-content active">
+      <!-- Fertilizer & Chemical Stock Availability Banner (Exclusive to Stock Tab) -->
+      <div class="hero-banner" id="heroBanner">
+        <div class="hero-content">
+          <h2 id="heroTitle">🌾 Live Fertilizer & Chemical Stock Availability</h2>
+          <p id="heroSubtitle">Check real-time stock levels of genuine fertilizers, pesticides & crop boosters. View product photos, reserve online for shop pickup or farm delivery, track packing status, and pay online or later.</p>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-pill">
+            <div class="stat-value" id="statInStockCount">0</div>
+            <div class="stat-label" id="statInStockLabel">In Stock Items</div>
+          </div>
+          <div class="stat-pill">
+            <div class="stat-value" id="statActiveOrdersCount">0</div>
+            <div class="stat-label" id="statActiveOrdersLabel">Active Orders</div>
+          </div>
+          <div class="stat-pill">
+            <div class="stat-value" id="statTotalDueVal">₹0</div>
+            <div class="stat-label" id="statPendingCreditLabel">Pending Credit</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls-bar">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="stockSearchInput" placeholder="Search fertilizer, chemical name, or brand..." oninput="renderStockGrid()">
+        </div>
+        <div class="filter-group">
+          <select id="categoryFilter" class="filter-select" onchange="renderStockGrid()">
+            <option value="ALL" id="optAllCat">All Categories</option>
+            <option value="Fertilizers" id="optFertilizers">Fertilizers</option>
+            <option value="Chemicals" id="optChemicals">Pesticides & Chemicals</option>
+            <option value="Organic" id="optOrganic">Organic Bio-Fertilizers</option>
+            <option value="Growth Bio" id="optGrowth">Growth Boosters</option>
+          </select>
+
+          <select id="stockStatusFilter" class="filter-select" onchange="renderStockGrid()">
+            <option value="ALL" id="optAllStock">All Stock Status</option>
+            <option value="INSTOCK" id="optInStock">In Stock Only</option>
+            <option value="OUTSTOCK" id="optOutStock">Out of Stock</option>
+          </select>
+
+          <select id="cropFilter" class="filter-select" onchange="renderStockGrid()">
+            <option value="ALL" id="optAllCrops">All Crop Types</option>
+            <option value="Paddy">Paddy / Rice</option>
+            <option value="Wheat">Wheat</option>
+            <option value="Cotton">Cotton</option>
+            <option value="Sugarcane">Sugarcane</option>
+            <option value="Vegetables">Vegetables & Chilli</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Product Cards Grid -->
+      <div class="product-grid" id="productGridContainer">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </section>
+
+    <!-- Tab 2: Customer Orders & Packing Status -->
+    <section id="tabOrders" class="tab-content">
+      <div class="section-title">
+        <span id="tabOrdersTitle">🛍️ Track My Orders, Packing & Pickup / Delivery Status</span>
+        <button class="btn-action" id="createNewOrderBtn" onclick="openCartModal()">🛒 Create New Order</button>
+      </div>
+      <div id="customerOrdersContainer" style="display: flex; flex-direction: column; gap: 16px;">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- Tab 3: Customer Ledger & Pay-Later Tab -->
+    <section id="tabLedger" class="tab-content">
+      <!-- Ledger Summary Card -->
+      <div class="ledger-header-card" id="ledgerHeaderCard">
+        <!-- Rendered dynamically for active logged-in customer ONLY -->
+      </div>
+
+      <!-- Itemized Purchase History -->
+      <div class="section-title">
+        <span id="purchasedItemsTitle">📄 Purchased Items & Bill Breakdown</span>
+        <button class="btn-action" id="printStatementBtn" onclick="printLedgerReceipt()">🖨️ Print Statement</button>
+      </div>
+
+      <div class="table-card">
+        <table class="custom-table" id="ledgerTable">
+          <thead>
+            <tr>
+              <th id="thInvoice">Invoice #</th>
+              <th id="thDate">Date</th>
+              <th id="thItems">Items Bought</th>
+              <th id="thTotal">Total Bill</th>
+              <th id="thPaid">Paid Amount</th>
+              <th id="thBalance">Remaining Balance</th>
+              <th id="thStatus">Status</th>
+              <th id="thAction">Action</th>
+            </tr>
+          </thead>
+          <tbody id="ledgerTableBody">
+            <!-- Rendered dynamically -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Tab 4: Process Notifications Center -->
+    <section id="tabNotifs" class="tab-content">
+      <div class="section-title">
+        <span id="tabNotifsTitle">⚡ Process Notifications & Event Logs</span>
+        <button class="btn-action" id="markAllReadBtn" onclick="clearAllNotifications()">Mark All as Read</button>
+      </div>
+      <div id="fullNotifContainer" style="display: flex; flex-direction: column; gap: 12px;">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- Tab 5: Shop Owner Control Center (EXCLUSIVE TO ADMIN) -->
+    <section id="tabOwner" class="tab-content">
+      <!-- CRUD Section Selector Bar -->
+      <div class="controls-bar" style="background: #ffffff;">
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <button class="btn-action active" id="crudTabProductsBtn" onclick="switchCrudSubTab('products')" style="font-weight: 700; background: var(--primary-light); color: var(--primary-color); border-color: #a7f3d0;">
+            📦 Product Catalog
+          </button>
+          <button class="btn-action" id="crudTabCustomersBtn" onclick="switchCrudSubTab('customers')" style="font-weight: 700;">
+            👤 Customer Accounts
+          </button>
+          <button class="btn-action" id="crudTabOrdersBtn" onclick="switchCrudSubTab('orders')" style="font-weight: 700;">
+            🛍️ Orders & Billing
+          </button>
+        </div>
+      </div>
+
+      <!-- CRUD Sub-Section 1: PRODUCTS -->
+      <div id="crudProductsSection" class="crud-sub-section">
+        <!-- Create Product Form with Image Upload -->
+        <div class="admin-card" style="margin-bottom: 24px;">
+          <div class="section-title">
+            <span>➕ Create New Product Item</span>
+          </div>
+
+          <form id="addProductPhotoForm" onsubmit="handleAddProductWithPhoto(event)">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;">
+              <div class="form-group">
+                <label>Product Name</label>
+                <input type="text" id="newProdName" class="form-control" placeholder="e.g. Syngenta Virtako Insecticide" required>
+              </div>
+              <div class="form-group">
+                <label>Category</label>
+                <select id="newProdCat" class="form-control" required>
+                  <option value="Fertilizers">Fertilizers</option>
+                  <option value="Chemicals">Pesticides & Chemicals</option>
+                  <option value="Organic">Organic Bio-Fertilizers</option>
+                  <option value="Growth Bio">Growth Boosters</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Brand & Unit</label>
+                <input type="text" id="newProdBrandUnit" class="form-control" placeholder="e.g. Bayer • 250 ml Bottle" required>
+              </div>
+              <div class="form-group">
+                <label>Selling Price (₹)</label>
+                <input type="number" id="newProdPrice" class="form-control" placeholder="e.g. 650" required min="1">
+              </div>
+              <div class="form-group">
+                <label>Initial Stock Quantity</label>
+                <input type="number" id="newProdStock" class="form-control" placeholder="e.g. 40" required min="1">
+              </div>
+              <div class="form-group" style="grid-column: 1 / -1;">
+                <label>🌾 Target Crop Type (Select preset or type custom crop)</label>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                  <select id="newProdCropSelect" class="form-control" style="flex: 1; min-width: 200px;" onchange="handleCropSelectChange()">
+                    <option value="" disabled selected>-- Select Target Crop Type --</option>
+                    <option value="Paddy">Paddy / Rice (நெல்)</option>
+                    <option value="Wheat">Wheat (கோதுமை)</option>
+                    <option value="Cotton">Cotton (பருத்தி)</option>
+                    <option value="Sugarcane">Sugarcane (கரும்பு)</option>
+                    <option value="Vegetables">Vegetables & Chilli (காய்கறிகள்)</option>
+                    <option value="Groundnut">Groundnut & Pulses (நிலக்கடலை)</option>
+                    <option value="Fruits">Fruits & Horticulture (பழங்கள்)</option>
+                    <option value="All Crops">All Crops (அனைத்து பயிர்கள்)</option>
+                    <option value="CUSTOM">✍️ Enter Custom Crop Type Manually...</option>
+                  </select>
+                  <input type="text" id="newProdCropManual" class="form-control" style="flex: 1; min-width: 220px;" placeholder="Or type crop manually e.g. Paddy & Maize, Chilli, Sugarcane..." required>
+                </div>
+              </div>
+            </div>
+
+            <!-- Direct Image File Picker & Live Preview -->
+            <div class="form-group" style="margin-top: 10px;">
+              <label style="font-weight: 700; color: var(--primary-color);">🖼️ Select Direct Chemical Image File</label>
+              <input type="file" id="newProdImageFile" accept="image/*" class="form-control" onchange="previewProductImageFile(event)" required>
+
+              <!-- Live Upload Preview Container -->
+              <div id="imagePreviewBox" style="display: none; margin-top: 12px; align-items: center; gap: 14px; background: #f8fafc; padding: 10px; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                <div style="width: 90px; height: 90px; border-radius: var(--radius-sm); overflow: hidden; border: 2px solid var(--primary-color);">
+                  <img id="imagePreviewImg" style="width: 100%; height: 100%; object-fit: cover;" alt="Chemical Preview">
+                </div>
+                <div>
+                  <div style="font-size: 13px; font-weight: 700; color: var(--success-color);">✅ Image Selected & Ready</div>
+                  <div style="font-size: 11px; color: var(--text-muted);">This direct image will be attached to the product item.</div>
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-primary" style="margin-top: 14px; background: linear-gradient(135deg, #0f766e, #16a34a); padding: 12px; font-size: 15px;">➕ Save New Product to Catalog</button>
+          </form>
+        </div>
+
+        <!-- Read, Update & Delete Products Table -->
+        <div class="admin-card">
+          <div class="section-title">
+            <span>📋 Inventory Items</span>
+            <span style="font-size: 12px; color: var(--text-muted);">Shop Owner inventory management</span>
+          </div>
+
+          <div class="table-card">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Photo</th>
+                  <th>Product Name</th>
+                  <th>Category</th>
+                  <th>Price</th>
+                  <th>Stock</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="crudProductsTableBody">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- CRUD Sub-Section 2: CUSTOMERS -->
+      <div id="crudCustomersSection" class="crud-sub-section" style="display: none;">
+        <!-- Add Customer Account Form -->
+        <div class="admin-card" style="margin-bottom: 24px;">
+          <div class="section-title">
+            <span>➕ Add New Customer Account</span>
+          </div>
+          <form id="ownerAddCustForm" onsubmit="handleOwnerAddCustomer(event)" autocomplete="off">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+              <div class="form-group">
+                <label>Farmer Name (Letters & Spaces Only)</label>
+                <input type="text" id="ownerCustName" class="form-control" placeholder="e.g. Balu Swamy" required pattern="[A-Za-z\u0B80-\u0BFF\s\.-]+" title="Name must contain letters only, no numbers or special symbols" autocomplete="off">
+              </div>
+              <div class="form-group">
+                <label>Phone Number (10 Digits)</label>
+                <input type="tel" id="ownerCustPhone" class="form-control" placeholder="9876543210" required pattern="[0-9]{10}" maxlength="10" minlength="10" title="Must be exactly 10 digits" autocomplete="off">
+              </div>
+              <div class="form-group">
+                <label>Village Location (Letters & Spaces Only)</label>
+                <input type="text" id="ownerCustVillage" class="form-control" placeholder="Green Field" required pattern="[A-Za-z\u0B80-\u0BFF\s\.-]+" title="Location must contain letters only, no numbers or special symbols" autocomplete="off">
+              </div>
+              <div class="form-group">
+                <label>🔑 Set 4-Digit Security PIN</label>
+                <input type="password" id="ownerCustPin" class="form-control" placeholder="Create 4-digit PIN" required pattern="[0-9]{4}" maxlength="4" minlength="4" inputmode="numeric" title="Must be exactly 4 digits" autocomplete="new-password">
+              </div>
+              <div class="form-group">
+                <label>🔒 Confirm 4-Digit Security PIN</label>
+                <input type="password" id="ownerCustConfirmPin" class="form-control" placeholder="Re-enter 4-digit PIN" required pattern="[0-9]{4}" maxlength="4" minlength="4" inputmode="numeric" title="Must match set PIN" autocomplete="new-password">
+              </div>
+            </div>
+            <button type="submit" class="btn-primary" style="margin-top: 14px;">➕ Register New Customer Account</button>
+          </form>
+        </div>
+
+        <!-- Read, Edit & Delete Customers Table -->
+        <div class="admin-card">
+          <div class="section-title">
+            <span>👥 Customer Directory</span>
+          </div>
+          <div class="table-card">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Farmer Name</th>
+                  <th>Phone</th>
+                  <th>Village Location</th>
+                  <th>Total Purchases</th>
+                  <th>Unpaid Balance</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="crudCustomersTableBody">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Overdue Receivables & Reminders Panel -->
+        <div class="admin-card" style="margin-top: 24px;">
+          <div class="section-title">
+            <span id="overdueTitle">🔔 Overdue Balances & Payment Reminders</span>
+          </div>
+          
+          <div class="table-card">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th id="thCust">Customer</th>
+                  <th id="thPhone">Phone</th>
+                  <th id="thVillage">Village</th>
+                  <th id="thTotalPurch">Total Purchases</th>
+                  <th id="thUnpaidDue">Unpaid Due Balance</th>
+                  <th id="thOverdueStatus">Overdue Status</th>
+                  <th id="thRemindersSent">Reminders Sent</th>
+                  <th id="thSendReminder">Send Reminder Action</th>
+                </tr>
+              </thead>
+              <tbody id="overdueTableBody">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- CRUD Sub-Section 3: ORDERS & BILLING -->
+      <div id="crudOrdersSection" class="crud-sub-section" style="display: none;">
+        <!-- Card 1: Record Offline Customer Bill -->
+        <div class="admin-card" style="margin-bottom: 24px;">
+          <h3 class="section-title" id="logOfflineTitle" style="margin-bottom: 12px;">✍️ Log Offline Purchase</h3>
+          <p id="logOfflineSub" style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">Record offline purchases made at your shop. Updates stock and appends bill to customer credit ledger.</p>
+          
+          <form id="offlineBillForm" onsubmit="handleLogOfflineBill(event)">
+            <div class="form-group">
+              <label id="lblSelectCust">Select Customer Account</label>
+              <select id="billCustomerSelect" class="form-control" required onchange="onOfflineCustChange()">
+                <!-- Populated dynamically -->
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label id="lblSelectProd">Select Product / Fertilizer</label>
+              <select id="billProductSelect" class="form-control" required onchange="onOfflineProdChange()">
+                <!-- Populated dynamically -->
+              </select>
+            </div>
+
+            <div class="form-group" style="display: flex; gap: 12px;">
+              <div style="flex: 1;">
+                <label id="lblQty">Quantity</label>
+                <input type="number" id="billQtyInput" class="form-control" value="1" min="1" required oninput="calculateBillPreview()">
+              </div>
+              <div style="flex: 1;">
+                <label id="lblUpfront">Upfront Paid (₹)</label>
+                <input type="number" id="billUpfrontInput" class="form-control" value="" min="0" step="any" oninput="calculateBillPreview()">
+                <div id="billUpfrontHint" style="font-size: 11px; color: var(--primary-color); font-weight: 600; margin-top: 4px;">Max Allowed: ₹0.00</div>
+              </div>
+            </div>
+
+            <div style="background: #f8fafc; border: 1px solid var(--border-color); padding: 12px; border-radius: var(--radius-sm); margin-bottom: 16px; font-size: 13px;">
+              <div style="display: flex; justify-content: space-between;">
+                <span id="lblTotalBill">Current Purchase Total:</span>
+                <strong id="billPreviewTotal" style="color: var(--text-primary);">₹0.00</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-top: 4px;">
+                <span>Previous Credit Due:</span>
+                <strong id="billPreviewPrevDue" style="color: var(--warning-color);">₹0.00</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-top: 4px; padding-top: 4px; border-top: 1px dashed var(--border-color);">
+                <span><strong>Max Total Payable Today:</strong></span>
+                <strong id="billPreviewMaxPayable" style="color: var(--primary-color); font-weight: 700;">₹0.00</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-top: 4px;">
+                <span id="lblAddedCredit">Added to Pay-Later Balance:</span>
+                <strong id="billPreviewBalance" style="color: #dc2626; font-weight: 700;">₹0.00</strong>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-primary" id="btnCreateBill">📄 Create Bill & Add to Ledger</button>
+          </form>
+        </div>
+
+        <!-- Orders Packing Station & Update/Delete Controls -->
+        <div class="admin-card">
+          <div class="section-title">
+            <span id="ownerPackingStationTitle">📦 Order Fulfillment & Packing Control Center</span>
+            <span id="ownerPackingSub" style="font-size: 12px; color: var(--primary-color);">Update status or delete customer orders</span>
+          </div>
+
+          <div id="ownerOrdersContainer" style="display: flex; flex-direction: column; gap: 14px;">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  </div> <!-- /mainAppContainer -->
+
+  <!-- FRESH DEDICATED FULL-PAGE AUTHENTICATION SCREEN (APPLE MINIMALIST GLASS) -->
+  <div id="authFullPageScreen" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; min-height: 100vh; background: radial-gradient(circle at 50% 30%, rgba(21, 128, 61, 0.14), transparent 70%), #0d1510; z-index: 99999; flex-direction: column; align-items: center; justify-content: center; padding: 24px; box-sizing: border-box; overflow-y: auto;">
+    <!-- Top Branding Bar -->
+    <div style="max-width: 440px; width: 100%; display: flex; justify-content: center; align-items: center; margin-bottom: 24px; text-align: center;">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div style="width: 48px; height: 48px; background: rgba(255, 255, 255, 0.95); color: #15803d; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 700; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);">🌾</div>
+        <div style="text-align: left;">
+          <h2 style="color: #ffffff; font-size: 21px; font-weight: 700; letter-spacing: -0.024em; margin: 0; line-height: 1.2;">KisanAgri Hub</h2>
+          <p style="color: rgba(255, 255, 255, 0.65); font-size: 13px; font-weight: 500; margin: 0;">Agro Chemical & Fertilizer Store</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fresh Auth Card Container -->
+    <div class="modal-card" style="max-width: 440px; width: 100%; padding: 32px 34px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(30px) saturate(190%); -webkit-backdrop-filter: blur(30px) saturate(190%); border-radius: 28px; box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35); border: 1px solid rgba(255, 255, 255, 0.8);">
+      <div style="margin-bottom: 22px; text-align: center;">
+        <h3 id="authPageTitle" style="font-size: 21px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.025em;">🌾 KisanAgri Portal Sign In</h3>
+        <p id="authPageSub" style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">Select Customer Sign In or Admin Login</p>
+      </div>
+
+      <!-- Apple Segmented Control Tab Switcher: Login vs Register vs Admin Login -->
+      <div class="role-switcher-container" style="display: flex; background: rgba(120, 120, 128, 0.08); padding: 3px; border-radius: var(--radius-pill); margin-bottom: 22px; gap: 3px; border: 1px solid rgba(0,0,0,0.04);">
+        <button id="authTabSignInBtn" class="role-btn active" style="flex: 1; justify-content: center; font-size: 12.5px; padding: 8px 6px; font-weight: 600;" onclick="switchAuthTab('signin')">
+          🔓 Login
+        </button>
+        <button id="authTabRegisterBtn" class="role-btn" style="flex: 1; justify-content: center; font-size: 12.5px; padding: 8px 6px; font-weight: 600;" onclick="switchAuthTab('register')">
+          📝 Register
+        </button>
+        <button id="authTabAdminBtn" class="role-btn" style="flex: 1; justify-content: center; font-size: 12.5px; padding: 8px 6px; font-weight: 600;" onclick="switchAuthTab('admin')">
+          🔐 Admin
+        </button>
+      </div>
+
+      <!-- VIEW 1: Existing Customer Login (First / Priority 1) -->
+      <div id="authSignInView">
+        <form onsubmit="handleCustomerSignIn(event)" autocomplete="off">
+          <input type="text" style="display:none !important;" aria-hidden="true">
+          <input type="password" style="display:none !important;" aria-hidden="true">
+
+          <div class="form-group">
+            <label id="lblSignInPhone">Registered Mobile Phone Number (10 Digits)</label>
+            <input type="tel" id="signInPhoneInput" name="kisan_phone_no_autofill" class="form-control" placeholder="Enter 10-digit mobile number" required pattern="[0-9]{10}" maxlength="10" minlength="10" title="Must be exactly 10 digits" readonly onfocus="this.removeAttribute('readonly')" autocomplete="one-time-code" autocorrect="off" autocapitalize="off" spellcheck="false">
+          </div>
+
+          <div class="form-group">
+            <label id="lblSignInPin">🔑 4-Digit Security PIN</label>
+            <input type="password" id="signInPinInput" name="kisan_pin_no_autofill" class="form-control" placeholder="Enter 4-digit PIN (e.g. 1234)" required pattern="[0-9]{4}" maxlength="4" minlength="4" inputmode="numeric" title="Must be exactly 4 digits" readonly onfocus="this.removeAttribute('readonly')" autocomplete="one-time-code">
+            <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 5px;" id="signInPinHint">Default PIN for sample accounts: <strong style="color: var(--primary-color);">1234</strong></div>
+          </div>
+
+          <button type="submit" id="btnSignInSubmit" class="btn-primary" style="margin-top: 16px; padding: 12px 20px; font-size: 14.5px; font-weight: 600; border-radius: var(--radius-pill);">🔓 Login & Enter Store</button>
+        </form>
+      </div>
+
+      <!-- VIEW 2: New Farmer Registration (Priority 2) -->
+      <div id="authRegisterView" style="display: none;">
+        <form onsubmit="handleCustomerRegister(event)" autocomplete="off">
+          <input type="text" style="display:none !important;" aria-hidden="true">
+          <input type="password" style="display:none !important;" aria-hidden="true">
+
+          <div class="form-group">
+            <label id="lblRegName">Full Name (Letters & Spaces Only)</label>
+            <input type="text" id="regNameInput" name="kisan_reg_name_no_autofill" class="form-control" placeholder="Enter full name" required pattern="[A-Za-z\u0B80-\u0BFF\s\.-]+" title="Name must contain letters only, no numbers or special symbols" readonly onfocus="this.removeAttribute('readonly')" autocomplete="one-time-code" autocorrect="off" autocapitalize="off" spellcheck="false">
+          </div>
+
+          <div class="form-group">
+            <label id="lblRegPhone">Phone Number (Exactly 10 Digits)</label>
+            <input type="tel" id="regPhoneInput" name="kisan_reg_phone_no_autofill" class="form-control" placeholder="Enter 10-digit phone number" required pattern="[0-9]{10}" maxlength="10" minlength="10" title="Phone number must be exactly 10 digits" readonly onfocus="this.removeAttribute('readonly')" autocomplete="one-time-code" autocorrect="off" autocapitalize="off" spellcheck="false">
+          </div>
+
+          <div class="form-group">
+            <label id="lblRegVillage">Village / Farm Location (Letters & Spaces Only)</label>
+            <input type="text" id="regVillageInput" name="kisan_reg_village_no_autofill" class="form-control" placeholder="Enter village or farm location" required pattern="[A-Za-z\u0B80-\u0BFF\s\.-]+" title="Location must contain letters only, no numbers or special symbols" readonly onfocus="this.removeAttribute('readonly')" autocomplete="one-time-code" autocorrect="off" autocapitalize="off" spellcheck="false">
+          </div>
+
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <div class="form-group" style="flex: 1; min-width: 150px;">
+              <label id="lblRegPin">🔑 Set 4-Digit PIN</label>
+              <input type="password" id="regPinInput" name="kisan_reg_pin_no_autofill" class="form-control" placeholder="Create 4-digit PIN" required pattern="[0-9]{4}" maxlength="4" minlength="4" inputmode="numeric" title="Must be exactly 4 digits" readonly onfocus="this.removeAttribute('readonly')" autocomplete="one-time-code">
+            </div>
+
+            <div class="form-group" style="flex: 1; min-width: 150px;">
+              <label id="lblRegConfirmPin">🔒 Confirm PIN</label>
+              <input type="password" id="regConfirmPinInput" name="kisan_reg_confirm_pin_no_autofill" class="form-control" placeholder="Re-enter PIN" required pattern="[0-9]{4}" maxlength="4" minlength="4" inputmode="numeric" title="Must match set PIN" readonly onfocus="this.removeAttribute('readonly')" autocomplete="one-time-code">
+            </div>
+          </div>
+
+          <button type="submit" id="btnRegSubmit" class="btn-primary" style="margin-top: 16px; padding: 12px 20px; font-size: 14.5px; font-weight: 600; border-radius: var(--radius-pill);">✨ Register & Enter Store</button>
+        </form>
+      </div>
+
+      <!-- VIEW 3: Dedicated Admin Login -->
+      <div id="authAdminView" style="display: none;">
+        <form onsubmit="handleAdminSignIn(event)" autocomplete="off">
+          <div style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.2); padding: 12px 14px; border-radius: var(--radius-md); margin-bottom: 16px;">
+            <div style="font-size: 12.5px; font-weight: 700; color: #dc2626;" id="adminNoticeTitle">👑 Only for Admin Access</div>
+            <div style="font-size: 11.5px; color: #991b1b; margin-top: 2px;" id="adminNoticeSub">Enter Admin passcode to access Admin Center.</div>
+          </div>
+
+          <div class="form-group">
+            <label id="lblAdminPasscode">Admin Passcode</label>
+            <input type="password" id="adminPasscodeInput" name="kisan_admin_pass_no_autofill" class="form-control" placeholder="Enter Admin Passcode (e.g. 1234)" required readonly onfocus="this.removeAttribute('readonly')" autocomplete="one-time-code">
+            <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 5px;" id="adminPasscodeHint">Default Admin Passcode: <strong style="color: var(--primary-color);">1234</strong></div>
+          </div>
+
+          <button type="submit" id="btnAdminSignInSubmit" class="btn-primary" style="margin-top: 16px; padding: 12px 20px; font-size: 14.5px; font-weight: 600; background: linear-gradient(135deg, #1d1d1f, #2d2d30); box-shadow: 0 4px 14px rgba(0,0,0,0.25); border-radius: var(--radius-pill);">🔐 Sign In as Admin</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Product Modal -->
+  <div class="modal-overlay" id="editProductModal">
+    <div class="modal-card" style="max-width: 500px;">
+      <div class="modal-header">
+        <h3 class="modal-title">✏️ Edit Product Details</h3>
+        <button class="close-btn" onclick="closeEditProductModal()">✕</button>
+      </div>
+
+      <form id="editProductForm" onsubmit="handleSaveEditProduct(event)">
+        <input type="hidden" id="editProdId">
+        <div class="form-group">
+          <label>Product Name</label>
+          <input type="text" id="editProdName" class="form-control" required>
+        </div>
+        <div class="form-group" style="display: flex; gap: 10px;">
+          <div style="flex: 1;">
+            <label>Price (₹)</label>
+            <input type="number" id="editProdPrice" class="form-control" required min="1">
+          </div>
+          <div style="flex: 1;">
+            <label>Stock Count</label>
+            <input type="number" id="editProdStock" class="form-control" required min="0">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Category</label>
+          <select id="editProdCat" class="form-control" required>
+            <option value="Fertilizers">Fertilizers</option>
+            <option value="Chemicals">Pesticides & Chemicals</option>
+            <option value="Organic">Organic Bio-Fertilizers</option>
+            <option value="Growth Bio">Growth Boosters</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Change Image File (Optional)</label>
+          <input type="file" id="editProdImageFile" accept="image/*" class="form-control" onchange="previewEditImageFile(event)">
+          <div id="editImagePreviewBox" style="margin-top: 8px; width: 80px; height: 80px; border-radius: 6px; overflow: hidden; border: 1px solid var(--border-color);">
+            <img id="editImagePreviewImg" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary" style="margin-top: 10px;">💾 Update Product</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Edit Customer Modal -->
+  <div class="modal-overlay" id="editCustomerModal">
+    <div class="modal-card" style="max-width: 450px;">
+      <div class="modal-header">
+        <h3 class="modal-title">✏️ Edit Customer Profile</h3>
+        <button class="close-btn" onclick="closeEditCustomerModal()">✕</button>
+      </div>
+
+      <form id="editCustomerForm" onsubmit="handleSaveEditCustomer(event)">
+        <input type="hidden" id="editCustIndex">
+        <div class="form-group">
+          <label>Farmer Name</label>
+          <input type="text" id="editCustName" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label>Phone Number (Login ID - Unchangeable)</label>
+          <input type="tel" id="editCustPhone" class="form-control" readonly disabled style="background: #f1f5f9; cursor: not-allowed; opacity: 0.8;">
+        </div>
+        <div class="form-group">
+          <label>Village Location</label>
+          <input type="text" id="editCustVillage" class="form-control" required>
+        </div>
+
+        <button type="submit" class="btn-primary" style="margin-top: 10px;">💾 Update Customer Account</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Shopping Cart & Order Modal -->
+  <div class="modal-overlay" id="cartModal">
+    <div class="modal-card" style="max-width: 550px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="cartModalTitle">🛒 Customer Product Order & Reservation</h3>
+        <button class="close-btn" onclick="closeCartModal()">✕</button>
+      </div>
+
+      <div id="cartModalContent">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Online Payment Modal -->
+  <div class="modal-overlay" id="paymentModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title" id="payModalTitle">💳 Online Balance Payment</h3>
+        <button class="close-btn" onclick="closePaymentModal()">✕</button>
+      </div>
+
+      <div style="margin-bottom: 16px;">
+        <div style="font-size: 13px; color: var(--text-muted);" id="payModalForLabel">Paying Balance For:</div>
+        <div style="font-size: 18px; font-weight: 700; color: var(--text-primary);" id="payModalCustName">Ramesh Kumar</div>
+        <div style="font-size: 12px; color: var(--primary-color);" id="payModalCustPhone">+91 98765 43210</div>
+      </div>
+
+      <!-- Payment Method Selection -->
+      <div class="payment-options">
+        <button class="pay-opt-btn active" id="optUpi" onclick="setPayMethod('UPI')">📲 UPI (GPay/PhonePe)</button>
+        <button class="pay-opt-btn" id="optCard" onclick="setPayMethod('CARD')">💳 Card</button>
+        <button class="pay-opt-btn" id="optNet" onclick="setPayMethod('NET')">🏛️ Net Banking</button>
+      </div>
+
+      <!-- UPI QR Code Simulator View -->
+      <div id="methodUpiView">
+        <div class="qr-box">
+          <div class="qr-placeholder"></div>
+          <div class="upi-id-tag">kisanagri@upi</div>
+        </div>
+        <div style="text-align: center; font-size: 12px; color: var(--text-muted); margin-bottom: 16px;" id="qrHint">
+          Scan QR with Google Pay, PhonePe, Paytm or BHIM UPI app
+        </div>
+      </div>
+
+      <!-- Card Input View -->
+      <div id="methodCardView" style="display: none; margin-bottom: 16px;">
+        <div class="form-group">
+          <label id="lblCardNum">Card Number</label>
+          <input type="text" class="form-control" placeholder="4532 •••• •••• 8921" value="4532 8912 3456 8921">
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <div class="form-group" style="flex: 1;">
+            <label id="lblExpiry">Expiry</label>
+            <input type="text" class="form-control" placeholder="MM/YY" value="08/28">
+          </div>
+          <div class="form-group" style="flex: 1;">
+            <label id="lblCvv">CVV</label>
+            <input type="password" class="form-control" placeholder="•••" value="782">
+          </div>
+        </div>
+      </div>
+
+      <!-- Amount Input -->
+      <div class="form-group">
+        <label id="lblPayAmount">Payment Amount (₹)</label>
+        <input type="number" id="payAmountInput" class="form-control" style="font-size: 20px; font-weight: 700; color: var(--warning-color);" min="1" step="0.5">
+        <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;" id="payModalMaxHint">Max Outstanding Balance: ₹0.00</div>
+      </div>
+
+      <button class="btn-primary" id="btnConfirmPay" onclick="submitOnlinePayment()">✅ Confirm & Complete Payment</button>
+    </div>
+  </div>
+
+  <!-- Product Details & MSDS Modal -->
+  <div class="modal-overlay" id="productModal">
+    <div class="modal-card" style="max-width: 550px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="prodModalTitle">Product Details</h3>
+        <button class="close-btn" onclick="closeProductModal()">✕</button>
+      </div>
+
+      <div id="prodModalBody">
+        <!-- Populated dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Offline Cash Payment Modal -->
+  <div class="modal-overlay" id="adminRecordPaymentModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title" id="adminPaymentModalTitle">💵 Record Offline Cash Payment</h3>
+        <button class="close-btn" onclick="closeAdminPaymentModal()">✕</button>
+      </div>
+
+      <form onsubmit="handleAdminSubmitOfflinePayment(event)">
+        <input type="hidden" id="adminPayCustIndex">
+        
+        <div style="background: #f8fafc; border: 1px solid var(--border-color); padding: 14px; border-radius: var(--radius-sm); margin-bottom: 16px;">
+          <div style="font-size: 14px; font-weight: 700; color: var(--text-primary);" id="adminPayCustNamePhone">Farmer Name (Phone)</div>
+          <div style="font-size: 12px; color: var(--text-muted);" id="adminPayCustVillage">Location: Village</div>
+          <div style="margin-top: 8px; font-size: 13px; font-weight: 700; color: var(--warning-color);" id="adminPayCustCurrentDue">Current Unpaid Due: ₹0</div>
+        </div>
+
+        <div class="form-group">
+          <label id="lblCashAmountReceived">Cash Amount Received (₹)</label>
+          <input type="number" id="adminCashAmountInput" class="form-control" placeholder="Enter amount received in cash..." min="1" step="any" required>
+        </div>
+
+        <div class="form-group">
+          <label id="lblPaymentNote">Payment Note / Method</label>
+          <input type="text" id="adminCashNoteInput" class="form-control" value="Paid in hand at shop (Cash)">
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+          <button type="button" class="btn-action" style="flex: 1; padding: 10px;" onclick="closeAdminPaymentModal()">Cancel</button>
+          <button type="submit" class="btn-primary" style="flex: 2;">💵 Mark Paid & Update Account</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Log Out Confirmation Modal -->
+  <div class="modal-overlay" id="logoutConfirmModal">
+    <div class="modal-card" style="max-width: 400px; text-align: center; padding: 24px; position: relative;">
+      <div class="modal-header" style="border-bottom: none; padding-bottom: 0; justify-content: space-between;">
+        <h3 class="modal-title" style="font-size: 18px; color: var(--text-primary);" id="logoutConfirmTitle">🚪 Log Out Confirmation</h3>
+        <button class="close-btn" onclick="closeLogoutConfirmModal()" style="font-size: 18px; cursor: pointer;">✕</button>
+      </div>
+
+      <div style="margin: 16px 0; font-size: 15px; font-weight: 600; color: var(--text-primary);" id="logoutConfirmText">
+        Are you sure want to Log Out?
+      </div>
+
+      <div style="display: flex; gap: 12px; justify-content: center; margin-top: 20px;">
+        <button type="button" class="btn-primary" onclick="confirmCustomerLogout()" style="flex: 1; background: var(--danger-color); padding: 10px; font-size: 14px; font-weight: 700;" id="logoutConfirmYesBtn">
+          Yes
+        </button>
+        <button type="button" class="btn-action" onclick="closeLogoutConfirmModal()" style="flex: 1; padding: 10px; font-size: 14px; font-weight: 600;" id="logoutConfirmNoBtn">
+          No
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Toast Notifications Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Notification Drawer -->
+  <div class="notif-drawer" id="notifDrawer">
+    <div class="notif-drawer-header">
+      <h4 id="notifDrawerTitle">🔔 Process Notifications</h4>
+      <button class="close-btn" style="width: 24px; height: 24px; font-size: 12px;" onclick="toggleNotifDrawer()">✕</button>
+    </div>
+    <div class="notif-list" id="notifDrawerList">
+      <!-- Populated dynamically -->
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/data.js?v=apple2.1"></script>
+  <script src="js/app.js?v=apple2.1"></script>
+</body>
+</html>
