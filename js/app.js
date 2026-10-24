@@ -804,7 +804,7 @@ function renderCrudProductsTable() {
         </td>
         <td><span class="status-badge status-paid" style="background:#f1f5f9; color:#475569; border-color:#cbd5e1;">${p.category}</span></td>
         <td style="font-weight: 700; color: var(--text-primary);">₹${p.price.toLocaleString('en-IN')}</td>
-        <td><strong style="color: ${p.stock <= p.minStockThreshold ? 'var(--warning-color)' : 'var(--success-color)'};">${p.stock}</strong></td>
+        <td><strong style="color: ${p.stock === 0 ? 'var(--danger-color)' : (p.stock <= p.minStockThreshold ? 'var(--warning-color)' : 'var(--success-color)')};">${p.stock === 0 ? (currentLang === 'ta' ? '0 (தீர்ந்துவிட்டது)' : '0 (Out of Stock)') : p.stock}</strong></td>
         <td>
           <div style="display: flex; gap: 6px;">
             <button class="btn-action" style="background: var(--primary-light); color: var(--primary-color); border-color: #a7f3d0; font-weight: 600;" onclick="openEditProductModal('${p.id}')">
@@ -1270,8 +1270,6 @@ function renderStockGrid() {
 
     return `
       <div class="product-card">
-        <span class="product-badge ${badgeClass}">${badgeText}</span>
-        
         <div>
           <!-- Direct Chemical / Fertilizer Image Display -->
           <div style="width: 100%; height: 180px; border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 14px; border: 1px solid var(--border-color); background: #f5f5f7; position: relative;">
@@ -1279,6 +1277,7 @@ function renderStockGrid() {
                  alt="${prodName} - ${p.brand} ${p.category} ${prodUnit}" 
                  style="width: 100%; height: 100%; object-fit: cover;"
                  onerror="this.onerror=null; this.src='assets/iffco_urea.jpg';">
+            <span class="product-badge ${badgeClass}">${badgeText}</span>
             <span style="position: absolute; bottom: 10px; left: 10px; background: rgba(0,0,0,0.65); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: white; padding: 3px 10px; border-radius: var(--radius-pill); font-size: 11px; font-weight: 600;">
               ${p.category}
             </span>
@@ -1301,7 +1300,9 @@ function renderStockGrid() {
           <div class="stock-bar-container">
             <div class="stock-bar-header">
               <span style="color: var(--text-muted);">${currentLang === 'ta' ? 'இருப்பு எண்ணிக்கை:' : 'Available Stock:'}</span>
-              <strong style="color: var(--text-primary);">${p.stock}</strong>
+              <strong style="color: ${p.stock === 0 ? 'var(--danger-color)' : 'var(--text-primary)'}; font-weight: 700;">
+                ${p.stock === 0 ? `0 (${badgeText})` : p.stock}
+              </strong>
             </div>
             <div class="stock-bar-bg">
               <div class="stock-bar-fill ${fillClass}" style="width: ${pct}%;"></div>
@@ -1315,14 +1316,14 @@ function renderStockGrid() {
               <span class="product-price">₹${p.price.toLocaleString('en-IN')}</span>
               <span class="mrp-strike">MRP ₹${p.mrp.toLocaleString('en-IN')}</span>
             </div>
-            <div style="display: flex; gap: 8px; align-items: center;">
+            <div style="display: flex; gap: 8px; align-items: center; flex-shrink: 0;">
               <button class="btn-details" onclick="showProductModal('${p.id}')">${t('dosageBtn')}</button>
               ${p.stock > 0 ? `
                 <button class="btn-action" style="background: var(--primary-gradient); color: white; border: none; font-weight: 600; box-shadow: 0 2px 8px rgba(21, 128, 61, 0.28); border-radius: var(--radius-pill);" onclick="addToCart('${p.id}')">
                   ${t('reserveBtn')}
                 </button>
               ` : `
-                <button class="btn-action" disabled style="opacity: 0.45; cursor: not-allowed; border-radius: var(--radius-pill);">${t('badgeOutStock')}</button>
+                <button class="btn-action btn-outstock" disabled>${badgeText}</button>
               `}
             </div>
           </div>
@@ -1360,7 +1361,7 @@ function showProductModal(prodId) {
     </div>
 
     <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border-color); padding-top: 12px;">
-      <span>${currentLang === 'ta' ? 'இருப்பு:' : 'Stock:'} <strong style="color: var(--text-primary);">${p.stock} units</strong></span>
+      <span>${currentLang === 'ta' ? 'இருப்பு:' : 'Stock:'} <strong style="color: ${p.stock === 0 ? 'var(--danger-color)' : 'var(--text-primary)'};">${p.stock === 0 ? (currentLang === 'ta' ? 'தீர்ந்துவிட்டது (0 units)' : 'Out of Stock (0 units)') : `${p.stock} units`}</strong></span>
       <span>
         ${currentLang === 'ta' ? 'மதிப்பீடு:' : 'Rating:'} 
         <button type="button" onclick="openPolicyModal('reviews')" style="background:none; border:none; color: var(--warning-color); font-weight:700; cursor:pointer; text-decoration:underline; font-size: 12px;" title="Click to view verified review policy">
