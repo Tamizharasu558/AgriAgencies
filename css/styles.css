@@ -1,18 +1,29 @@
 /* ==========================================================================
-   KisanAgri Hub — Apple-Inspired Clean, Simple & Premium Design System
+   KisanAgri Hub — iOS 27 Liquid Glass UI Theme & Spatial Design System
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-  /* Apple Neutral Canvas System */
-  --bg-page: #f5f5f7;
-  --bg-card: #ffffff;
-  --bg-card-subtle: #fafafb;
-  --bg-inset: rgba(0, 0, 0, 0.03);
-  --bg-modal: #ffffff;
-  --bg-glass: rgba(255, 255, 255, 0.82);
-  --bg-glass-dark: rgba(29, 29, 31, 0.85);
+  /* iOS 27 Spatial Liquid Glass System */
+  --bg-page: #f4f6fa;
+  --bg-card: rgba(255, 255, 255, 0.74);
+  --bg-card-subtle: rgba(255, 255, 255, 0.58);
+  --bg-card-hover: rgba(255, 255, 255, 0.9);
+  --bg-inset: rgba(0, 0, 0, 0.025);
+  --bg-modal: rgba(255, 255, 255, 0.84);
+  --bg-glass: rgba(255, 255, 255, 0.72);
+  --bg-glass-pill: rgba(255, 255, 255, 0.65);
+  --bg-glass-dark: rgba(20, 24, 28, 0.86);
+
+  /* iOS 27 Specular Refraction Highlights & Borders */
+  --glass-border: rgba(255, 255, 255, 0.8);
+  --glass-border-subtle: rgba(255, 255, 255, 0.48);
+  --glass-highlight: inset 0 1px 1px 0 rgba(255, 255, 255, 0.95);
+  --glass-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.95), 0 12px 32px -4px rgba(15, 23, 42, 0.05), 0 4px 12px -2px rgba(15, 23, 42, 0.02);
+  --glass-shadow-hover: inset 0 1px 2px 0 rgba(255, 255, 255, 1), 0 20px 44px -6px rgba(15, 23, 42, 0.09), 0 6px 16px -2px rgba(15, 23, 42, 0.03);
+  --glass-blur: blur(28px) saturate(190%);
+  --glass-blur-deep: blur(36px) saturate(210%);
 
   /* Apple Typography Scale (WCAG AA Contrast Compliant: >= 4.5:1 on light backgrounds) */
   --text-primary: #1d1d1f;
@@ -25,30 +36,30 @@
   --primary-color: #15803d;
   --primary-hover: #166534;
   --primary-light: rgba(21, 128, 61, 0.08);
-  --primary-tint: #ecfdf5;
-  --primary-gradient: linear-gradient(135deg, #15803d 0%, #166534 100%);
+  --primary-tint: rgba(236, 253, 245, 0.8);
+  --primary-gradient: linear-gradient(135deg, rgba(21, 128, 61, 0.92) 0%, rgba(22, 101, 52, 0.96) 100%);
   --apple-blue: #0071e3;
   --apple-blue-hover: #0077ed;
 
-  /* Status Colors (Apple Tinted Pills) */
+  /* Status Colors (iOS 27 Tinted Glass Pills) */
   --success-color: #15803d;
-  --success-bg: rgba(34, 197, 94, 0.1);
-  --success-border: rgba(34, 197, 94, 0.2);
+  --success-bg: rgba(34, 197, 94, 0.12);
+  --success-border: rgba(34, 197, 94, 0.28);
 
   --warning-color: #b45309;
-  --warning-bg: rgba(245, 158, 11, 0.1);
-  --warning-border: rgba(245, 158, 11, 0.22);
+  --warning-bg: rgba(245, 158, 11, 0.12);
+  --warning-border: rgba(245, 158, 11, 0.28);
 
   --danger-color: #dc2626;
-  --danger-bg: rgba(239, 68, 68, 0.09);
-  --danger-border: rgba(239, 68, 68, 0.2);
+  --danger-bg: rgba(239, 68, 68, 0.1);
+  --danger-border: rgba(239, 68, 68, 0.25);
 
   /* Hairlines & Borders */
-  --border-color: rgba(0, 0, 0, 0.08);
+  --border-color: rgba(255, 255, 255, 0.75);
   --border-light: rgba(0, 0, 0, 0.04);
-  --border-hover: rgba(0, 0, 0, 0.14);
+  --border-hover: rgba(255, 255, 255, 0.95);
   --border-focus: #15803d;
-  --ring-focus: 0 0 0 4px rgba(21, 128, 61, 0.14);
+  --ring-focus: 0 0 0 4px rgba(21, 128, 61, 0.16);
 
   /* Continuous Curve Corner Radii (Apple Squircle Aesthetic) */
   --radius-xs: 8px;
@@ -58,12 +69,12 @@
   --radius-xl: 26px;
   --radius-pill: 9999px;
 
-  /* Apple Subtle Light Shadows */
+  /* Shadows */
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.03);
-  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
-  --shadow-md: 0 6px 18px -2px rgba(0, 0, 0, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
-  --shadow-lg: 0 16px 36px -4px rgba(0, 0, 0, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.03);
-  --shadow-modal: 0 28px 64px -12px rgba(0, 0, 0, 0.16), 0 12px 24px -6px rgba(0, 0, 0, 0.06);
+  --shadow-sm: inset 0 1px 1px 0 rgba(255, 255, 255, 0.8), 0 2px 6px rgba(0, 0, 0, 0.03);
+  --shadow-md: inset 0 1px 1px 0 rgba(255, 255, 255, 0.9), 0 8px 24px -3px rgba(15, 23, 42, 0.05);
+  --shadow-lg: inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.95), 0 18px 38px -4px rgba(15, 23, 42, 0.08);
+  --shadow-modal: inset 0 1px 1.5px 0 rgba(255, 255, 255, 1), 0 32px 72px -12px rgba(0, 0, 0, 0.22), 0 12px 24px -6px rgba(0, 0, 0, 0.08);
 
   /* Physics Transitions */
   --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
@@ -91,6 +102,14 @@ html {
 body {
   font-family: var(--font-sans);
   background-color: var(--bg-page);
+  /* iOS 27 Luminous Ambient Aura Mesh Background */
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(21, 128, 61, 0.09) 0px, transparent 48%),
+    radial-gradient(at 95% 5%, rgba(0, 113, 227, 0.08) 0px, transparent 45%),
+    radial-gradient(at 88% 55%, rgba(16, 185, 129, 0.08) 0px, transparent 45%),
+    radial-gradient(at 5% 75%, rgba(245, 158, 11, 0.06) 0px, transparent 45%),
+    radial-gradient(at 80% 95%, rgba(13, 148, 136, 0.08) 0px, transparent 50%);
+  background-attachment: fixed;
   color: var(--text-primary);
   min-height: 100vh;
   line-height: 1.5;
@@ -98,7 +117,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Custom Apple Subtle Scrollbars */
+/* Custom Apple Glass Scrollbars */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -107,25 +126,28 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.15);
+  background: rgba(0, 0, 0, 0.14);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border-radius: var(--radius-pill);
-  border: 2px solid var(--bg-page);
+  border: 2px solid transparent;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(0, 0, 0, 0.24);
 }
 
 /* ==========================================================================
-   Header & Apple Frosted Glass Navigation
+   Header & iOS 27 Liquid Frosted Glass Navigation
    ========================================================================== */
 header {
   position: sticky;
   top: 0;
   z-index: 100;
   background: var(--bg-glass);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(30px) saturate(200%);
+  -webkit-backdrop-filter: blur(30px) saturate(200%);
   border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.03);
   transition: var(--transition-fast);
 }
 
@@ -148,7 +170,7 @@ header {
 }
 
 .brand:hover {
-  opacity: 0.88;
+  opacity: 0.9;
   transform: translateY(-1px);
 }
 
@@ -156,6 +178,9 @@ header {
   width: 42px;
   height: 42px;
   background: var(--primary-gradient);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.45);
   color: white;
   border-radius: var(--radius-md);
   display: flex;
@@ -164,7 +189,7 @@ header {
   font-size: 16px;
   font-weight: 800;
   letter-spacing: -0.02em;
-  box-shadow: 0 4px 12px rgba(21, 128, 61, 0.24);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.5), 0 6px 16px rgba(21, 128, 61, 0.28);
   flex-shrink: 0;
 }
 
@@ -193,38 +218,44 @@ header {
 }
 
 #activeProfileBadge {
-  background: var(--primary-tint) !important;
+  background: rgba(236, 253, 245, 0.8) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   color: var(--primary-color) !important;
   padding: 4px 12px !important;
   border-radius: var(--radius-pill) !important;
   font-weight: 600 !important;
   font-size: 12px !important;
-  border: 1px solid rgba(21, 128, 61, 0.18) !important;
+  border: 1px solid rgba(21, 128, 61, 0.22) !important;
   display: flex !important;
   align-items: center !important;
   gap: 6px !important;
-  box-shadow: var(--shadow-xs);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9), var(--shadow-xs);
 }
 
 #headerAuthActionBtn {
   font-size: 11px !important;
   padding: 4px 10px !important;
   font-weight: 600 !important;
-  background: #ffffff !important;
+  background: rgba(255, 255, 255, 0.72) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   color: var(--text-secondary) !important;
-  border: 1px solid var(--border-color) !important;
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
   border-radius: var(--radius-pill) !important;
   cursor: pointer;
   transition: var(--transition-fast) !important;
   display: inline-flex;
   align-items: center;
   gap: 4px;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9), 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
 #headerAuthActionBtn:hover {
-  background: #f1f1f4 !important;
+  background: rgba(255, 255, 255, 0.95) !important;
   color: var(--text-primary) !important;
-  border-color: var(--border-hover) !important;
+  border-color: rgba(255, 255, 255, 1) !important;
+  box-shadow: inset 0 1px 1px #fff, 0 3px 8px rgba(0, 0, 0, 0.06);
   transform: translateY(-1px);
 }
 
@@ -233,13 +264,16 @@ header {
 }
 
 /* ==========================================================================
-   Apple iOS Segmented Controls (Language, Role, and Tabs)
+   iOS 27 Liquid Glass Segmented Controls (Language, Role, and Tabs)
    ========================================================================== */
 .role-switcher-container {
   display: flex;
   align-items: center;
   background: rgba(120, 120, 128, 0.09) !important;
-  border: 1px solid rgba(0, 0, 0, 0.05) !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.6) !important;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
   padding: 3px !important;
   border-radius: var(--radius-pill) !important;
   gap: 2px;
@@ -264,14 +298,17 @@ header {
 
 .role-btn:hover:not(.active) {
   color: var(--text-primary);
-  background: rgba(0, 0, 0, 0.03);
+  background: rgba(255, 255, 255, 0.4);
 }
 
 .role-btn.active {
-  background: #ffffff !important;
+  background: rgba(255, 255, 255, 0.88) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   color: var(--text-primary) !important;
   font-weight: 600 !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.95), 0 3px 10px rgba(0, 0, 0, 0.08) !important;
 }
 
 .role-btn:active {
@@ -289,8 +326,10 @@ header {
   position: relative;
   height: 38px;
   border-radius: var(--radius-pill);
-  background: #ffffff;
-  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
   color: var(--text-primary);
   font-size: 14px;
   font-weight: 600;
@@ -300,13 +339,13 @@ header {
   justify-content: center;
   cursor: pointer;
   transition: var(--transition-bounce);
-  box-shadow: var(--shadow-xs);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.95), 0 2px 8px rgba(0, 0, 0, 0.03);
 }
 
 .notif-btn:hover {
-  background: #ffffff;
-  border-color: var(--border-hover);
-  box-shadow: var(--shadow-sm);
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(255, 255, 255, 1);
+  box-shadow: inset 0 1px 1px #fff, 0 4px 14px rgba(0, 0, 0, 0.06);
   transform: translateY(-1px);
 }
 
@@ -335,10 +374,10 @@ header {
   align-items: center;
   justify-content: center;
   border: 2px solid #ffffff;
-  box-shadow: 0 2px 4px rgba(220, 38, 38, 0.25);
+  box-shadow: 0 2px 6px rgba(220, 38, 38, 0.35);
 }
 
-/* Apple Segmented Navigation Tabs */
+/* iOS 27 Liquid Glass Navigation Tabs */
 .nav-tabs {
   max-width: 1240px;
   margin: 0 auto;
@@ -373,14 +412,17 @@ header {
 
 .tab-btn:hover {
   color: var(--text-primary);
-  background: rgba(0, 0, 0, 0.04);
+  background: rgba(255, 255, 255, 0.45);
 }
 
 .tab-btn.active {
   color: #ffffff;
-  background: var(--text-primary);
+  background: var(--bg-glass-dark);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   font-weight: 600;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.3), 0 4px 14px rgba(0, 0, 0, 0.18);
 }
 
 .tab-btn:active {
@@ -417,11 +459,13 @@ main {
 }
 
 /* ==========================================================================
-   Hero Banner (Apple Minimalist Ambient Card)
+   Hero Banner (iOS 27 Spatial Glass Hero Slab)
    ========================================================================== */
 .hero-banner {
-  background: #ffffff;
-  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-xl);
   padding: 32px 36px;
   margin-bottom: 24px;
@@ -429,7 +473,7 @@ main {
   align-items: center;
   justify-content: space-between;
   gap: 32px;
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--glass-shadow);
   position: relative;
   overflow: hidden;
 }
@@ -439,9 +483,20 @@ main {
   position: absolute;
   top: 0;
   right: 0;
-  width: 320px;
+  width: 340px;
   height: 100%;
-  background: radial-gradient(circle at 100% 0%, rgba(21, 128, 61, 0.06), transparent 70%);
+  background: radial-gradient(circle at 100% 0%, rgba(21, 128, 61, 0.12), transparent 70%);
+  pointer-events: none;
+}
+
+.hero-banner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.9) 20%, rgba(255, 255, 255, 0.9) 80%, transparent);
   pointer-events: none;
 }
 
@@ -468,8 +523,11 @@ main {
 }
 
 .stat-pill {
-  background: var(--bg-page);
-  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.58);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.9), 0 4px 14px -2px rgba(15, 23, 42, 0.04);
   padding: 14px 20px;
   border-radius: var(--radius-lg);
   text-align: center;
@@ -478,8 +536,9 @@ main {
 }
 
 .stat-pill:hover {
-  background: #ffffff;
-  box-shadow: var(--shadow-md);
+  background: rgba(255, 255, 255, 0.88);
+  border-color: rgba(255, 255, 255, 1);
+  box-shadow: inset 0 1px 1px #fff, 0 8px 24px -2px rgba(15, 23, 42, 0.08);
   transform: translateY(-2px);
 }
 
@@ -501,7 +560,7 @@ main {
 }
 
 /* ==========================================================================
-   Controls Bar (Search & Filter Pills)
+   Controls Bar (iOS 27 Frosted Glass Search & Filter Pills)
    ========================================================================== */
 .controls-bar {
   display: flex;
@@ -510,11 +569,13 @@ main {
   justify-content: space-between;
   gap: 14px;
   margin-bottom: 24px;
-  background: #ffffff;
+  background: var(--bg-card);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   padding: 12px 18px;
   border-radius: var(--radius-lg);
-  border: 1px solid var(--border-color);
-  box-shadow: var(--shadow-xs);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
 }
 
 .search-box {
@@ -526,8 +587,11 @@ main {
 .search-box input {
   width: 100%;
   padding: 11px 16px 11px 40px;
-  background: var(--bg-page);
-  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03);
   border-radius: var(--radius-pill);
   color: var(--text-primary);
   font-family: var(--font-sans);
@@ -537,9 +601,9 @@ main {
 
 .search-box input:focus {
   outline: none;
-  background: #ffffff;
-  border-color: rgba(21, 128, 61, 0.3);
-  box-shadow: var(--ring-focus);
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(21, 128, 61, 0.4);
+  box-shadow: inset 0 1px 1px #fff, var(--ring-focus);
 }
 
 .search-icon {
@@ -560,8 +624,11 @@ main {
 }
 
 .filter-select {
-  background: var(--bg-page);
-  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8), 0 1px 3px rgba(0, 0, 0, 0.02);
   color: var(--text-primary);
   padding: 10px 16px;
   border-radius: var(--radius-pill);
@@ -574,17 +641,18 @@ main {
 }
 
 .filter-select:hover {
-  background: #ebebed;
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(255, 255, 255, 1);
 }
 
 .filter-select:focus {
-  background: #ffffff;
-  border-color: rgba(21, 128, 61, 0.3);
-  box-shadow: var(--ring-focus);
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(21, 128, 61, 0.4);
+  box-shadow: inset 0 1px 1px #fff, var(--ring-focus);
 }
 
 /* ==========================================================================
-   Apple Product Grid & Cards
+   iOS 27 Liquid Glass Product Grid & Cards
    ========================================================================== */
 .product-grid {
   display: grid;
@@ -593,8 +661,10 @@ main {
 }
 
 .product-card {
-  background: #ffffff;
-  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
   border-radius: var(--radius-xl);
   padding: 22px;
   transition: var(--transition-bounce);
@@ -602,17 +672,29 @@ main {
   flex-direction: column;
   justify-content: space-between;
   position: relative;
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--glass-shadow);
   overflow: hidden;
 }
 
-.product-card:hover {
-  border-color: var(--border-hover);
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-3px);
+.product-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.95) 20%, rgba(255, 255, 255, 0.95) 80%, transparent);
+  pointer-events: none;
 }
 
-/* Apple Status Badge */
+.product-card:hover {
+  background: var(--bg-card-hover);
+  border-color: rgba(255, 255, 255, 0.95);
+  box-shadow: var(--glass-shadow-hover);
+  transform: translateY(-4px) scale(1.008);
+}
+
+/* iOS 27 Translucent Glass Status Badges */
 .product-badge {
   position: absolute;
   top: 10px;
@@ -623,33 +705,37 @@ main {
   border-radius: var(--radius-pill);
   letter-spacing: 0.02em;
   z-index: 2;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
   white-space: nowrap;
   line-height: 1.2;
 }
 
 .badge-instock {
-  background: rgba(21, 128, 61, 0.92) !important;
+  background: rgba(21, 128, 61, 0.88) !important;
   color: #ffffff !important;
-  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
 }
 
 .badge-lowstock {
-  background: rgba(180, 83, 9, 0.92) !important;
+  background: rgba(180, 83, 9, 0.88) !important;
   color: #ffffff !important;
-  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
 }
 
 .badge-outstock {
-  background: rgba(220, 38, 38, 0.92) !important;
+  background: rgba(220, 38, 38, 0.88) !important;
   color: #ffffff !important;
-  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
 }
 
 .btn-outstock {
-  background: #fef2f2 !important;
+  background: rgba(254, 242, 242, 0.8) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   color: #dc2626 !important;
-  border: 1px solid rgba(239, 68, 68, 0.25) !important;
+  border: 1px solid rgba(239, 68, 68, 0.28) !important;
   cursor: not-allowed !important;
   white-space: nowrap !important;
   font-weight: 600 !important;
@@ -696,16 +782,19 @@ main {
 }
 
 .crop-chip {
-  background: var(--bg-page);
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   color: var(--text-secondary);
   font-size: 11.5px;
   font-weight: 500;
   padding: 3px 9px;
   border-radius: var(--radius-pill);
-  border: 1px solid var(--border-color);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8);
 }
 
-/* Apple Minimalist Stock Bar */
+/* iOS 27 Minimalist Stock Bar */
 .stock-bar-container {
   margin: 14px 0 16px;
 }
@@ -720,9 +809,10 @@ main {
 .stock-bar-bg {
   width: 100%;
   height: 6px;
-  background: #ebebed;
+  background: rgba(0, 0, 0, 0.06);
   border-radius: var(--radius-pill);
   overflow: hidden;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
 }
 
 .stock-bar-fill {
@@ -731,9 +821,9 @@ main {
   transition: width 0.5s var(--ease-spring);
 }
 
-.fill-green { background: #16a34a; }
-.fill-amber { background: #f59e0b; }
-.fill-red { background: #ef4444; }
+.fill-green { background: linear-gradient(90deg, #15803d, #22c55e); }
+.fill-amber { background: linear-gradient(90deg, #b45309, #f59e0b); }
+.fill-red { background: linear-gradient(90deg, #b91c1c, #ef4444); }
 
 .product-price-row {
   display: flex;
@@ -742,7 +832,7 @@ main {
   gap: 12px;
   margin-top: 14px;
   padding-top: 14px;
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .product-price {
@@ -760,11 +850,16 @@ main {
   font-weight: 500;
 }
 
-/* Buttons (Apple Pill Style) */
+/* ==========================================================================
+   iOS 27 Liquid Glass Buttons (Luminous Emerald & Specular Refraction)
+   ========================================================================== */
 .btn-primary {
   background: var(--primary-gradient);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.45), 0 6px 20px rgba(21, 128, 61, 0.3);
   color: #ffffff;
-  border: none;
   font-family: var(--font-sans);
   font-weight: 600;
   font-size: 14px;
@@ -773,7 +868,6 @@ main {
   cursor: pointer;
   width: 100%;
   transition: var(--transition-bounce);
-  box-shadow: 0 4px 14px rgba(21, 128, 61, 0.28);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -781,9 +875,9 @@ main {
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, #166534 0%, #14532d 100%);
-  box-shadow: 0 6px 18px rgba(21, 128, 61, 0.35);
-  transform: translateY(-1px);
+  background: linear-gradient(135deg, rgba(22, 101, 52, 0.95) 0%, rgba(20, 83, 45, 0.98) 100%);
+  box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 0.55), 0 8px 26px rgba(21, 128, 61, 0.38);
+  transform: translateY(-2px);
 }
 
 .btn-primary:active {
@@ -791,8 +885,11 @@ main {
 }
 
 .btn-action {
-  background: #ffffff;
-  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9), 0 2px 6px rgba(0, 0, 0, 0.03);
   color: var(--text-primary);
   padding: 7px 14px;
   border-radius: var(--radius-pill);
@@ -804,13 +901,13 @@ main {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  box-shadow: var(--shadow-xs);
   white-space: nowrap;
 }
 
 .btn-action:hover {
-  background: var(--bg-page);
-  border-color: var(--border-hover);
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(255, 255, 255, 1);
+  box-shadow: inset 0 1px 1px #fff, 0 4px 12px rgba(0, 0, 0, 0.06);
   transform: translateY(-1px);
 }
 
@@ -819,8 +916,11 @@ main {
 }
 
 .btn-details {
-  background: var(--bg-page);
-  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9), 0 2px 6px rgba(0, 0, 0, 0.03);
   color: var(--text-primary);
   padding: 7px 14px;
   border-radius: var(--radius-pill);
@@ -838,6 +938,7 @@ main {
   background: var(--text-primary);
   color: #ffffff;
   border-color: var(--text-primary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   transform: translateY(-1px);
 }
 
@@ -846,11 +947,14 @@ main {
 }
 
 /* ==========================================================================
-   Customer Ledger & Summary Card
+   Customer Ledger & Summary Card (iOS 27 Glass Slab)
    ========================================================================== */
 .ledger-header-card {
-  background: #ffffff;
-  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
   border-radius: var(--radius-xl);
   padding: 26px 32px;
   margin-bottom: 24px;
@@ -859,7 +963,19 @@ main {
   justify-content: space-between;
   align-items: center;
   gap: 24px;
-  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.ledger-header-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.95) 20%, rgba(255, 255, 255, 0.95) 80%, transparent);
+  pointer-events: none;
 }
 
 .customer-info-box h3 {
@@ -886,22 +1002,26 @@ main {
 }
 
 .ledger-stat-box {
-  background: var(--bg-page);
-  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.58);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9), 0 4px 12px rgba(0, 0, 0, 0.02);
   padding: 16px 20px;
   border-radius: var(--radius-lg);
   transition: var(--transition-bounce);
 }
 
 .ledger-stat-box:hover {
-  background: #ffffff;
-  box-shadow: var(--shadow-md);
+  background: rgba(255, 255, 255, 0.88);
+  border-color: rgba(255, 255, 255, 1);
+  box-shadow: inset 0 1px 1px #fff, 0 8px 24px rgba(15, 23, 42, 0.06);
   transform: translateY(-1px);
 }
 
 .ledger-stat-box.highlight-due {
-  border-color: rgba(245, 158, 11, 0.3);
-  background: rgba(245, 158, 11, 0.08);
+  border-color: rgba(245, 158, 11, 0.35);
+  background: rgba(254, 243, 199, 0.6);
 }
 
 .ledger-stat-title {
@@ -925,8 +1045,10 @@ main {
 
 .btn-pay-now {
   background: var(--primary-gradient);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
   color: white;
-  border: none;
   font-family: var(--font-sans);
   font-size: 14.5px;
   font-weight: 600;
@@ -934,16 +1056,16 @@ main {
   border-radius: var(--radius-pill);
   cursor: pointer;
   transition: var(--transition-bounce);
-  box-shadow: 0 4px 14px rgba(21, 128, 61, 0.28);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.45), 0 6px 20px rgba(21, 128, 61, 0.32);
   display: inline-flex;
   align-items: center;
   gap: 8px;
 }
 
 .btn-pay-now:hover {
-  background: linear-gradient(135deg, #166534 0%, #14532d 100%);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(21, 128, 61, 0.35);
+  background: linear-gradient(135deg, rgba(22, 101, 52, 0.95) 0%, rgba(20, 83, 45, 0.98) 100%);
+  transform: translateY(-2px);
+  box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 0.55), 0 8px 26px rgba(21, 128, 61, 0.38);
 }
 
 .btn-pay-now:active {
@@ -951,7 +1073,7 @@ main {
 }
 
 /* ==========================================================================
-   Apple-Clean Minimalist Tables
+   iOS 27 Liquid Glass Tables
    ========================================================================== */
 .section-title {
   font-size: 18px;
@@ -965,11 +1087,25 @@ main {
 }
 
 .table-card {
-  background: #ffffff;
-  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
   border-radius: var(--radius-xl);
   overflow: hidden;
-  box-shadow: var(--shadow-sm);
+  position: relative;
+}
+
+.table-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.95) 20%, rgba(255, 255, 255, 0.95) 80%, transparent);
+  pointer-events: none;
 }
 
 .custom-table {
@@ -980,19 +1116,21 @@ main {
 }
 
 .custom-table th {
-  background: #fafafc;
+  background: rgba(248, 250, 252, 0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   padding: 14px 20px;
   color: var(--text-muted);
   font-weight: 600;
   font-size: 11.5px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .custom-table td {
   padding: 16px 20px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   color: var(--text-secondary);
   transition: background 0.15s ease;
 }
@@ -1002,7 +1140,7 @@ main {
 }
 
 .custom-table tr:hover td {
-  background: #fbfbfd;
+  background: rgba(255, 255, 255, 0.55);
 }
 
 .status-badge {
@@ -1014,36 +1152,56 @@ main {
   font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 0.02em;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .status-paid {
-  background: rgba(34, 197, 94, 0.12);
+  background: rgba(34, 197, 94, 0.14);
   color: #15803d;
-  border: 1px solid rgba(34, 197, 94, 0.25);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.6);
 }
 
 .status-overdue {
-  background: rgba(239, 68, 68, 0.12);
+  background: rgba(239, 68, 68, 0.14);
   color: #dc2626;
-  border: 1px solid rgba(239, 68, 68, 0.25);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.6);
 }
 
 .status-due-soon {
-  background: rgba(245, 158, 11, 0.12);
+  background: rgba(245, 158, 11, 0.14);
   color: #b45309;
-  border: 1px solid rgba(245, 158, 11, 0.25);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.6);
 }
 
 /* ==========================================================================
-   Admin Center & Forms
+   Admin Center & Forms (iOS 27 Glass Form Styling)
    ========================================================================== */
 .admin-card {
-  background: #ffffff;
-  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
   border-radius: var(--radius-xl);
   padding: 26px 30px;
-  box-shadow: var(--shadow-sm);
   margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.95) 20%, rgba(255, 255, 255, 0.95) 80%, transparent);
+  pointer-events: none;
 }
 
 .form-group {
@@ -1063,8 +1221,11 @@ main {
 .form-control {
   width: 100%;
   padding: 10px 14px;
-  background: var(--bg-page);
-  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03);
   border-radius: var(--radius-md);
   color: var(--text-primary);
   font-family: var(--font-sans);
@@ -1074,13 +1235,13 @@ main {
 
 .form-control:focus {
   outline: none;
-  background: #ffffff;
-  border-color: rgba(21, 128, 61, 0.3);
-  box-shadow: var(--ring-focus);
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(21, 128, 61, 0.4);
+  box-shadow: inset 0 1px 1px #fff, var(--ring-focus);
 }
 
 /* ==========================================================================
-   Apple Sheet Modals
+   iOS 27 VisionOS Glass Sheet Modals
    ========================================================================== */
 .modal-overlay {
   position: fixed;
@@ -1088,9 +1249,9 @@ main {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.36);
-  backdrop-filter: blur(20px) saturate(190%);
-  -webkit-backdrop-filter: blur(20px) saturate(190%);
+  background: rgba(15, 23, 42, 0.36);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
   z-index: 300;
   display: flex;
   align-items: center;
@@ -1106,13 +1267,15 @@ main {
 }
 
 .modal-card {
-  background: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.82) !important;
+  backdrop-filter: var(--glass-blur-deep) !important;
+  -webkit-backdrop-filter: var(--glass-blur-deep) !important;
+  border: 1px solid rgba(255, 255, 255, 0.9) !important;
+  box-shadow: inset 0 1px 1.5px 0 rgba(255, 255, 255, 1), 0 32px 72px -12px rgba(0, 0, 0, 0.22) !important;
   border-radius: var(--radius-xl);
   width: 90%;
   max-width: 500px;
   padding: 28px 32px;
-  box-shadow: var(--shadow-modal);
   position: relative;
   transform: scale(0.95) translateY(10px);
   transition: transform 0.28s var(--ease-spring), opacity 0.25s var(--ease-smooth);
@@ -1129,7 +1292,7 @@ main {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   padding-bottom: 14px;
 }
 
@@ -1141,8 +1304,11 @@ main {
 }
 
 .close-btn {
-  background: var(--bg-page);
-  border: none;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9), 0 1px 3px rgba(0, 0, 0, 0.04);
   color: var(--text-muted);
   width: 30px;
   height: 30px;
@@ -1157,7 +1323,8 @@ main {
 
 .close-btn:hover {
   color: var(--text-primary);
-  background: #e2e2e5;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: inset 0 1px 1px #fff, 0 2px 6px rgba(0, 0, 0, 0.08);
   transform: scale(1.05);
 }
 
@@ -1174,8 +1341,11 @@ main {
 }
 
 .pay-opt-btn {
-  background: var(--bg-page);
-  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8), 0 1px 3px rgba(0, 0, 0, 0.02);
   padding: 10px 8px;
   border-radius: var(--radius-md);
   color: var(--text-secondary);
@@ -1188,19 +1358,21 @@ main {
 }
 
 .pay-opt-btn:hover {
-  background: #ebebed;
+  background: rgba(255, 255, 255, 0.9);
 }
 
 .pay-opt-btn.active {
-  border-color: rgba(21, 128, 61, 0.25);
-  background: var(--primary-tint);
+  border-color: rgba(21, 128, 61, 0.35);
+  background: rgba(236, 253, 245, 0.85);
   color: var(--primary-color);
-  box-shadow: 0 2px 6px rgba(21, 128, 61, 0.12);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9), 0 3px 10px rgba(21, 128, 61, 0.16);
 }
 
 .qr-box {
-  background: var(--bg-page);
-  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
   padding: 18px;
   border-radius: var(--radius-lg);
   width: 180px;
@@ -1210,7 +1382,7 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--shadow-xs);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9), 0 4px 16px rgba(0, 0, 0, 0.04);
 }
 
 .qr-placeholder {
@@ -1233,7 +1405,7 @@ main {
 }
 
 /* ==========================================================================
-   Toasts & Notification Drawer
+   Toasts & Notification Drawer (iOS 27 Liquid Glass)
    ========================================================================== */
 .toast-container {
   position: fixed;
@@ -1247,14 +1419,14 @@ main {
 }
 
 .toast {
-  background: var(--bg-glass);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.84);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.9);
   border-left: 4px solid var(--primary-color);
   padding: 14px 18px;
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.95), 0 14px 34px -4px rgba(15, 23, 42, 0.12);
   display: flex;
   align-items: flex-start;
   gap: 12px;
@@ -1294,12 +1466,12 @@ main {
   right: 28px;
   width: 380px;
   max-height: 500px;
-  background: var(--bg-glass);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(32px) saturate(200%);
+  -webkit-backdrop-filter: blur(32px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.88);
   border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-modal);
+  box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 1), 0 24px 54px -10px rgba(0, 0, 0, 0.16);
   z-index: 150;
   display: none;
   flex-direction: column;
@@ -1313,8 +1485,10 @@ main {
 
 .notif-drawer-header {
   padding: 14px 18px;
-  background: #fafafc;
-  border-bottom: 1px solid var(--border-color);
+  background: rgba(250, 250, 252, 0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1335,22 +1509,25 @@ main {
 }
 
 .notif-item {
-  background: #ffffff;
-  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
   border-left: 3px solid var(--primary-color);
   padding: 12px 14px;
   border-radius: var(--radius-md);
   font-size: 12.5px;
   transition: var(--transition-fast);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9), 0 1px 3px rgba(0, 0, 0, 0.02);
 }
 
 .notif-item:hover {
-  background: var(--bg-page);
+  background: rgba(255, 255, 255, 0.9);
   transform: translateX(2px);
 }
 
 .notif-item.unread {
-  background: var(--primary-tint);
+  background: rgba(236, 253, 245, 0.8);
   border-left-color: var(--primary-color);
 }
 
@@ -1361,19 +1538,19 @@ main {
 }
 
 /* ==========================================================================
-   Full Page Apple Authentication Screen
+   Full Page Apple Authentication Screen (iOS 27 Vision Glass Aura)
    ========================================================================== */
 #authFullPageScreen {
-  background: radial-gradient(circle at 50% 25%, rgba(21, 128, 61, 0.12), transparent 70%), #0d1712 !important;
+  background: radial-gradient(circle at 50% 25%, rgba(21, 128, 61, 0.18), transparent 60%), radial-gradient(circle at 85% 75%, rgba(0, 113, 227, 0.14), transparent 55%), #0a110d !important;
 }
 
 #authFullPageScreen .modal-card {
-  background: rgba(255, 255, 255, 0.94) !important;
-  backdrop-filter: blur(30px) saturate(190%) !important;
-  -webkit-backdrop-filter: blur(30px) saturate(190%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.6) !important;
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(36px) saturate(210%) !important;
+  -webkit-backdrop-filter: blur(36px) saturate(210%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.9) !important;
   border-radius: 28px !important;
-  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.45) !important;
+  box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 1), 0 36px 84px rgba(0, 0, 0, 0.45) !important;
 }
 
 /* ==========================================================================
@@ -1993,10 +2170,13 @@ textarea:focus-visible {
   outline-offset: 2px !important;
 }
 
-/* Form Consent Checkboxes & Disclosures */
+/* Form Consent Checkboxes & Disclosures (iOS 27 Glass Surface) */
 .form-consent-box {
-  background: #f8fafc;
-  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.58);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9);
   padding: 12px 14px;
   border-radius: var(--radius-md);
   margin: 14px 0;
@@ -2025,7 +2205,7 @@ textarea:focus-visible {
 }
 
 /* ==========================================================================
-   Cookie Consent Banner (Apple Minimalist Glass)
+   Cookie Consent Banner (iOS 27 Liquid Glass Pod)
    ========================================================================== */
 .cookie-banner {
   position: fixed;
@@ -2034,12 +2214,12 @@ textarea:focus-visible {
   transform: translateX(-50%) translateY(140%);
   max-width: 680px;
   width: calc(100% - 32px);
-  background: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(28px) saturate(180%);
-  -webkit-backdrop-filter: blur(28px) saturate(180%);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 0 20px 48px -8px rgba(0, 0, 0, 0.22), 0 4px 12px rgba(0, 0, 0, 0.06);
-  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(32px) saturate(200%);
+  -webkit-backdrop-filter: blur(32px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 1), 0 24px 60px -8px rgba(0, 0, 0, 0.22);
+  border-radius: 24px;
   padding: 20px 24px;
   z-index: 99998;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
@@ -2093,33 +2273,41 @@ textarea:focus-visible {
 }
 
 .cookie-btn-primary {
-  background: var(--primary-color);
+  background: var(--primary-gradient);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.45), 0 4px 14px rgba(21, 128, 61, 0.25);
   color: #ffffff;
-  border: none;
   border-radius: var(--radius-pill);
   padding: 8px 18px;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  transition: var(--transition-fast);
+  transition: var(--transition-bounce);
 }
 .cookie-btn-primary:hover {
-  background: var(--primary-hover);
+  background: linear-gradient(135deg, rgba(22, 101, 52, 0.95) 0%, rgba(20, 83, 45, 0.98) 100%);
+  transform: translateY(-1px);
 }
 
 .cookie-btn-secondary {
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   color: var(--text-primary);
-  border: 1px solid var(--border-color);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9), 0 2px 6px rgba(0, 0, 0, 0.04);
   border-radius: var(--radius-pill);
   padding: 8px 16px;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  transition: var(--transition-fast);
+  transition: var(--transition-bounce);
 }
 .cookie-btn-secondary:hover {
-  background: rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.95);
+  transform: translateY(-1px);
 }
 
 .cookie-btn-text {
@@ -2134,14 +2322,29 @@ textarea:focus-visible {
 }
 
 /* ==========================================================================
-   Comprehensive Site Footer (Business Details, Licenses, Policies & Compliance)
+   Comprehensive Site Footer (iOS 27 Spatial Glass Canvas)
    ========================================================================== */
 .site-footer {
-  background: #ffffff;
-  border-top: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-top: 1px solid var(--glass-border);
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.03);
   margin-top: 48px;
   padding: 48px 24px 32px;
   color: var(--text-secondary);
+  position: relative;
+}
+
+.site-footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.95) 20%, rgba(255, 255, 255, 0.95) 80%, transparent);
+  pointer-events: none;
 }
 
 .footer-inner {
@@ -2209,8 +2412,11 @@ textarea:focus-visible {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: var(--primary-tint);
-  border: 1px solid rgba(21, 128, 61, 0.2);
+  background: rgba(34, 197, 94, 0.14);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.7);
   color: var(--primary-color);
   padding: 4px 10px;
   border-radius: var(--radius-pill);
@@ -2220,8 +2426,11 @@ textarea:focus-visible {
 }
 
 .license-info-card {
-  background: #f8fafc;
-  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.58);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9);
   border-radius: var(--radius-md);
   padding: 14px;
   font-size: 12px;
@@ -2230,8 +2439,11 @@ textarea:focus-visible {
 }
 
 .footer-trust-banner {
-  background: linear-gradient(135deg, rgba(21, 128, 61, 0.05) 0%, rgba(21, 128, 61, 0.02) 100%);
-  border: 1px solid rgba(21, 128, 61, 0.18);
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9), 0 4px 16px rgba(0, 0, 0, 0.03);
   border-radius: var(--radius-lg);
   padding: 18px 24px;
   display: flex;
@@ -2254,12 +2466,15 @@ textarea:focus-visible {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow: inset 0 1px 1px #fff, 0 4px 12px rgba(0, 0, 0, 0.05);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 18px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   flex-shrink: 0;
 }
 
@@ -2275,7 +2490,7 @@ textarea:focus-visible {
 }
 
 .footer-bottom-bar {
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
   padding-top: 24px;
   display: flex;
   align-items: center;
@@ -2287,21 +2502,24 @@ textarea:focus-visible {
 }
 
 /* ==========================================================================
-   Policy & Legal Compliance Modal (Interactive Multi-Tab)
+   Policy & Legal Compliance Modal (iOS 27 Vision Glass Multi-Tab)
    ========================================================================== */
 .policy-tabs-bar {
   display: flex;
-  background: rgba(0, 0, 0, 0.04);
+  background: rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
   padding: 4px;
   border-radius: var(--radius-pill);
   gap: 4px;
   overflow-x: auto;
   margin-bottom: 20px;
-  border: 1px solid var(--border-color);
 }
 
 .policy-tab-btn {
-  border: none;
+  border: 1px solid transparent;
   background: transparent;
   color: var(--text-secondary);
   font-size: 12.5px;
@@ -2314,10 +2532,13 @@ textarea:focus-visible {
 }
 
 .policy-tab-btn.active {
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-color: rgba(255, 255, 255, 0.95);
   color: var(--primary-color);
   font-weight: 700;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  box-shadow: inset 0 1px 1px #fff, 0 3px 10px rgba(0, 0, 0, 0.06);
 }
 
 .policy-content-body {
@@ -2350,8 +2571,12 @@ textarea:focus-visible {
 }
 
 .policy-highlight-card {
-  background: #f8fafc;
+  background: rgba(236, 253, 245, 0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(21, 128, 61, 0.2);
   border-left: 4px solid var(--primary-color);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8);
   border-radius: var(--radius-sm);
   padding: 12px 16px;
   margin: 14px 0;
