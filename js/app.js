@@ -1511,7 +1511,7 @@ function renderCartModal() {
 
     <div class="form-group">
       <label>${t('fulfillmentLabel')}</label>
-      <div style="display: flex; gap: 10px; margin-top: 4px;">
+      <div class="cart-fulfillment-options" style="display: flex; gap: 10px; margin-top: 4px;">
         <label style="flex: 1; border: 1px solid var(--border-color); padding: 10px; border-radius: var(--radius-sm); cursor: pointer; background: #ffffff; text-align: center; font-size: 12px; font-weight: 600;">
           <input type="radio" name="fulfillment" value="PICKUP" checked onchange="toggleDeliveryAddressField()">
           ${t('pickupOption')}
@@ -1676,7 +1676,7 @@ function renderCustomerOrders() {
     }).join(', ');
 
     return `
-      <div style="background: #ffffff; border: 1px solid var(--border-color); padding: 20px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm);">
+      <div class="order-card" style="background: #ffffff; border: 1px solid var(--border-color); padding: 20px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm);">
         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
           <div>
             <h4 style="font-size: 16px; font-weight: 700; color: var(--text-primary);">${ord.orderId}</h4>
@@ -1685,7 +1685,7 @@ function renderCustomerOrders() {
           <div>${statusBadge}</div>
         </div>
 
-        <div style="display: flex; gap: 8px; margin: 14px 0; background: #f8fafc; padding: 12px; border-radius: var(--radius-sm); font-size: 12px;">
+        <div class="order-step-tracker" style="display: flex; gap: 8px; margin: 14px 0; background: #f8fafc; padding: 12px; border-radius: var(--radius-sm); font-size: 12px;">
           <span style="font-weight: 600; color: ${ord.status === 'ORDER_PLACED' ? 'var(--warning-color)' : 'var(--success-color)'};">${t('stepPlaced')}</span> → 
           <span style="font-weight: 600; color: ${ord.status === 'PACKED_READY' || ord.status === 'DISPATCHED' || ord.status === 'COMPLETED' ? 'var(--success-color)' : 'var(--text-muted)'};">${t('stepPacked')}</span> → 
           <span style="font-weight: 600; color: ${ord.status === 'DISPATCHED' || ord.status === 'COMPLETED' ? 'var(--success-color)' : 'var(--text-muted)'};">${t('stepReady')}</span> → 
@@ -1696,7 +1696,7 @@ function renderCustomerOrders() {
           <strong>${currentLang === 'ta' ? 'பொருட்கள்:' : 'Items:'}</strong> ${itemsSummary}
         </div>
 
-        <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 12px; font-size: 13px;">
+        <div class="order-card-footer" style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 12px; font-size: 13px;">
           <div>
             <div>${currentLang === 'ta' ? 'முகவரி:' : 'Address:'} <span style="color: var(--text-primary); font-weight: 500;">${ord.deliveryAddress}</span></div>
             <div style="font-size: 11px; margin-top: 4px;">
@@ -1923,7 +1923,7 @@ function renderOwnerOrders() {
     const cName = (currentLang === 'ta' && ord.customerNameTa) ? ord.customerNameTa : ord.customerName;
 
     return `
-      <div style="background: #f8fafc; border: 1px solid var(--border-color); padding: 16px; border-radius: var(--radius-sm); display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <div class="owner-order-card" style="background: #f8fafc; border: 1px solid var(--border-color); padding: 16px; border-radius: var(--radius-sm); display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
         <div>
           <div style="display: flex; align-items: center; gap: 10px;">
             <strong style="font-size: 15px; color: var(--text-primary);">${ord.orderId}</strong>
@@ -1944,7 +1944,7 @@ function renderOwnerOrders() {
           </div>
         </div>
 
-        <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+        <div class="owner-order-actions" style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
           ${ord.status === 'ORDER_PLACED' ? `
             <button class="btn-primary" style="padding: 8px 14px; font-size: 12px;" onclick="markOrderPacked('${ord.orderId}')">
               Mark Packed & Ready

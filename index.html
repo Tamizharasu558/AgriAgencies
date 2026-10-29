@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KisanAgri - Agro Chemical & Fertilizer Stock Availability, Orders & Pay-Later Ledger</title>
   <meta name="description" content="Check live fertilizer & agro-chemical stock availability, reserve products for shop pickup or farm delivery, manage store credit, and pay online.">
-  <link rel="stylesheet" href="css/styles.css?v=apple2.1">
+  <link rel="stylesheet" href="css/styles.css?v=apple2.2">
 </head>
 <body>
   <!-- Accessibility Skip Link -->
@@ -268,7 +268,7 @@
               </div>
               <div class="form-group" style="grid-column: 1 / -1;">
                 <label>Target Crop Type (Select preset or type custom crop)</label>
-                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <div class="crop-select-row" style="display: flex; gap: 10px; flex-wrap: wrap;">
                   <select id="newProdCropSelect" class="form-control" style="flex: 1; min-width: 200px;" onchange="handleCropSelectChange()">
                     <option value="" disabled selected>-- Select Target Crop Type --</option>
                     <option value="Paddy">Paddy / Rice (நெல்)</option>
@@ -461,7 +461,7 @@
               </select>
             </div>
 
-            <div class="form-group" style="display: flex; gap: 12px;">
+            <div class="form-group bill-qty-upfront-row" style="display: flex; gap: 12px;">
               <div style="flex: 1;">
                 <label id="lblQty">Quantity</label>
                 <input type="number" id="billQtyInput" class="form-control" value="1" min="1" required oninput="calculateBillPreview()">
@@ -1030,7 +1030,7 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/data.js?v=apple2.1"></script>
-  <script src="js/app.js?v=apple2.1"></script>
+  <script src="js/data.js?v=apple2.2"></script>
+  <script src="js/app.js?v=apple2.2"></script>
 </body>
 </html>

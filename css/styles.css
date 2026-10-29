@@ -1396,55 +1396,196 @@ main {
 }
 
 @media (max-width: 768px) {
+  /* Mobile Header & Top Bar Navigation */
+  header {
+    border-bottom: 1px solid var(--border-color);
+  }
+
   .top-bar {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 14px;
-    padding: 12px 18px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 8px 12px;
+    padding: 10px 14px;
+  }
+
+  .top-bar > div:first-child {
+    grid-column: 1 / 2;
+    min-width: 0;
+  }
+
+  .brand {
+    gap: 10px;
+  }
+
+  .brand-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+    border-radius: var(--radius-sm);
+    flex-shrink: 0;
+  }
+
+  .brand-text h1 {
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2;
+  }
+
+  .brand-text p {
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   #headerProfileSubBar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 4px;
     width: 100%;
-    justify-content: space-between;
   }
 
+  #activeProfileBadge {
+    font-size: 11.5px !important;
+    padding: 3px 9px !important;
+    max-width: 175px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  #headerAuthActionBtn {
+    font-size: 11px !important;
+    padding: 3px 8px !important;
+  }
+
+  .top-bar > .header-actions {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  #cartBtn {
+    height: 36px !important;
+    padding: 0 12px !important;
+    font-size: 12.5px !important;
+  }
+
+  #notifBellBtn {
+    width: 36px !important;
+    height: 36px !important;
+  }
+
+  .top-bar > div:nth-child(2) {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-top: 6px;
+    border-top: 1px solid var(--border-light);
+  }
+
+  .role-btn {
+    font-size: 12px;
+    padding: 5px 12px;
+  }
+
+  /* Mobile Navigation Tabs */
   .nav-tabs {
-    padding: 4px 16px 8px;
+    padding: 4px 14px 8px;
+    gap: 6px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .nav-tabs::-webkit-scrollbar {
+    display: none;
   }
 
   .tab-btn {
     font-size: 12.5px;
     padding: 7px 13px;
+    flex-shrink: 0;
+    white-space: nowrap;
+    min-height: 36px;
   }
 
+  /* Main Canvas */
+  main {
+    margin: 16px auto 48px;
+    padding: 0 14px;
+  }
+
+  /* Mobile Hero Banner */
   .hero-banner {
     flex-direction: column;
     align-items: flex-start;
-    padding: 24px 20px;
-    gap: 20px;
+    padding: 18px 16px;
+    gap: 16px;
+    border-radius: var(--radius-lg);
+    margin-bottom: 16px;
+  }
+
+  .hero-content h2 {
+    font-size: 19px;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+
+  .hero-content p {
+    font-size: 12.5px;
+    line-height: 1.5;
   }
 
   .hero-stats {
     width: 100%;
-    justify-content: space-between;
-    gap: 10px;
+    display: flex;
+    gap: 8px;
   }
 
   .stat-pill {
     flex: 1;
-    min-width: 90px;
-    padding: 12px 10px;
+    min-width: 0;
+    padding: 10px 6px;
+    border-radius: var(--radius-md);
   }
 
+  .stat-value {
+    font-size: 17px;
+  }
+
+  .stat-label {
+    font-size: 9.5px;
+    letter-spacing: 0.02em;
+  }
+
+  /* Controls Bar & Filters */
   .controls-bar {
     flex-direction: column;
     align-items: stretch;
-    gap: 12px;
-    padding: 14px;
+    gap: 10px;
+    padding: 12px;
+    border-radius: var(--radius-lg);
+    margin-bottom: 16px;
   }
 
   .search-box {
     width: 100%;
+    min-width: 0;
+  }
+
+  .search-box input {
+    font-size: 16px; /* Prevents auto-zoom on iOS */
+    padding: 10px 14px 10px 38px;
   }
 
   .filter-group {
@@ -1455,29 +1596,363 @@ main {
 
   .filter-select {
     width: 100%;
+    font-size: 14px;
+    padding: 10px 14px;
+    min-height: 42px;
   }
 
+  /* Product Catalog Grid */
   .product-grid {
     grid-template-columns: 1fr;
     gap: 16px;
   }
 
+  .product-card {
+    padding: 16px;
+    border-radius: var(--radius-lg);
+  }
+
+  .product-title h3 {
+    font-size: 15.5px;
+  }
+
+  .product-price-row {
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .product-price {
+    font-size: 20px;
+  }
+
+  .btn-details {
+    padding: 7px 12px;
+    font-size: 12px;
+  }
+
+  .product-price-row .btn-action {
+    padding: 7px 14px;
+    font-size: 12.5px;
+  }
+
+  /* Customer Orders & Packing Tracking Cards */
+  .order-card {
+    padding: 16px !important;
+    border-radius: var(--radius-lg) !important;
+  }
+
+  .order-step-tracker {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 6px;
+    margin: 12px 0;
+    background: #f8fafc;
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    line-height: 1.45;
+  }
+
+  .order-card-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    border-top: 1px solid var(--border-color);
+    padding-top: 10px;
+    font-size: 12.5px;
+  }
+
+  /* Customer Ledger & Pay-Later */
+  .ledger-header-card {
+    padding: 18px 16px;
+    border-radius: var(--radius-lg);
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+
+  .customer-info-box h3 {
+    font-size: 18px;
+  }
+
+  .customer-meta {
+    flex-direction: column;
+    gap: 4px;
+    font-size: 12.5px;
+  }
+
+  .ledger-summary-grid {
+    grid-template-columns: 1fr;
+    max-width: 100%;
+    gap: 10px;
+  }
+
+  .ledger-stat-box {
+    padding: 12px 14px;
+    border-radius: var(--radius-md);
+  }
+
+  .ledger-stat-value {
+    font-size: 20px;
+  }
+
+  .btn-pay-now {
+    width: 100%;
+    justify-content: center;
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  /* Tables: Smooth Horizontal Touch Swipe on Mobile */
+  .table-card {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+  }
+
+  .custom-table {
+    min-width: 620px;
+  }
+
+  .custom-table th,
+  .custom-table td {
+    padding: 11px 12px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  #overdueTable {
+    min-width: 760px;
+  }
+
+  /* Admin Center (Shop Owner View) */
+  .admin-card {
+    padding: 18px 16px;
+    border-radius: var(--radius-lg);
+    margin-bottom: 18px;
+  }
+
+  .owner-order-card {
+    flex-direction: column;
+    align-items: stretch !important;
+    gap: 12px !important;
+    padding: 14px !important;
+  }
+
+  .owner-order-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .owner-order-actions button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .crop-select-row select,
+  .crop-select-row input {
+    min-width: 100% !important;
+  }
+
+  .bill-qty-upfront-row {
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  /* Mobile Sheet Modals */
+  .modal-overlay {
+    padding: 12px;
+    align-items: center;
+  }
+
   .modal-card {
-    width: 94% !important;
-    padding: 22px 18px !important;
+    width: 100% !important;
+    max-width: 480px !important;
+    border-radius: var(--radius-lg) !important;
+    padding: 20px 16px !important;
+    max-height: 90vh !important;
+    margin: auto 0;
+  }
+
+  .modal-header {
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+  }
+
+  .modal-title {
+    font-size: 17px;
+  }
+
+  .cart-fulfillment-options {
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  .cart-fulfillment-options label {
+    text-align: left !important;
+    padding: 12px !important;
+  }
+
+  .payment-options {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .pay-opt-btn {
+    padding: 11px;
+    font-size: 13px;
+  }
+
+  .qr-box {
+    width: 150px;
+    height: 150px;
+    padding: 12px;
+  }
+
+  .qr-placeholder {
+    width: 100px;
+    height: 100px;
+  }
+
+  .policy-tabs-bar {
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 3px;
+  }
+
+  .policy-tabs-bar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .policy-tab-btn {
+    font-size: 11.5px;
+    padding: 6px 11px;
+    flex-shrink: 0;
+  }
+
+  .policy-content-body {
+    max-height: 52vh;
+    font-size: 12.5px;
+    line-height: 1.55;
+  }
+
+  /* Mobile Notification Drawer & Toasts */
+  .notif-drawer {
+    width: calc(100vw - 24px);
+    right: 12px;
+    top: 98px;
+    max-height: calc(100vh - 124px);
+    border-radius: var(--radius-lg);
   }
 
   .toast-container {
-    left: 18px;
-    right: 18px;
-    bottom: 18px;
-    max-width: 100%;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    max-width: calc(100% - 24px);
   }
 
-  .notif-drawer {
-    width: calc(100vw - 36px);
-    right: 18px;
-    top: 70px;
+  .toast {
+    padding: 12px 14px;
+    border-radius: var(--radius-md);
+  }
+
+  /* Form Controls iOS zoom prevention */
+  .form-control,
+  input[type="text"],
+  input[type="tel"],
+  input[type="password"],
+  input[type="number"],
+  select {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .section-title {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 16px;
+  }
+
+  .section-title .btn-action {
+    align-self: flex-start;
+  }
+
+  .site-footer {
+    padding: 32px 14px 24px;
+    margin-top: 32px;
+  }
+
+  .footer-trust-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px 14px;
+    gap: 14px;
+  }
+
+  .footer-trust-item {
+    min-width: 100%;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .footer-bottom-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  #authFullPageScreen {
+    padding: 16px 12px !important;
+    justify-content: flex-start !important;
+  }
+
+  #authFullPageScreen .modal-card {
+    border-radius: 20px !important;
+    padding: 22px 16px !important;
+    margin: auto 0 !important;
+    max-width: 100% !important;
+  }
+
+  #authPageTitle {
+    font-size: 18px !important;
+  }
+
+  .brand-text p {
+    display: none; /* Keeps header ultraclean on tiny phone screens */
+  }
+
+  #activeProfileBadge {
+    max-width: 145px;
+  }
+
+  .hero-stats {
+    gap: 6px;
+  }
+
+  .stat-pill {
+    padding: 8px 4px;
+  }
+
+  .stat-value {
+    font-size: 15px;
+  }
+
+  .stat-label {
+    font-size: 9px;
   }
 }
 
