@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KisanAgri - Agro Chemical & Fertilizer Stock Availability, Orders & Pay-Later Ledger</title>
   <meta name="description" content="Check live fertilizer & agro-chemical stock availability, reserve products for shop pickup or farm delivery, manage store credit, and pay online.">
-  <link rel="stylesheet" href="css/styles.css?v=apple-pro-dark-1.0">
+  <link rel="stylesheet" href="css/styles.css?v=apple-fast-2.0">
   <!-- Dark Mode Script (runs before body renders to avoid flash) -->
   <script>
     (function () {
@@ -1050,17 +1050,40 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/data.js?v=apple-pro-dark-1.0"></script>
-  <script src="js/app.js?v=apple-pro-dark-1.0"></script>
+  <script src="js/data.js?v=apple-fast-2.0"></script>
+  <script src="js/app.js?v=apple-fast-2.0"></script>
   <script>
-    // ── Dark Mode ─────────────────────────────────────────────────────────────
+    // ── Apple Instant & Smooth Dark Mode ──────────────────────────────────
     function toggleDarkMode() {
       const html = document.documentElement;
       const isDark = html.getAttribute('data-theme') === 'dark';
       const next = isDark ? 'light' : 'dark';
-      html.setAttribute('data-theme', next);
-      localStorage.setItem('kisan_theme', next);
-      updateDarkModeIcon(next === 'dark');
+
+      const applyTheme = () => {
+        // Freeze individual element spring transitions to eliminate mobile render delays
+        html.classList.add('theme-switching');
+        html.setAttribute('data-theme', next);
+        try {
+          localStorage.setItem('kisan_theme', next);
+        } catch (e) {}
+        updateDarkModeIcon(next === 'dark');
+
+        // Restore transitions in the next animation frame
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            html.classList.remove('theme-switching');
+          });
+        });
+      };
+
+      // Native Apple iOS 18 / Safari / Chrome 120fps GPU View Transition
+      if (document.startViewTransition) {
+        document.startViewTransition(() => {
+          applyTheme();
+        });
+      } else {
+        applyTheme();
+      }
     }
 
     function updateDarkModeIcon(isDark) {

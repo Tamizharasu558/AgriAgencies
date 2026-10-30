@@ -732,10 +732,57 @@
   color: #000000 !important;
 }
 
+/* Disable backdrop-filter lag on solid opaque surfaces in dark mode */
+[data-theme="dark"] .hero-banner,
+[data-theme="dark"] .controls-bar,
+[data-theme="dark"] .product-card,
+[data-theme="dark"] .table-card,
+[data-theme="dark"] .admin-card,
+[data-theme="dark"] .ledger-header-card,
+[data-theme="dark"] .stat-pill,
+[data-theme="dark"] .order-card,
+[data-theme="dark"] .owner-order-card {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Fast Theme Switching - Temporarily freeze transitions during theme swap to eliminate mobile UI delay */
+html.theme-switching,
+html.theme-switching *,
+html.theme-switching *::before,
+html.theme-switching *::after {
+  transition: none !important;
+  animation-duration: 0.001ms !important;
+}
+
+/* Apple Native GPU Cross-fade View Transitions */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.22s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+/* Remove 300ms mobile tap delay & grey tap highlight */
+button,
+a,
+input,
+select,
+.btn-action,
+.btn-primary,
+.btn-details,
+.notif-btn,
+.tab-btn,
+.role-btn,
+.crop-chip,
+.filter-select {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html {
@@ -2151,6 +2198,20 @@ main {
 }
 
 @media (max-width: 768px) {
+  /* Disable heavy GPU backdrop blurs on mobile cards for instantaneous 60/120fps performance */
+  .hero-banner,
+  .controls-bar,
+  .product-card,
+  .table-card,
+  .admin-card,
+  .ledger-header-card,
+  .stat-pill,
+  .order-card,
+  .owner-order-card {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
   /* Mobile Header & Top Bar Navigation */
   header {
     border-bottom: 1px solid var(--border-color);
