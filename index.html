@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KisanAgri - Agro Chemical & Fertilizer Stock Availability, Orders & Pay-Later Ledger</title>
   <meta name="description" content="Check live fertilizer & agro-chemical stock availability, reserve products for shop pickup or farm delivery, manage store credit, and pay online.">
-  <link rel="stylesheet" href="css/styles.css?v=system-default-8.0">
+  <link rel="stylesheet" href="css/styles.css?v=instant-mobile-9.0">
   <!-- System-Theme Default Dark Mode Script (runs before body renders to avoid flash) -->
   <script>
     (function () {
@@ -1061,10 +1061,10 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/data.js?v=system-default-8.0"></script>
-  <script src="js/app.js?v=system-default-8.0"></script>
+  <script src="js/data.js?v=instant-mobile-9.0"></script>
+  <script src="js/app.js?v=instant-mobile-9.0"></script>
   <script>
-    // ── System-Default Theme Switcher with Silky Smooth Apple Transitions ──────
+    // ── Instant 0ms Theme Switcher ─────────────────────────────────────────────
     let lastThemeToggleTime = 0;
 
     function toggleDarkMode(e) {
@@ -1091,25 +1091,13 @@
         sessionStorage.setItem('kisan_theme_override', next);
       } catch (err) {}
 
-      updateDarkModeIcon(next === 'dark', true);
+      updateDarkModeIcon(next === 'dark');
     }
 
-    function updateDarkModeIcon(isDark, animate = false) {
+    function updateDarkModeIcon(isDark) {
       const icon = document.getElementById('darkModeIcon');
       if (icon) {
-        if (animate) {
-          icon.style.transform = 'scale(0.6) rotate(90deg)';
-          icon.style.opacity = '0';
-          setTimeout(() => {
-            icon.textContent = isDark ? '☀️' : '🌙';
-            icon.style.transform = 'scale(1) rotate(0deg)';
-            icon.style.opacity = '1';
-          }, 110);
-        } else {
-          icon.textContent = isDark ? '☀️' : '🌙';
-          icon.style.transform = 'scale(1) rotate(0deg)';
-          icon.style.opacity = '1';
-        }
+        icon.textContent = isDark ? '☀️' : '🌙';
       }
       const toggleBtn = document.getElementById('darkModeToggle');
       if (toggleBtn) {
@@ -1121,12 +1109,12 @@
     // Initialize icon state, mobile touch listener, and OS system theme observer
     (function () {
       const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-      updateDarkModeIcon(isDark, false);
+      updateDarkModeIcon(isDark);
 
-      // 0ms Mobile Fast-Touch Listener (bypasses mobile tap delay without ghost-click)
+      // 0ms Mobile Fast-Touch: trigger immediately on finger contact
       const toggleBtn = document.getElementById('darkModeToggle');
       if (toggleBtn) {
-        toggleBtn.addEventListener('touchend', function (e) {
+        toggleBtn.addEventListener('touchstart', function (e) {
           e.preventDefault();
           toggleDarkMode(e);
         }, { passive: false });

@@ -802,7 +802,7 @@ function renderCrudProductsTable() {
           <strong>${prodName}</strong><br>
           <span style="font-size: 11px; color: var(--text-muted);">${p.brand} • ${p.unit}</span>
         </td>
-        <td><span class="status-badge status-paid" style="background:#f1f5f9; color:#475569; border-color:#cbd5e1;">${p.category}</span></td>
+        <td><span class="status-badge" style="background: var(--bg-card-subtle); color: var(--text-secondary); border-color: var(--border-color);">${p.category}</span></td>
         <td style="font-weight: 700; color: var(--text-primary);">₹${p.price.toLocaleString('en-IN')}</td>
         <td><strong style="color: ${p.stock === 0 ? 'var(--danger-color)' : (p.stock <= p.minStockThreshold ? 'var(--warning-color)' : 'var(--success-color)')};">${p.stock === 0 ? (currentLang === 'ta' ? '0 (தீர்ந்துவிட்டது)' : '0 (Out of Stock)') : p.stock}</strong></td>
         <td>
@@ -1243,7 +1243,7 @@ function renderStockGrid() {
 
   if (filtered.length === 0) {
     container.innerHTML = `
-      <div style="grid-column: 1 / -1; text-align: center; padding: 48px; background: #ffffff; border-radius: var(--radius-md); border: 1px dashed var(--border-color);">
+      <div style="grid-column: 1 / -1; text-align: center; padding: 48px; background: var(--bg-card); border-radius: var(--radius-md); border: 1px dashed var(--border-color);">
         
         <h3 style="font-size: 16px; color: var(--text-primary);">${currentLang === 'ta' ? 'பொருட்கள் எதுவும் கிடைக்கவில்லை' : 'No Products Found'}</h3>
       </div>
@@ -1474,9 +1474,9 @@ function renderCartModal() {
         </div>
         <div style="display: flex; align-items: center; gap: 12px;">
           <div style="display: flex; align-items: center; border: 1px solid var(--border-color); border-radius: var(--radius-sm);">
-            <button style="border:none; background: #f1f5f9; width: 26px; height: 26px; cursor: pointer;" onclick="updateCartQty('${p.id}', -1)">-</button>
+            <button style="border:none; background: var(--bg-card-subtle); color: var(--text-primary); width: 26px; height: 26px; cursor: pointer;" onclick="updateCartQty('${p.id}', -1)">-</button>
             <span style="padding: 0 10px; font-weight: 600; font-size: 13px;">${cItem.qty}</span>
-            <button style="border:none; background: #f1f5f9; width: 26px; height: 26px; cursor: pointer;" onclick="updateCartQty('${p.id}', 1)">+</button>
+            <button style="border:none; background: var(--bg-card-subtle); color: var(--text-primary); width: 26px; height: 26px; cursor: pointer;" onclick="updateCartQty('${p.id}', 1)">+</button>
           </div>
           <strong style="font-size: 14px; min-width: 70px; text-align: right;">₹${itemTotal.toLocaleString('en-IN')}</strong>
         </div>
@@ -1492,7 +1492,7 @@ function renderCartModal() {
       ${itemsHtml}
     </div>
 
-    <div style="background: #f8fafc; border: 1px solid var(--border-color); padding: 12px; border-radius: var(--radius-sm); margin-bottom: 16px;">
+    <div style="background: var(--bg-card-subtle); border: 1px solid var(--border-color); padding: 12px; border-radius: var(--radius-sm); margin-bottom: 16px;">
       <div style="display: flex; justify-content: space-between; font-size: 15px; font-weight: 700; color: var(--text-primary);">
         <span>${currentLang === 'ta' ? 'மொத்த தொகை:' : 'Total Value:'}</span>
         <span style="color: var(--primary-color);">₹${grandTotal.toLocaleString('en-IN')}</span>
