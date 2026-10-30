@@ -614,11 +614,11 @@ function applyLanguageUI() {
   const footerDescEl = document.getElementById('footerAboutDescText');
   if (footerDescEl) footerDescEl.textContent = t('footerAboutDesc');
   const footerLegalH = document.getElementById('footerLegalHeader');
-  if (footerLegalH) footerLegalH.textContent = `t('footerQuickLinks')`;
+  if (footerLegalH) footerLegalH.textContent = t('footerQuickLinks');
   const footerCompH = document.getElementById('footerComplianceHeader');
-  if (footerCompH) footerCompH.textContent = `t('footerComplianceTitle')`;
+  if (footerCompH) footerCompH.textContent = t('footerComplianceTitle');
   const footerContH = document.getElementById('footerContactHeader');
-  if (footerContH) footerContH.textContent = `t('footerContactTitle')`;
+  if (footerContH) footerContH.textContent = t('footerContactTitle');
   const footerCopyEl = document.getElementById('footerCopyrightText');
   if (footerCopyEl) footerCopyEl.textContent = t('footerCopyright');
 
