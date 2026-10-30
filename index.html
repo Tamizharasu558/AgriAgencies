@@ -5,14 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KisanAgri - Agro Chemical & Fertilizer Stock Availability, Orders & Pay-Later Ledger</title>
   <meta name="description" content="Check live fertilizer & agro-chemical stock availability, reserve products for shop pickup or farm delivery, manage store credit, and pay online.">
-  <link rel="stylesheet" href="css/styles.css?v=horizontal-filters-5.0">
+  <link rel="stylesheet" href="css/styles.css?v=apple-dark-6.0">
   <!-- Dark Mode Script (runs before body renders to avoid flash) -->
   <script>
     (function () {
-      const stored = localStorage.getItem('kisan_theme');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const isDark = stored === 'dark' || (!stored && prefersDark);
-      if (isDark) document.documentElement.setAttribute('data-theme', 'dark');
+      try {
+        const stored = localStorage.getItem('kisan_theme');
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const isDark = stored === 'dark' || (!stored && prefersDark);
+        if (isDark) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+        }
+      } catch (e) {}
     })();
   </script>
 </head>
@@ -71,7 +77,7 @@
       <!-- Action Buttons -->
       <div class="header-actions">
         <!-- Dark Mode Toggle -->
-        <button class="notif-btn" id="darkModeToggle" title="Toggle Dark Mode" aria-label="Toggle Dark Mode" onclick="toggleDarkMode()" style="width: 38px;">
+        <button class="notif-btn" id="darkModeToggle" title="Toggle Dark Mode" aria-label="Toggle Dark Mode" onclick="toggleDarkMode(event)" style="width: 38px;">
           <span id="darkModeIcon">🌙</span>
         </button>
 
@@ -1050,73 +1056,67 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/data.js?v=horizontal-filters-5.0"></script>
-  <script src="js/app.js?v=horizontal-filters-5.0"></script>
+  <script src="js/data.js?v=apple-dark-6.0"></script>
+  <script src="js/app.js?v=apple-dark-6.0"></script>
   <script>
-    // ── Instant 0ms Zero-Glitch Theme Switcher ────────────────────────────────
-    let isTogglingTheme = false;
+    // ── Apple-Grade Instant & Reliable Theme Switcher ──────────────────────────
+    let lastThemeToggleTime = 0;
 
-    function toggleDarkMode() {
-      if (isTogglingTheme) return;
-      isTogglingTheme = true;
+    function toggleDarkMode(e) {
+      if (e && e.stopPropagation) e.stopPropagation();
+      const now = Date.now();
+      if (now - lastThemeToggleTime < 350) return; // Prevent double-trigger on mobile
+      lastThemeToggleTime = now;
 
       const html = document.documentElement;
       const isDark = html.getAttribute('data-theme') === 'dark';
       const next = isDark ? 'light' : 'dark';
 
-      // 1. Injected freeze style: completely disables all transitions and animations instantly
-      const freeze = document.createElement('style');
-      freeze.id = 'theme-atomic-freeze';
-      freeze.textContent = '*, *::before, *::after { transition: none !important; animation: none !important; }';
-      document.head.appendChild(freeze);
+      if (next === 'dark') {
+        html.setAttribute('data-theme', 'dark');
+      } else {
+        html.removeAttribute('data-theme');
+      }
 
-      // 2. Immediate atomic attribute switch
-      html.setAttribute('data-theme', next);
       try {
         localStorage.setItem('kisan_theme', next);
-      } catch (e) {}
+      } catch (err) {}
+
       updateDarkModeIcon(next === 'dark');
-
-      // 3. Force layout recalculation in ONE single atomic frame (0 glitch, 0 lag)
-      void html.offsetHeight;
-
-      // 4. Safely remove freeze on next frame to restore interactive button hovers
-      requestAnimationFrame(() => {
-        const el = document.getElementById('theme-atomic-freeze');
-        if (el) el.remove();
-        isTogglingTheme = false;
-      });
     }
 
     function updateDarkModeIcon(isDark) {
       const icon = document.getElementById('darkModeIcon');
       if (icon) icon.textContent = isDark ? '☀️' : '🌙';
+      const toggleBtn = document.getElementById('darkModeToggle');
+      if (toggleBtn) {
+        toggleBtn.setAttribute('title', isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode');
+        toggleBtn.setAttribute('aria-label', isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode');
+      }
     }
 
-    // Sync icon and fast-touch listener on page load
+    // Initialize icon state and OS theme listener
     (function () {
       const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
       updateDarkModeIcon(isDark);
 
-      // 0ms Mobile Fast-Touch Response (bypasses 300ms mobile touch delay)
-      const toggleBtn = document.getElementById('darkModeToggle');
-      if (toggleBtn) {
-        toggleBtn.addEventListener('pointerdown', function(e) {
-          if (e.pointerType === 'touch') {
-            e.preventDefault();
-            toggleDarkMode();
-          }
-        }, { passive: false });
-      }
-
       // Listen for OS-level theme change
-      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-        if (!localStorage.getItem('kisan_theme')) {
-          const theme = e.matches ? 'dark' : 'light';
-          document.documentElement.setAttribute('data-theme', theme);
-          updateDarkModeIcon(e.matches);
-        }
-      });
+      if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+          let hasCustomSetting = false;
+          try {
+            hasCustomSetting = !!localStorage.getItem('kisan_theme');
+          } catch (err) {}
+          if (!hasCustomSetting) {
+            if (e.matches) {
+              document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+              document.documentElement.removeAttribute('data-theme');
+            }
+            updateDarkModeIcon(e.matches);
+          }
+        });
+      }
     })();
   </script>
 </body>
