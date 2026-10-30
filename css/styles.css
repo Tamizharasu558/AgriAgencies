@@ -5,25 +5,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-  /* iOS 27 Spatial Liquid Glass System */
+  /* iOS 27 Spatial Liquid Glass System (Optimized for 60-120fps Rendering) */
   --bg-page: #f4f6fa;
-  --bg-card: rgba(255, 255, 255, 0.74);
-  --bg-card-subtle: rgba(255, 255, 255, 0.58);
-  --bg-card-hover: rgba(255, 255, 255, 0.9);
-  --bg-inset: rgba(0, 0, 0, 0.025);
-  --bg-modal: rgba(255, 255, 255, 0.84);
-  --bg-glass: rgba(255, 255, 255, 0.72);
-  --bg-glass-pill: rgba(255, 255, 255, 0.65);
-  --bg-glass-dark: rgba(20, 24, 28, 0.86);
+  --bg-card: rgba(255, 255, 255, 0.84);
+  --bg-card-subtle: rgba(255, 255, 255, 0.68);
+  --bg-card-hover: rgba(255, 255, 255, 0.95);
+  --bg-inset: rgba(0, 0, 0, 0.02);
+  --bg-modal: rgba(255, 255, 255, 0.9);
+  --bg-glass: rgba(255, 255, 255, 0.84);
+  --bg-glass-pill: rgba(255, 255, 255, 0.72);
+  --bg-glass-dark: rgba(20, 24, 28, 0.88);
 
   /* iOS 27 Specular Refraction Highlights & Borders */
-  --glass-border: rgba(255, 255, 255, 0.8);
-  --glass-border-subtle: rgba(255, 255, 255, 0.48);
+  --glass-border: rgba(255, 255, 255, 0.85);
+  --glass-border-subtle: rgba(255, 255, 255, 0.5);
   --glass-highlight: inset 0 1px 1px 0 rgba(255, 255, 255, 0.95);
-  --glass-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.95), 0 12px 32px -4px rgba(15, 23, 42, 0.05), 0 4px 12px -2px rgba(15, 23, 42, 0.02);
-  --glass-shadow-hover: inset 0 1px 2px 0 rgba(255, 255, 255, 1), 0 20px 44px -6px rgba(15, 23, 42, 0.09), 0 6px 16px -2px rgba(15, 23, 42, 0.03);
-  --glass-blur: blur(28px) saturate(190%);
-  --glass-blur-deep: blur(36px) saturate(210%);
+  --glass-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.95), 0 8px 24px -4px rgba(15, 23, 42, 0.04), 0 2px 6px -1px rgba(15, 23, 42, 0.02);
+  --glass-shadow-hover: inset 0 1px 2px 0 rgba(255, 255, 255, 1), 0 16px 36px -6px rgba(15, 23, 42, 0.08);
+  --glass-blur: blur(14px);
+  --glass-blur-deep: blur(22px);
 
   /* Apple Typography Scale (WCAG AA Contrast Compliant: >= 4.5:1 on light backgrounds) */
   --text-primary: #1d1d1f;
@@ -74,13 +74,13 @@
   --shadow-sm: inset 0 1px 1px 0 rgba(255, 255, 255, 0.8), 0 2px 6px rgba(0, 0, 0, 0.03);
   --shadow-md: inset 0 1px 1px 0 rgba(255, 255, 255, 0.9), 0 8px 24px -3px rgba(15, 23, 42, 0.05);
   --shadow-lg: inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.95), 0 18px 38px -4px rgba(15, 23, 42, 0.08);
-  --shadow-modal: inset 0 1px 1.5px 0 rgba(255, 255, 255, 1), 0 32px 72px -12px rgba(0, 0, 0, 0.22), 0 12px 24px -6px rgba(0, 0, 0, 0.08);
+  --shadow-modal: inset 0 1px 1.5px 0 rgba(255, 255, 255, 1), 0 32px 72px -12px rgba(0, 0, 0, 0.22);
 
-  /* Physics Transitions */
+  /* Physics Transitions — Targeted to GPU properties to prevent layout thrash */
   --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
-  --transition-fast: all 0.18s var(--ease-smooth);
-  --transition-bounce: all 0.28s var(--ease-spring);
+  --transition-fast: transform 0.16s ease, opacity 0.16s ease, background-color 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+  --transition-bounce: transform 0.22s var(--ease-spring), box-shadow 0.22s var(--ease-spring), background-color 0.2s ease, border-color 0.2s ease;
 
   /* Typography */
   --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
@@ -94,7 +94,6 @@
 }
 
 html {
-  scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -102,22 +101,35 @@ html {
 body {
   font-family: var(--font-sans);
   background-color: var(--bg-page);
-  /* iOS 27 Luminous Ambient Aura Mesh Background */
-  background-image: 
-    radial-gradient(at 0% 0%, rgba(21, 128, 61, 0.09) 0px, transparent 48%),
-    radial-gradient(at 95% 5%, rgba(0, 113, 227, 0.08) 0px, transparent 45%),
-    radial-gradient(at 88% 55%, rgba(16, 185, 129, 0.08) 0px, transparent 45%),
-    radial-gradient(at 5% 75%, rgba(245, 158, 11, 0.06) 0px, transparent 45%),
-    radial-gradient(at 80% 95%, rgba(13, 148, 136, 0.08) 0px, transparent 50%);
-  background-attachment: fixed;
   color: var(--text-primary);
   min-height: 100vh;
   line-height: 1.5;
   letter-spacing: -0.011em;
   overflow-x: hidden;
+  position: relative;
 }
 
-/* Custom Apple Glass Scrollbars */
+/* Hardware-accelerated fixed ambient backdrop layer (zero scroll repaints) */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(21, 128, 61, 0.08) 0px, transparent 48%),
+    radial-gradient(at 95% 5%, rgba(0, 113, 227, 0.07) 0px, transparent 45%),
+    radial-gradient(at 88% 55%, rgba(16, 185, 129, 0.07) 0px, transparent 45%),
+    radial-gradient(at 5% 75%, rgba(245, 158, 11, 0.05) 0px, transparent 45%),
+    radial-gradient(at 80% 95%, rgba(13, 148, 136, 0.07) 0px, transparent 50%);
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Custom Apple Glass Scrollbars (Hardware Accelerated) */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -126,14 +138,12 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.14);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.16);
   border-radius: var(--radius-pill);
   border: 2px solid transparent;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.24);
+  background: rgba(0, 0, 0, 0.28);
 }
 
 /* ==========================================================================
@@ -144,11 +154,12 @@ header {
   top: 0;
   z-index: 100;
   background: var(--bg-glass);
-  backdrop-filter: blur(30px) saturate(200%);
-  -webkit-backdrop-filter: blur(30px) saturate(200%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border-color);
   box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.03);
   transition: var(--transition-fast);
+  transform: translateZ(0);
 }
 
 .top-bar {
@@ -178,8 +189,6 @@ header {
   width: 42px;
   height: 42px;
   background: var(--primary-gradient);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.45);
   color: white;
   border-radius: var(--radius-md);
@@ -218,9 +227,7 @@ header {
 }
 
 #activeProfileBadge {
-  background: rgba(236, 253, 245, 0.8) !important;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(236, 253, 245, 0.85) !important;
   color: var(--primary-color) !important;
   padding: 4px 12px !important;
   border-radius: var(--radius-pill) !important;
@@ -237,9 +244,7 @@ header {
   font-size: 11px !important;
   padding: 4px 10px !important;
   font-weight: 600 !important;
-  background: rgba(255, 255, 255, 0.72) !important;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(255, 255, 255, 0.75) !important;
   color: var(--text-secondary) !important;
   border: 1px solid rgba(255, 255, 255, 0.8) !important;
   border-radius: var(--radius-pill) !important;
@@ -270,8 +275,6 @@ header {
   display: flex;
   align-items: center;
   background: rgba(120, 120, 128, 0.09) !important;
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
   border: 1px solid rgba(255, 255, 255, 0.6) !important;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
   padding: 3px !important;
@@ -302,9 +305,7 @@ header {
 }
 
 .role-btn.active {
-  background: rgba(255, 255, 255, 0.88) !important;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.92) !important;
   color: var(--text-primary) !important;
   font-weight: 600 !important;
   border: 1px solid rgba(255, 255, 255, 0.85);
@@ -326,9 +327,7 @@ header {
   position: relative;
   height: 38px;
   border-radius: var(--radius-pill);
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  background: rgba(255, 255, 255, 0.78);
   border: 1px solid rgba(255, 255, 255, 0.85);
   color: var(--text-primary);
   font-size: 14px;
@@ -418,8 +417,6 @@ header {
 .tab-btn.active {
   color: #ffffff;
   background: var(--bg-glass-dark);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.18);
   font-weight: 600;
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.3), 0 4px 14px rgba(0, 0, 0, 0.18);
@@ -523,10 +520,8 @@ main {
 }
 
 .stat-pill {
-  background: rgba(255, 255, 255, 0.58);
-  backdrop-filter: blur(18px) saturate(180%);
-  -webkit-backdrop-filter: blur(18px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.9);
   box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.9), 0 4px 14px -2px rgba(15, 23, 42, 0.04);
   padding: 14px 20px;
   border-radius: var(--radius-lg);
@@ -536,7 +531,7 @@ main {
 }
 
 .stat-pill:hover {
-  background: rgba(255, 255, 255, 0.88);
+  background: #ffffff;
   border-color: rgba(255, 255, 255, 1);
   box-shadow: inset 0 1px 1px #fff, 0 8px 24px -2px rgba(15, 23, 42, 0.08);
   transform: translateY(-2px);
@@ -587,10 +582,8 @@ main {
 .search-box input {
   width: 100%;
   padding: 11px 16px 11px 40px;
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.95);
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03);
   border-radius: var(--radius-pill);
   color: var(--text-primary);
@@ -601,7 +594,7 @@ main {
 
 .search-box input:focus {
   outline: none;
-  background: rgba(255, 255, 255, 0.95);
+  background: #ffffff;
   border-color: rgba(21, 128, 61, 0.4);
   box-shadow: inset 0 1px 1px #fff, var(--ring-focus);
 }
@@ -624,10 +617,8 @@ main {
 }
 
 .filter-select {
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.95);
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8), 0 1px 3px rgba(0, 0, 0, 0.02);
   color: var(--text-primary);
   padding: 10px 16px;
@@ -662,8 +653,6 @@ main {
 
 .product-card {
   background: var(--bg-card);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-xl);
   padding: 22px;
@@ -674,6 +663,7 @@ main {
   position: relative;
   box-shadow: var(--glass-shadow);
   overflow: hidden;
+  transform: translateZ(0);
 }
 
 .product-card::before {
@@ -691,7 +681,7 @@ main {
   background: var(--bg-card-hover);
   border-color: rgba(255, 255, 255, 0.95);
   box-shadow: var(--glass-shadow-hover);
-  transform: translateY(-4px) scale(1.008);
+  transform: translateY(-4px);
 }
 
 /* iOS 27 Translucent Glass Status Badges */
@@ -705,35 +695,31 @@ main {
   border-radius: var(--radius-pill);
   letter-spacing: 0.02em;
   z-index: 2;
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
   white-space: nowrap;
   line-height: 1.2;
 }
 
 .badge-instock {
-  background: rgba(21, 128, 61, 0.88) !important;
+  background: rgba(21, 128, 61, 0.92) !important;
   color: #ffffff !important;
   border: 1px solid rgba(255, 255, 255, 0.35) !important;
 }
 
 .badge-lowstock {
-  background: rgba(180, 83, 9, 0.88) !important;
+  background: rgba(180, 83, 9, 0.92) !important;
   color: #ffffff !important;
   border: 1px solid rgba(255, 255, 255, 0.35) !important;
 }
 
 .badge-outstock {
-  background: rgba(220, 38, 38, 0.88) !important;
+  background: rgba(220, 38, 38, 0.92) !important;
   color: #ffffff !important;
   border: 1px solid rgba(255, 255, 255, 0.35) !important;
 }
 
 .btn-outstock {
-  background: rgba(254, 242, 242, 0.8) !important;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(254, 242, 242, 0.9) !important;
   color: #dc2626 !important;
   border: 1px solid rgba(239, 68, 68, 0.28) !important;
   cursor: not-allowed !important;
@@ -782,15 +768,13 @@ main {
 }
 
 .crop-chip {
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.85);
   color: var(--text-secondary);
   font-size: 11.5px;
   font-weight: 500;
   padding: 3px 9px;
   border-radius: var(--radius-pill);
-  border: 1px solid rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.95);
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8);
 }
 
@@ -855,8 +839,6 @@ main {
    ========================================================================== */
 .btn-primary {
   background: var(--primary-gradient);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.35);
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.45), 0 6px 20px rgba(21, 128, 61, 0.3);
   color: #ffffff;
@@ -885,10 +867,8 @@ main {
 }
 
 .btn-action {
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.9);
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9), 0 2px 6px rgba(0, 0, 0, 0.03);
   color: var(--text-primary);
   padding: 7px 14px;
@@ -905,7 +885,7 @@ main {
 }
 
 .btn-action:hover {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.98);
   border-color: rgba(255, 255, 255, 1);
   box-shadow: inset 0 1px 1px #fff, 0 4px 12px rgba(0, 0, 0, 0.06);
   transform: translateY(-1px);
@@ -916,10 +896,8 @@ main {
 }
 
 .btn-details {
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.9);
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9), 0 2px 6px rgba(0, 0, 0, 0.03);
   color: var(--text-primary);
   padding: 7px 14px;
@@ -1002,10 +980,8 @@ main {
 }
 
 .ledger-stat-box {
-  background: rgba(255, 255, 255, 0.58);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.9);
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9), 0 4px 12px rgba(0, 0, 0, 0.02);
   padding: 16px 20px;
   border-radius: var(--radius-lg);
@@ -1013,7 +989,7 @@ main {
 }
 
 .ledger-stat-box:hover {
-  background: rgba(255, 255, 255, 0.88);
+  background: #ffffff;
   border-color: rgba(255, 255, 255, 1);
   box-shadow: inset 0 1px 1px #fff, 0 8px 24px rgba(15, 23, 42, 0.06);
   transform: translateY(-1px);
@@ -1021,7 +997,7 @@ main {
 
 .ledger-stat-box.highlight-due {
   border-color: rgba(245, 158, 11, 0.35);
-  background: rgba(254, 243, 199, 0.6);
+  background: rgba(254, 243, 199, 0.85);
 }
 
 .ledger-stat-title {
@@ -1045,8 +1021,6 @@ main {
 
 .btn-pay-now {
   background: var(--primary-gradient);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.35);
   color: white;
   font-family: var(--font-sans);
@@ -1116,9 +1090,7 @@ main {
 }
 
 .custom-table th {
-  background: rgba(248, 250, 252, 0.65);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(248, 250, 252, 0.88);
   padding: 14px 20px;
   color: var(--text-muted);
   font-weight: 600;
@@ -1152,8 +1124,6 @@ main {
   font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 0.02em;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
 }
 
 .status-paid {
@@ -1221,10 +1191,8 @@ main {
 .form-control {
   width: 100%;
   padding: 10px 14px;
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.9);
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03);
   border-radius: var(--radius-md);
   color: var(--text-primary);
@@ -1249,9 +1217,9 @@ main {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(15, 23, 42, 0.36);
-  backdrop-filter: blur(28px) saturate(190%);
-  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   z-index: 300;
   display: flex;
   align-items: center;
@@ -1267,10 +1235,8 @@ main {
 }
 
 .modal-card {
-  background: rgba(255, 255, 255, 0.82) !important;
-  backdrop-filter: var(--glass-blur-deep) !important;
-  -webkit-backdrop-filter: var(--glass-blur-deep) !important;
-  border: 1px solid rgba(255, 255, 255, 0.9) !important;
+  background: rgba(255, 255, 255, 0.94) !important;
+  border: 1px solid rgba(255, 255, 255, 0.95) !important;
   box-shadow: inset 0 1px 1.5px 0 rgba(255, 255, 255, 1), 0 32px 72px -12px rgba(0, 0, 0, 0.22) !important;
   border-radius: var(--radius-xl);
   width: 90%;
@@ -1304,10 +1270,8 @@ main {
 }
 
 .close-btn {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.95);
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9), 0 1px 3px rgba(0, 0, 0, 0.04);
   color: var(--text-muted);
   width: 30px;
@@ -1341,10 +1305,8 @@ main {
 }
 
 .pay-opt-btn {
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.9);
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8), 0 1px 3px rgba(0, 0, 0, 0.02);
   padding: 10px 8px;
   border-radius: var(--radius-md);
@@ -1358,7 +1320,7 @@ main {
 }
 
 .pay-opt-btn:hover {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.95);
 }
 
 .pay-opt-btn.active {
@@ -1369,10 +1331,8 @@ main {
 }
 
 .qr-box {
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.9);
   padding: 18px;
   border-radius: var(--radius-lg);
   width: 180px;
@@ -1419,10 +1379,8 @@ main {
 }
 
 .toast {
-  background: rgba(255, 255, 255, 0.84);
-  backdrop-filter: blur(28px) saturate(190%);
-  -webkit-backdrop-filter: blur(28px) saturate(190%);
-  border: 1px solid rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.95);
   border-left: 4px solid var(--primary-color);
   padding: 14px 18px;
   border-radius: var(--radius-lg);
@@ -1466,12 +1424,10 @@ main {
   right: 28px;
   width: 380px;
   max-height: 500px;
-  background: rgba(255, 255, 255, 0.78);
-  backdrop-filter: blur(32px) saturate(200%);
-  -webkit-backdrop-filter: blur(32px) saturate(200%);
-  border: 1px solid rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.92);
   border-radius: var(--radius-xl);
-  box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 1), 0 24px 54px -10px rgba(0, 0, 0, 0.16);
+  box-shadow: 0 24px 54px -10px rgba(0, 0, 0, 0.16);
   z-index: 150;
   display: none;
   flex-direction: column;
@@ -1485,9 +1441,7 @@ main {
 
 .notif-drawer-header {
   padding: 14px 18px;
-  background: rgba(250, 250, 252, 0.65);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(250, 250, 252, 0.95);
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   display: flex;
   justify-content: space-between;
@@ -1509,10 +1463,8 @@ main {
 }
 
 .notif-item {
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.95);
   border-left: 3px solid var(--primary-color);
   padding: 12px 14px;
   border-radius: var(--radius-md);
@@ -1522,12 +1474,12 @@ main {
 }
 
 .notif-item:hover {
-  background: rgba(255, 255, 255, 0.9);
+  background: #ffffff;
   transform: translateX(2px);
 }
 
 .notif-item.unread {
-  background: rgba(236, 253, 245, 0.8);
+  background: rgba(236, 253, 245, 0.92);
   border-left-color: var(--primary-color);
 }
 
@@ -1545,12 +1497,12 @@ main {
 }
 
 #authFullPageScreen .modal-card {
-  background: rgba(255, 255, 255, 0.85) !important;
-  backdrop-filter: blur(36px) saturate(210%) !important;
-  -webkit-backdrop-filter: blur(36px) saturate(210%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.9) !important;
+  background: rgba(255, 255, 255, 0.96) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.95) !important;
   border-radius: 28px !important;
-  box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 1), 0 36px 84px rgba(0, 0, 0, 0.45) !important;
+  box-shadow: 0 36px 84px rgba(0, 0, 0, 0.45) !important;
 }
 
 /* ==========================================================================
@@ -2172,10 +2124,8 @@ textarea:focus-visible {
 
 /* Form Consent Checkboxes & Disclosures (iOS 27 Glass Surface) */
 .form-consent-box {
-  background: rgba(255, 255, 255, 0.58);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.9);
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9);
   padding: 12px 14px;
   border-radius: var(--radius-md);
@@ -2214,11 +2164,9 @@ textarea:focus-visible {
   transform: translateX(-50%) translateY(140%);
   max-width: 680px;
   width: calc(100% - 32px);
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(32px) saturate(200%);
-  -webkit-backdrop-filter: blur(32px) saturate(200%);
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 1), 0 24px 60px -8px rgba(0, 0, 0, 0.22);
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 24px 60px -8px rgba(0, 0, 0, 0.22);
   border-radius: 24px;
   padding: 20px 24px;
   z-index: 99998;
@@ -2274,8 +2222,6 @@ textarea:focus-visible {
 
 .cookie-btn-primary {
   background: var(--primary-gradient);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.35);
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.45), 0 4px 14px rgba(21, 128, 61, 0.25);
   color: #ffffff;
@@ -2292,11 +2238,9 @@ textarea:focus-visible {
 }
 
 .cookie-btn-secondary {
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(255, 255, 255, 0.85);
   color: var(--text-primary);
-  border: 1px solid rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.9);
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9), 0 2px 6px rgba(0, 0, 0, 0.04);
   border-radius: var(--radius-pill);
   padding: 8px 16px;
@@ -2306,7 +2250,7 @@ textarea:focus-visible {
   transition: var(--transition-bounce);
 }
 .cookie-btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.98);
   transform: translateY(-1px);
 }
 
@@ -2325,9 +2269,7 @@ textarea:focus-visible {
    Comprehensive Site Footer (iOS 27 Spatial Glass Canvas)
    ========================================================================== */
 .site-footer {
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
+  background: rgba(255, 255, 255, 0.92);
   border-top: 1px solid var(--glass-border);
   box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.03);
   margin-top: 48px;
@@ -2413,8 +2355,6 @@ textarea:focus-visible {
   align-items: center;
   gap: 6px;
   background: rgba(34, 197, 94, 0.14);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(34, 197, 94, 0.3);
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.7);
   color: var(--primary-color);
@@ -2426,10 +2366,8 @@ textarea:focus-visible {
 }
 
 .license-info-card {
-  background: rgba(255, 255, 255, 0.58);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.9);
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9);
   border-radius: var(--radius-md);
   padding: 14px;
@@ -2439,10 +2377,8 @@ textarea:focus-visible {
 }
 
 .footer-trust-banner {
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.9);
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9), 0 4px 16px rgba(0, 0, 0, 0.03);
   border-radius: var(--radius-lg);
   padding: 18px 24px;
@@ -2466,9 +2402,7 @@ textarea:focus-visible {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: #ffffff;
   border: 1px solid rgba(255, 255, 255, 0.95);
   box-shadow: inset 0 1px 1px #fff, 0 4px 12px rgba(0, 0, 0, 0.05);
   display: flex;
@@ -2507,8 +2441,6 @@ textarea:focus-visible {
 .policy-tabs-bar {
   display: flex;
   background: rgba(0, 0, 0, 0.05);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.7);
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
   padding: 4px;
@@ -2532,9 +2464,7 @@ textarea:focus-visible {
 }
 
 .policy-tab-btn.active {
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(255, 255, 255, 0.96);
   border-color: rgba(255, 255, 255, 0.95);
   color: var(--primary-color);
   font-weight: 700;
@@ -2571,9 +2501,7 @@ textarea:focus-visible {
 }
 
 .policy-highlight-card {
-  background: rgba(236, 253, 245, 0.65);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(236, 253, 245, 0.85);
   border: 1px solid rgba(21, 128, 61, 0.2);
   border-left: 4px solid var(--primary-color);
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8);
@@ -2683,4 +2611,40 @@ textarea:focus-visible {
   }
 }
 
+/* ==========================================================================
+   GPU Compositing Hints — Eliminates layout-triggered repaints on hover
+   ========================================================================== */
+.product-card,
+.stat-pill,
+.ledger-stat-box,
+.btn-primary,
+.btn-action,
+.btn-details,
+.btn-pay-now,
+.modal-card,
+.toast,
+.notif-drawer,
+.cookie-banner {
+  will-change: transform;
+}
+
+/* Contain paint to card boundaries — prevents scroll-triggered full-page repaints */
+.product-card,
+.admin-card,
+.table-card,
+.ledger-header-card {
+  contain: layout style;
+}
+
+/* ==========================================================================
+   Reduced Motion — Respects OS accessibility preference
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
 
