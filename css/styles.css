@@ -1305,9 +1305,10 @@ main {
 
 .filter-group {
   display: flex;
+  flex-direction: row;
   align-items: center;
   gap: 10px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .filter-select {
@@ -2191,10 +2192,17 @@ main {
     gap: 22px;
   }
   .controls-bar {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 14px;
+    display: flex;
     align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+  }
+  .filter-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: nowrap;
   }
 }
 
@@ -2250,13 +2258,22 @@ main {
   .product-card {
     padding: 18px;
   }
-  /* Controls bar single line grid */
+  /* Controls bar & horizontal filters */
   .controls-bar {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     gap: 12px;
     padding: 10px 16px;
     margin-bottom: 20px;
+  }
+  .filter-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
   }
   .search-box input {
     font-size: 13.5px;
@@ -2329,14 +2346,25 @@ main {
     padding: 16px;
   }
   .controls-bar {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
     padding: 12px 14px;
     margin-bottom: 18px;
   }
   .search-box {
-    grid-column: 1 / -1;
+    flex: 1;
+    min-width: 220px;
+  }
+  .filter-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
   }
   .footer-grid {
     grid-template-columns: 1fr 1fr;
@@ -2560,17 +2588,31 @@ main {
     padding: 10px 14px 10px 38px;
   }
 
+  /* Horizontal Filter Row (Like Old) */
   .filter-group {
     width: 100%;
-    flex-direction: column;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     gap: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+    box-sizing: border-box;
+  }
+
+  .filter-group::-webkit-scrollbar {
+    display: none;
   }
 
   .filter-select {
-    width: 100%;
-    font-size: 14px;
-    padding: 10px 14px;
-    min-height: 42px;
+    flex: 1;
+    min-width: 110px;
+    font-size: 12.5px;
+    padding: 8px 12px;
+    min-height: 38px;
+    white-space: nowrap;
   }
 
   /* Product Catalog Grid (Adaptive: 2 cols on tablet/large mobile, 1 col on phones) */
