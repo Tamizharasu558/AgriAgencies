@@ -1304,9 +1304,6 @@ function renderStockGrid() {
                 ${p.stock === 0 ? `0 (${badgeText})` : p.stock}
               </strong>
             </div>
-            <div class="stock-bar-bg">
-              <div class="stock-bar-fill ${fillClass}" style="width: ${pct}%;"></div>
-            </div>
           </div>
         </div>
 

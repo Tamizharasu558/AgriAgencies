@@ -317,10 +317,6 @@
   box-shadow: var(--glass-shadow-hover);
 }
 
-[data-theme="dark"] .product-card .stock-bar-bg {
-  background: rgba(255, 255, 255, 0.08);
-}
-
 [data-theme="dark"] .crop-chip {
   background: rgba(255, 255, 255, 0.07);
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -1344,36 +1340,17 @@ main {
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8);
 }
 
-/* iOS 27 Minimalist Stock Bar */
+/* Stock Availability Info Row */
 .stock-bar-container {
-  margin: 14px 0 16px;
+  margin: 12px 0 14px;
 }
 
 .stock-bar-header {
   display: flex;
   justify-content: space-between;
-  font-size: 12px;
-  margin-bottom: 6px;
+  font-size: 12.5px;
+  margin-bottom: 0;
 }
-
-.stock-bar-bg {
-  width: 100%;
-  height: 6px;
-  background: rgba(0, 0, 0, 0.06);
-  border-radius: var(--radius-pill);
-  overflow: hidden;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
-}
-
-.stock-bar-fill {
-  height: 100%;
-  border-radius: var(--radius-pill);
-  transition: width 0.5s var(--ease-spring);
-}
-
-.fill-green { background: linear-gradient(90deg, #15803d, #22c55e); }
-.fill-amber { background: linear-gradient(90deg, #b45309, #f59e0b); }
-.fill-red { background: linear-gradient(90deg, #b91c1c, #ef4444); }
 
 .product-price-row {
   display: flex;
