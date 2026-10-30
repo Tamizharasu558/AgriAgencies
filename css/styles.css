@@ -749,20 +749,13 @@
   -webkit-backdrop-filter: none !important;
 }
 
-/* Fast Theme Switching - Temporarily freeze transitions during theme swap to eliminate mobile UI delay */
+/* Fast Theme Switching - Instant zero-lag swap without staggered element glitch */
 html.theme-switching,
 html.theme-switching *,
 html.theme-switching *::before,
 html.theme-switching *::after {
   transition: none !important;
   animation-duration: 0.001ms !important;
-}
-
-/* Apple Native GPU Cross-fade View Transitions */
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation-duration: 0.22s;
-  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 *, *::before, *::after {
@@ -2356,6 +2349,11 @@ main {
 }
 
 @media (max-width: 768px) {
+  /* Eliminate full-page background gradient repaints on mobile */
+  body::before {
+    display: none !important;
+  }
+
   /* Disable heavy GPU backdrop blurs on mobile cards for instantaneous 60/120fps performance */
   .hero-banner,
   .controls-bar,

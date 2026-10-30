@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KisanAgri - Agro Chemical & Fertilizer Stock Availability, Orders & Pay-Later Ledger</title>
   <meta name="description" content="Check live fertilizer & agro-chemical stock availability, reserve products for shop pickup or farm delivery, manage store credit, and pay online.">
-  <link rel="stylesheet" href="css/styles.css?v=responsive-fit-3.0">
+  <link rel="stylesheet" href="css/styles.css?v=instant-zero-lag-4.0">
   <!-- Dark Mode Script (runs before body renders to avoid flash) -->
   <script>
     (function () {
@@ -1050,40 +1050,42 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/data.js?v=responsive-fit-3.0"></script>
-  <script src="js/app.js?v=responsive-fit-3.0"></script>
+  <script src="js/data.js?v=instant-zero-lag-4.0"></script>
+  <script src="js/app.js?v=instant-zero-lag-4.0"></script>
   <script>
-    // ── Apple Instant & Smooth Dark Mode ──────────────────────────────────
+    // ── Instant 0ms Zero-Glitch Theme Switcher ────────────────────────────────
+    let isTogglingTheme = false;
+
     function toggleDarkMode() {
+      if (isTogglingTheme) return;
+      isTogglingTheme = true;
+
       const html = document.documentElement;
       const isDark = html.getAttribute('data-theme') === 'dark';
       const next = isDark ? 'light' : 'dark';
 
-      const applyTheme = () => {
-        // Freeze individual element spring transitions to eliminate mobile render delays
-        html.classList.add('theme-switching');
-        html.setAttribute('data-theme', next);
-        try {
-          localStorage.setItem('kisan_theme', next);
-        } catch (e) {}
-        updateDarkModeIcon(next === 'dark');
+      // 1. Injected freeze style: completely disables all transitions and animations instantly
+      const freeze = document.createElement('style');
+      freeze.id = 'theme-atomic-freeze';
+      freeze.textContent = '*, *::before, *::after { transition: none !important; animation: none !important; }';
+      document.head.appendChild(freeze);
 
-        // Restore transitions in the next animation frame
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            html.classList.remove('theme-switching');
-          });
-        });
-      };
+      // 2. Immediate atomic attribute switch
+      html.setAttribute('data-theme', next);
+      try {
+        localStorage.setItem('kisan_theme', next);
+      } catch (e) {}
+      updateDarkModeIcon(next === 'dark');
 
-      // Native Apple iOS 18 / Safari / Chrome 120fps GPU View Transition
-      if (document.startViewTransition) {
-        document.startViewTransition(() => {
-          applyTheme();
-        });
-      } else {
-        applyTheme();
-      }
+      // 3. Force layout recalculation in ONE single atomic frame (0 glitch, 0 lag)
+      void html.offsetHeight;
+
+      // 4. Safely remove freeze on next frame to restore interactive button hovers
+      requestAnimationFrame(() => {
+        const el = document.getElementById('theme-atomic-freeze');
+        if (el) el.remove();
+        isTogglingTheme = false;
+      });
     }
 
     function updateDarkModeIcon(isDark) {
@@ -1091,10 +1093,21 @@
       if (icon) icon.textContent = isDark ? '☀️' : '🌙';
     }
 
-    // Sync icon on page load
+    // Sync icon and fast-touch listener on page load
     (function () {
       const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
       updateDarkModeIcon(isDark);
+
+      // 0ms Mobile Fast-Touch Response (bypasses 300ms mobile touch delay)
+      const toggleBtn = document.getElementById('darkModeToggle');
+      if (toggleBtn) {
+        toggleBtn.addEventListener('pointerdown', function(e) {
+          if (e.pointerType === 'touch') {
+            e.preventDefault();
+            toggleDarkMode();
+          }
+        }, { passive: false });
+      }
 
       // Listen for OS-level theme change
       window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
