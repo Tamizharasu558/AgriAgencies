@@ -5,7 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KisanAgri - Agro Chemical & Fertilizer Stock Availability, Orders & Pay-Later Ledger</title>
   <meta name="description" content="Check live fertilizer & agro-chemical stock availability, reserve products for shop pickup or farm delivery, manage store credit, and pay online.">
-  <link rel="stylesheet" href="css/styles.css?v=ios27-perf">
+  <link rel="stylesheet" href="css/styles.css?v=ios27-dark">
+  <!-- Dark Mode Script (runs before body renders to avoid flash) -->
+  <script>
+    (function () {
+      const stored = localStorage.getItem('kisan_theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const isDark = stored === 'dark' || (!stored && prefersDark);
+      if (isDark) document.documentElement.setAttribute('data-theme', 'dark');
+    })();
+  </script>
 </head>
 <body>
   <!-- Accessibility Skip Link -->
@@ -61,6 +70,11 @@
 
       <!-- Action Buttons -->
       <div class="header-actions">
+        <!-- Dark Mode Toggle -->
+        <button id="darkModeToggle" title="Toggle Dark Mode" aria-label="Toggle Dark Mode" onclick="toggleDarkMode()">
+          <span id="darkModeIcon">🌙</span>
+        </button>
+
         <!-- Cart Button -->
         <button class="notif-btn" id="cartBtn" title="Shopping Cart / Order List" onclick="openCartModal()" style="width: auto; padding: 0 16px; gap: 8px;">
           <span id="cartBtnText" style="font-size: 13px; font-weight: 600;">Cart</span>
@@ -1032,5 +1046,36 @@
   <!-- Scripts -->
   <script src="js/data.js?v=apple2.2"></script>
   <script src="js/app.js?v=apple2.2"></script>
+  <script>
+    // ── Dark Mode ─────────────────────────────────────────────────────────────
+    function toggleDarkMode() {
+      const html = document.documentElement;
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      const next = isDark ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('kisan_theme', next);
+      updateDarkModeIcon(next === 'dark');
+    }
+
+    function updateDarkModeIcon(isDark) {
+      const icon = document.getElementById('darkModeIcon');
+      if (icon) icon.textContent = isDark ? '☀️' : '🌙';
+    }
+
+    // Sync icon on page load
+    (function () {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      updateDarkModeIcon(isDark);
+
+      // Listen for OS-level theme change
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (!localStorage.getItem('kisan_theme')) {
+          const theme = e.matches ? 'dark' : 'light';
+          document.documentElement.setAttribute('data-theme', theme);
+          updateDarkModeIcon(e.matches);
+        }
+      });
+    })();
+  </script>
 </body>
 </html>

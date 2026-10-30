@@ -86,6 +86,362 @@
   --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
 }
 
+/* ==========================================================================
+   Dark Mode — iOS 27 Spatial Dark Glass (Deep Space Obsidian)
+   Applied via [data-theme="dark"] on <html>
+   ========================================================================== */
+[data-theme="dark"] {
+  --bg-page: #0d1117;
+  --bg-card: rgba(30, 36, 44, 0.88);
+  --bg-card-subtle: rgba(24, 30, 38, 0.78);
+  --bg-card-hover: rgba(40, 48, 58, 0.96);
+  --bg-inset: rgba(0, 0, 0, 0.2);
+  --bg-modal: rgba(22, 28, 36, 0.96);
+  --bg-glass: rgba(18, 24, 32, 0.88);
+  --bg-glass-pill: rgba(28, 36, 46, 0.82);
+  --bg-glass-dark: rgba(255, 255, 255, 0.12);
+
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-border-subtle: rgba(255, 255, 255, 0.06);
+  --glass-highlight: inset 0 1px 1px 0 rgba(255, 255, 255, 0.08);
+  --glass-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.06), 0 8px 24px -4px rgba(0, 0, 0, 0.4), 0 2px 6px -1px rgba(0, 0, 0, 0.3);
+  --glass-shadow-hover: inset 0 1px 2px 0 rgba(255, 255, 255, 0.1), 0 16px 36px -6px rgba(0, 0, 0, 0.5);
+
+  --text-primary: #f0f4f8;
+  --text-secondary: #a8b4c0;
+  --text-muted: #6e7d8c;
+  --text-tertiary: #4e5d6c;
+  --text-on-primary: #ffffff;
+
+  --primary-color: #34d399;
+  --primary-hover: #10b981;
+  --primary-light: rgba(52, 211, 153, 0.12);
+  --primary-tint: rgba(52, 211, 153, 0.1);
+  --primary-gradient: linear-gradient(135deg, rgba(16, 185, 129, 0.92) 0%, rgba(5, 150, 105, 0.96) 100%);
+
+  --success-color: #34d399;
+  --success-bg: rgba(52, 211, 153, 0.12);
+  --success-border: rgba(52, 211, 153, 0.25);
+
+  --warning-color: #fbbf24;
+  --warning-bg: rgba(251, 191, 36, 0.12);
+  --warning-border: rgba(251, 191, 36, 0.25);
+
+  --danger-color: #f87171;
+  --danger-bg: rgba(248, 113, 113, 0.12);
+  --danger-border: rgba(248, 113, 113, 0.25);
+
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-light: rgba(255, 255, 255, 0.05);
+  --border-hover: rgba(255, 255, 255, 0.16);
+  --border-focus: #34d399;
+  --ring-focus: 0 0 0 4px rgba(52, 211, 153, 0.2);
+}
+
+/* Dark mode background aura — deep teal/blue nebula */
+[data-theme="dark"] body::before {
+  background-image:
+    radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.12) 0px, transparent 50%),
+    radial-gradient(at 95% 5%, rgba(56, 189, 248, 0.08) 0px, transparent 45%),
+    radial-gradient(at 85% 60%, rgba(99, 102, 241, 0.07) 0px, transparent 45%),
+    radial-gradient(at 5% 80%, rgba(251, 191, 36, 0.05) 0px, transparent 45%),
+    radial-gradient(at 75% 95%, rgba(20, 184, 166, 0.07) 0px, transparent 50%);
+}
+
+/* Dark mode body bg */
+[data-theme="dark"] body {
+  background-color: var(--bg-page);
+}
+
+/* Dark: inputs & selects readable on dark surface */
+[data-theme="dark"] .search-box input,
+[data-theme="dark"] .filter-select,
+[data-theme="dark"] .form-control {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  color-scheme: dark;
+}
+
+[data-theme="dark"] .search-box input::placeholder {
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .search-box input:focus,
+[data-theme="dark"] .filter-select:focus,
+[data-theme="dark"] .form-control:focus {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--primary-color);
+}
+
+/* Dark: tab active pill */
+[data-theme="dark"] .tab-btn.active {
+  background: rgba(255, 255, 255, 0.14);
+  color: var(--text-primary);
+}
+
+/* Dark: role/lang btn active */
+[data-theme="dark"] .role-btn.active {
+  background: rgba(255, 255, 255, 0.14) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Dark: stat pills */
+[data-theme="dark"] .stat-pill {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .stat-pill:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* Dark: pay option buttons */
+[data-theme="dark"] .pay-opt-btn {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .pay-opt-btn.active {
+  background: rgba(52, 211, 153, 0.14);
+  border-color: rgba(52, 211, 153, 0.35);
+  color: var(--primary-color);
+}
+
+/* Dark: action/detail buttons */
+[data-theme="dark"] .btn-action,
+[data-theme="dark"] .btn-details {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .btn-action:hover,
+[data-theme="dark"] .btn-details:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Dark: header auth btn */
+[data-theme="dark"] #headerAuthActionBtn {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: var(--text-secondary) !important;
+}
+
+/* Dark: active profile badge */
+[data-theme="dark"] #activeProfileBadge {
+  background: rgba(52, 211, 153, 0.12) !important;
+  border-color: rgba(52, 211, 153, 0.25) !important;
+}
+
+/* Dark: notif-btn (cart & bell) */
+[data-theme="dark"] .notif-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: var(--text-primary);
+}
+
+/* Dark: table headers */
+[data-theme="dark"] .custom-table th {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-muted);
+  border-bottom-color: rgba(255, 255, 255, 0.07);
+}
+
+[data-theme="dark"] .custom-table td {
+  border-bottom-color: rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .custom-table tr:hover td {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* Dark: status badges */
+[data-theme="dark"] .status-paid {
+  background: rgba(52, 211, 153, 0.14);
+  color: #34d399;
+  border-color: rgba(52, 211, 153, 0.28);
+}
+
+[data-theme="dark"] .status-overdue {
+  background: rgba(248, 113, 113, 0.14);
+  color: #f87171;
+  border-color: rgba(248, 113, 113, 0.28);
+}
+
+[data-theme="dark"] .status-due-soon {
+  background: rgba(251, 191, 36, 0.14);
+  color: #fbbf24;
+  border-color: rgba(251, 191, 36, 0.28);
+}
+
+/* Dark: modal overlay */
+[data-theme="dark"] .modal-overlay {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+[data-theme="dark"] .modal-card {
+  background: rgba(20, 26, 36, 0.98) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Dark: close button */
+[data-theme="dark"] .close-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: var(--text-muted);
+}
+
+/* Dark: toast */
+[data-theme="dark"] .toast {
+  background: rgba(20, 28, 40, 0.98);
+  border-color: rgba(255, 255, 255, 0.1);
+  border-left-color: var(--primary-color);
+}
+
+/* Dark: notif drawer */
+[data-theme="dark"] .notif-drawer {
+  background: rgba(16, 22, 32, 0.98);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .notif-drawer-header {
+  background: rgba(20, 28, 40, 0.95);
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="dark"] .notif-item {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.08);
+  border-left-color: var(--primary-color);
+}
+
+[data-theme="dark"] .notif-item.unread {
+  background: rgba(52, 211, 153, 0.08);
+}
+
+/* Dark: ledger stat highlight */
+[data-theme="dark"] .ledger-stat-box.highlight-due {
+  background: rgba(251, 191, 36, 0.1);
+  border-color: rgba(251, 191, 36, 0.25);
+}
+
+/* Dark: footer */
+[data-theme="dark"] .site-footer {
+  background: rgba(10, 14, 22, 0.95);
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Dark: cookie banner */
+[data-theme="dark"] .cookie-banner {
+  background: rgba(16, 22, 32, 0.98);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Dark: consent box */
+[data-theme="dark"] .form-consent-box {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Dark: auth screen */
+[data-theme="dark"] #authFullPageScreen {
+  background: radial-gradient(circle at 50% 25%, rgba(16, 185, 129, 0.2), transparent 60%),
+              radial-gradient(circle at 85% 75%, rgba(56, 189, 248, 0.12), transparent 55%),
+              #060a0f !important;
+}
+
+[data-theme="dark"] #authFullPageScreen .modal-card {
+  background: rgba(14, 20, 30, 0.98) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+/* Dark: policy tabs */
+[data-theme="dark"] .policy-tabs-bar {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .policy-tab-btn.active {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--primary-color);
+}
+
+/* Dark: order step tracker bg */
+[data-theme="dark"] .order-step-tracker {
+  background: rgba(255, 255, 255, 0.04) !important;
+}
+
+/* Dark: footer trust banner */
+[data-theme="dark"] .footer-trust-banner {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .footer-trust-icon {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="dark"] .license-info-card {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Dark: crop chip tags */
+[data-theme="dark"] .crop-chip {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-muted);
+}
+
+/* Dark: skip link */
+[data-theme="dark"] .skip-link {
+  background: var(--primary-color);
+}
+
+/* Dark mode toggle button */
+#darkModeToggle {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9), 0 2px 6px rgba(0, 0, 0, 0.04);
+  color: var(--text-primary);
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-bounce);
+  flex-shrink: 0;
+}
+
+#darkModeToggle:hover {
+  background: rgba(255, 255, 255, 0.96);
+  transform: scale(1.08);
+}
+
+#darkModeToggle:active {
+  transform: scale(0.94);
+}
+
+[data-theme="dark"] #darkModeToggle {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.14);
+  color: var(--text-primary);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] #darkModeToggle:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
 /* Base Styles */
 *, *::before, *::after {
   box-sizing: border-box;
