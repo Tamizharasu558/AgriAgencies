@@ -5,14 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KisanAgri - Agro Chemical & Fertilizer Stock Availability, Orders & Pay-Later Ledger</title>
   <meta name="description" content="Check live fertilizer & agro-chemical stock availability, reserve products for shop pickup or farm delivery, manage store credit, and pay online.">
-  <link rel="stylesheet" href="css/styles.css?v=smooth-apple-7.0">
-  <!-- Dark Mode Script (runs before body renders to avoid flash) -->
+  <link rel="stylesheet" href="css/styles.css?v=system-default-8.0">
+  <!-- System-Theme Default Dark Mode Script (runs before body renders to avoid flash) -->
   <script>
     (function () {
       try {
-        const stored = localStorage.getItem('kisan_theme');
-        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const isDark = stored === 'dark' || (!stored && prefersDark);
+        // Clear any stale test keys from localStorage so system theme is the default
+        localStorage.removeItem('kisan_theme');
+
+        // Check if user explicitly toggled during this active browsing session
+        const sessionOverride = sessionStorage.getItem('kisan_theme_override');
+        const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const isDark = sessionOverride ? (sessionOverride === 'dark') : systemPrefersDark;
+
         if (isDark) {
           document.documentElement.setAttribute('data-theme', 'dark');
         } else {
@@ -1056,10 +1061,10 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/data.js?v=smooth-apple-7.0"></script>
-  <script src="js/app.js?v=smooth-apple-7.0"></script>
+  <script src="js/data.js?v=system-default-8.0"></script>
+  <script src="js/app.js?v=system-default-8.0"></script>
   <script>
-    // ── Apple-Grade Instant & Silky Smooth Theme Switcher ──────────────────────
+    // ── System-Default Theme Switcher with Silky Smooth Apple Transitions ──────
     let lastThemeToggleTime = 0;
 
     function toggleDarkMode(e) {
@@ -1081,8 +1086,9 @@
         html.removeAttribute('data-theme');
       }
 
+      // Store manual toggle for the active browsing session
       try {
-        localStorage.setItem('kisan_theme', next);
+        sessionStorage.setItem('kisan_theme_override', next);
       } catch (err) {}
 
       updateDarkModeIcon(next === 'dark', true);
@@ -1112,7 +1118,7 @@
       }
     }
 
-    // Initialize icon state, mobile touch listener, and OS theme observer
+    // Initialize icon state, mobile touch listener, and OS system theme observer
     (function () {
       const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
       updateDarkModeIcon(isDark, false);
@@ -1126,22 +1132,29 @@
         }, { passive: false });
       }
 
-      // Listen for OS-level theme change
+      // Dynamic listener for OS-level system theme changes (e.g. sunset/sunrise or toggling Dark Mode in device settings)
       if (window.matchMedia) {
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-          let hasCustomSetting = false;
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        const handleSystemThemeChange = (e) => {
+          // Whenever system setting changes, clear session override so system theme takes precedence
           try {
-            hasCustomSetting = !!localStorage.getItem('kisan_theme');
+            sessionStorage.removeItem('kisan_theme_override');
           } catch (err) {}
-          if (!hasCustomSetting) {
-            if (e.matches) {
-              document.documentElement.setAttribute('data-theme', 'dark');
-            } else {
-              document.documentElement.removeAttribute('data-theme');
-            }
-            updateDarkModeIcon(e.matches, true);
+
+          const isSystemDark = e.matches;
+          if (isSystemDark) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+          } else {
+            document.documentElement.removeAttribute('data-theme');
           }
-        });
+          updateDarkModeIcon(isSystemDark, true);
+        };
+
+        if (mediaQuery.addEventListener) {
+          mediaQuery.addEventListener('change', handleSystemThemeChange);
+        } else if (mediaQuery.addListener) {
+          mediaQuery.addListener(handleSystemThemeChange);
+        }
       }
     })();
   </script>
