@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KisanAgri - Agro Chemical & Fertilizer Stock Availability, Orders & Pay-Later Ledger</title>
   <meta name="description" content="Check live fertilizer & agro-chemical stock availability, reserve products for shop pickup or farm delivery, manage store credit, and pay online.">
-  <link rel="stylesheet" href="css/styles.css?v=apple-dark-6.0">
+  <link rel="stylesheet" href="css/styles.css?v=smooth-apple-7.0">
   <!-- Dark Mode Script (runs before body renders to avoid flash) -->
   <script>
     (function () {
@@ -312,7 +312,7 @@
               <input type="file" id="newProdImageFile" accept="image/*" class="form-control" onchange="previewProductImageFile(event)" required>
 
               <!-- Live Upload Preview Container -->
-              <div id="imagePreviewBox" style="display: none; margin-top: 12px; align-items: center; gap: 14px; background: #f8fafc; padding: 10px; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+              <div id="imagePreviewBox" style="display: none; margin-top: 12px; align-items: center; gap: 14px; background: var(--bg-card-subtle); padding: 10px; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
                 <div style="width: 90px; height: 90px; border-radius: var(--radius-sm); overflow: hidden; border: 2px solid var(--primary-color);">
                   <img id="imagePreviewImg" style="width: 100%; height: 100%; object-fit: cover;" alt="Chemical Preview">
                 </div>
@@ -493,7 +493,7 @@
               </div>
             </div>
 
-            <div style="background: #f8fafc; border: 1px solid var(--border-color); padding: 12px; border-radius: var(--radius-sm); margin-bottom: 16px; font-size: 13px;">
+            <div style="background: var(--bg-card-subtle); border: 1px solid var(--border-color); padding: 12px; border-radius: var(--radius-sm); margin-bottom: 16px; font-size: 13px;">
               <div style="display: flex; justify-content: space-between;">
                 <span id="lblTotalBill">Current Purchase Total:</span>
                 <strong id="billPreviewTotal" style="color: var(--text-primary);">₹0.00</strong>
@@ -829,7 +829,7 @@
         </div>
         <div class="form-group">
           <label>Phone Number (Login ID - Unchangeable)</label>
-          <input type="tel" id="editCustPhone" class="form-control" readonly disabled style="background: #f1f5f9; cursor: not-allowed; opacity: 0.8;">
+          <input type="tel" id="editCustPhone" class="form-control" readonly disabled style="background: var(--bg-inset); cursor: not-allowed; opacity: 0.8;">
         </div>
         <div class="form-group">
           <label>Village Location</label>
@@ -941,7 +941,7 @@
       <form onsubmit="handleAdminSubmitOfflinePayment(event)">
         <input type="hidden" id="adminPayCustIndex">
         
-        <div style="background: #f8fafc; border: 1px solid var(--border-color); padding: 14px; border-radius: var(--radius-sm); margin-bottom: 16px;">
+        <div style="background: var(--bg-card-subtle); border: 1px solid var(--border-color); padding: 14px; border-radius: var(--radius-sm); margin-bottom: 16px;">
           <div style="font-size: 14px; font-weight: 700; color: var(--text-primary);" id="adminPayCustNamePhone">Farmer Name (Phone)</div>
           <div style="font-size: 12px; color: var(--text-muted);" id="adminPayCustVillage">Location: Village</div>
           <div style="margin-top: 8px; font-size: 13px; font-weight: 700; color: var(--warning-color);" id="adminPayCustCurrentDue">Current Unpaid Due: ₹0</div>
@@ -1056,16 +1056,19 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/data.js?v=apple-dark-6.0"></script>
-  <script src="js/app.js?v=apple-dark-6.0"></script>
+  <script src="js/data.js?v=smooth-apple-7.0"></script>
+  <script src="js/app.js?v=smooth-apple-7.0"></script>
   <script>
-    // ── Apple-Grade Instant & Reliable Theme Switcher ──────────────────────────
+    // ── Apple-Grade Instant & Silky Smooth Theme Switcher ──────────────────────
     let lastThemeToggleTime = 0;
 
     function toggleDarkMode(e) {
-      if (e && e.stopPropagation) e.stopPropagation();
+      if (e) {
+        if (e.cancelable) e.preventDefault();
+        if (e.stopPropagation) e.stopPropagation();
+      }
       const now = Date.now();
-      if (now - lastThemeToggleTime < 350) return; // Prevent double-trigger on mobile
+      if (now - lastThemeToggleTime < 350) return; // Debounce mobile ghost triggers
       lastThemeToggleTime = now;
 
       const html = document.documentElement;
@@ -1082,12 +1085,26 @@
         localStorage.setItem('kisan_theme', next);
       } catch (err) {}
 
-      updateDarkModeIcon(next === 'dark');
+      updateDarkModeIcon(next === 'dark', true);
     }
 
-    function updateDarkModeIcon(isDark) {
+    function updateDarkModeIcon(isDark, animate = false) {
       const icon = document.getElementById('darkModeIcon');
-      if (icon) icon.textContent = isDark ? '☀️' : '🌙';
+      if (icon) {
+        if (animate) {
+          icon.style.transform = 'scale(0.6) rotate(90deg)';
+          icon.style.opacity = '0';
+          setTimeout(() => {
+            icon.textContent = isDark ? '☀️' : '🌙';
+            icon.style.transform = 'scale(1) rotate(0deg)';
+            icon.style.opacity = '1';
+          }, 110);
+        } else {
+          icon.textContent = isDark ? '☀️' : '🌙';
+          icon.style.transform = 'scale(1) rotate(0deg)';
+          icon.style.opacity = '1';
+        }
+      }
       const toggleBtn = document.getElementById('darkModeToggle');
       if (toggleBtn) {
         toggleBtn.setAttribute('title', isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode');
@@ -1095,10 +1112,19 @@
       }
     }
 
-    // Initialize icon state and OS theme listener
+    // Initialize icon state, mobile touch listener, and OS theme observer
     (function () {
       const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-      updateDarkModeIcon(isDark);
+      updateDarkModeIcon(isDark, false);
+
+      // 0ms Mobile Fast-Touch Listener (bypasses mobile tap delay without ghost-click)
+      const toggleBtn = document.getElementById('darkModeToggle');
+      if (toggleBtn) {
+        toggleBtn.addEventListener('touchend', function (e) {
+          e.preventDefault();
+          toggleDarkMode(e);
+        }, { passive: false });
+      }
 
       // Listen for OS-level theme change
       if (window.matchMedia) {
@@ -1113,7 +1139,7 @@
             } else {
               document.documentElement.removeAttribute('data-theme');
             }
-            updateDarkModeIcon(e.matches);
+            updateDarkModeIcon(e.matches, true);
           }
         });
       }

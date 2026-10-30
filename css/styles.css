@@ -149,7 +149,8 @@
 
 /* Zero muddy gradient meshes in clean Apple dark mode */
 [data-theme="dark"] body::before {
-  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 [data-theme="dark"] body {
@@ -257,7 +258,8 @@
 
 [data-theme="dark"] .hero-banner::after,
 [data-theme="dark"] .hero-banner::before {
-  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 [data-theme="dark"] .hero-content h2 {
@@ -328,7 +330,8 @@
 }
 
 [data-theme="dark"] .product-card::before {
-  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 [data-theme="dark"] .product-card:hover {
@@ -414,7 +417,8 @@
 }
 
 [data-theme="dark"] .ledger-header-card::before {
-  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 [data-theme="dark"] .ledger-stat-box {
@@ -451,7 +455,8 @@
 }
 
 [data-theme="dark"] .table-card::before {
-  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 [data-theme="dark"] .custom-table th {
@@ -478,7 +483,8 @@
 }
 
 [data-theme="dark"] .admin-card::before {
-  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 /* Modals & Dialogs */
@@ -608,7 +614,8 @@
 }
 
 [data-theme="dark"] .site-footer::before {
-  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 [data-theme="dark"] .footer-trust-banner {
@@ -749,13 +756,77 @@
   -webkit-backdrop-filter: none !important;
 }
 
-/* Fast Theme Switching - Instant zero-lag swap without staggered element glitch */
-html.theme-switching,
-html.theme-switching *,
-html.theme-switching *::before,
-html.theme-switching *::after {
-  transition: none !important;
-  animation-duration: 0.001ms !important;
+/* ==========================================================================
+   Apple-Grade Smooth Theme Transition (Silky 0.28s Fluid iOS Curve)
+   ========================================================================== */
+body,
+header,
+main,
+.top-bar,
+.hero-banner,
+.stat-pill,
+.controls-bar,
+.product-card,
+.table-card,
+.admin-card,
+.ledger-header-card,
+.ledger-stat-box,
+.order-card,
+.owner-order-card,
+.site-footer,
+.footer-trust-banner,
+.role-switcher-container,
+.role-btn,
+.tab-btn,
+.nav-tabs,
+.notif-btn,
+#darkModeToggle,
+.search-box input,
+.filter-select,
+.form-control,
+.crop-chip,
+.modal-card,
+.custom-table th,
+.custom-table td,
+.toast,
+.notif-drawer,
+.notif-item {
+  transition: background-color 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              color 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-banner::before,
+.hero-banner::after,
+.product-card::before,
+.ledger-header-card::before,
+.table-card::before,
+.admin-card::before,
+.site-footer::before {
+  transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 1;
+}
+
+#darkModeToggle {
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1),
+              background-color 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#darkModeToggle:active {
+  transform: scale(0.9);
+}
+
+#darkModeIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
+  will-change: transform;
 }
 
 *, *::before, *::after {
@@ -814,7 +885,9 @@ body::before {
     radial-gradient(at 5% 75%, rgba(245, 158, 11, 0.05) 0px, transparent 45%),
     radial-gradient(at 80% 95%, rgba(13, 148, 136, 0.07) 0px, transparent 50%);
   transform: translateZ(0);
-  will-change: transform;
+  opacity: 1;
+  transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity;
 }
 
 /* Custom Apple Glass Scrollbars (Hardware Accelerated) */

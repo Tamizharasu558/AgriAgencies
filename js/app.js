@@ -1509,11 +1509,11 @@ function renderCartModal() {
     <div class="form-group">
       <label>${t('fulfillmentLabel')}</label>
       <div class="cart-fulfillment-options" style="display: flex; gap: 10px; margin-top: 4px;">
-        <label style="flex: 1; border: 1px solid var(--border-color); padding: 10px; border-radius: var(--radius-sm); cursor: pointer; background: #ffffff; text-align: center; font-size: 12px; font-weight: 600;">
+        <label style="flex: 1; border: 1px solid var(--border-color); padding: 10px; border-radius: var(--radius-sm); cursor: pointer; background: var(--bg-card); text-align: center; font-size: 12px; font-weight: 600;">
           <input type="radio" name="fulfillment" value="PICKUP" checked onchange="toggleDeliveryAddressField()">
           ${t('pickupOption')}
         </label>
-        <label style="flex: 1; border: 1px solid var(--border-color); padding: 10px; border-radius: var(--radius-sm); cursor: pointer; background: #ffffff; text-align: center; font-size: 12px; font-weight: 600;">
+        <label style="flex: 1; border: 1px solid var(--border-color); padding: 10px; border-radius: var(--radius-sm); cursor: pointer; background: var(--bg-card); text-align: center; font-size: 12px; font-weight: 600;">
           <input type="radio" name="fulfillment" value="DELIVERY" onchange="toggleDeliveryAddressField()">
           ${t('deliveryOption')}
         </label>
@@ -1648,7 +1648,7 @@ function renderCustomerOrders() {
       : '';
 
     container.innerHTML = `
-      <div style="text-align: center; padding: 40px; background: #ffffff; border-radius: var(--radius-md); border: 1px dashed var(--border-color);">
+      <div style="text-align: center; padding: 40px; background: var(--bg-card); border-radius: var(--radius-md); border: 1px dashed var(--border-color);">
         
         <h4 style="font-size: 16px; color: var(--text-primary);">${t('noActiveOrders')}</h4>
         ${showOrdersForText}
@@ -1664,7 +1664,7 @@ function renderCustomerOrders() {
     } else if (ord.status === 'DISPATCHED') {
       statusBadge = `<span class="status-badge status-paid">${t('stepReady')}</span>`;
     } else if (ord.status === 'COMPLETED') {
-      statusBadge = `<span class="status-badge" style="background:#e2e8f0; color:#475569;">${t('stepCompleted')}</span>`;
+      statusBadge = `<span class="status-badge" style="background: var(--bg-card-subtle); color: var(--text-secondary);">${t('stepCompleted')}</span>`;
     }
 
     const itemsSummary = ord.items.map(i => {
@@ -1673,7 +1673,7 @@ function renderCustomerOrders() {
     }).join(', ');
 
     return `
-      <div class="order-card" style="background: #ffffff; border: 1px solid var(--border-color); padding: 20px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm);">
+      <div class="order-card" style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 20px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm);">
         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
           <div>
             <h4 style="font-size: 16px; font-weight: 700; color: var(--text-primary);">${ord.orderId}</h4>
@@ -1682,7 +1682,7 @@ function renderCustomerOrders() {
           <div>${statusBadge}</div>
         </div>
 
-        <div class="order-step-tracker" style="display: flex; gap: 8px; margin: 14px 0; background: #f8fafc; padding: 12px; border-radius: var(--radius-sm); font-size: 12px;">
+        <div class="order-step-tracker" style="display: flex; gap: 8px; margin: 14px 0; background: var(--bg-card-subtle); padding: 12px; border-radius: var(--radius-sm); font-size: 12px;">
           <span style="font-weight: 600; color: ${ord.status === 'ORDER_PLACED' ? 'var(--warning-color)' : 'var(--success-color)'};">${t('stepPlaced')}</span> → 
           <span style="font-weight: 600; color: ${ord.status === 'PACKED_READY' || ord.status === 'DISPATCHED' || ord.status === 'COMPLETED' ? 'var(--success-color)' : 'var(--text-muted)'};">${t('stepPacked')}</span> → 
           <span style="font-weight: 600; color: ${ord.status === 'DISPATCHED' || ord.status === 'COMPLETED' ? 'var(--success-color)' : 'var(--text-muted)'};">${t('stepReady')}</span> → 
@@ -1920,7 +1920,7 @@ function renderOwnerOrders() {
     const cName = (currentLang === 'ta' && ord.customerNameTa) ? ord.customerNameTa : ord.customerName;
 
     return `
-      <div class="owner-order-card" style="background: #f8fafc; border: 1px solid var(--border-color); padding: 16px; border-radius: var(--radius-sm); display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <div class="owner-order-card" style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 16px; border-radius: var(--radius-sm); display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
         <div>
           <div style="display: flex; align-items: center; gap: 10px;">
             <strong style="font-size: 15px; color: var(--text-primary);">${ord.orderId}</strong>
@@ -2757,14 +2757,14 @@ function renderNotifications() {
 
   const fullContainer = document.getElementById('fullNotifContainer');
   if (visibleNotifs.length === 0) {
-    fullContainer.innerHTML = `<div style="padding: 32px; text-align: center; color: var(--text-muted); background: #ffffff; border-radius: var(--radius-md); border: 1px solid var(--border-color);">${currentLang === 'ta' ? 'அறிவிப்புகள் எதுவும் இல்லை' : 'No personal notifications for your account.'}</div>`;
+    fullContainer.innerHTML = `<div style="padding: 32px; text-align: center; color: var(--text-muted); background: var(--bg-card); border-radius: var(--radius-md); border: 1px solid var(--border-color);">${currentLang === 'ta' ? 'அறிவிப்புகள் எதுவும் இல்லை' : 'No personal notifications for your account.'}</div>`;
   } else {
     fullContainer.innerHTML = visibleNotifs.map(n => {
       const rawTitle = (currentLang === 'ta' && n.titleTa) ? n.titleTa : n.title;
       const rawMsg = (currentLang === 'ta' && n.messageTa) ? n.messageTa : n.message;
       return `
-        <div style="background: #ffffff; border: 1px solid var(--border-color); padding: 16px 20px; border-radius: var(--radius-md); display: flex; align-items: flex-start; gap: 14px; box-shadow: var(--shadow-sm);">
-          <div style="font-size: 24px; width: 40px; height: 40px; background: #f8fafc; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid var(--border-color);">
+        <div style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 16px 20px; border-radius: var(--radius-md); display: flex; align-items: flex-start; gap: 14px; box-shadow: var(--shadow-sm);">
+          <div style="font-size: 24px; width: 40px; height: 40px; background: var(--bg-card-subtle); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid var(--border-color);">
             ${n.icon}
           </div>
           <div style="flex: 1;">
