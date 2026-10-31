@@ -1943,8 +1943,14 @@ main {
 }
 
 /* ==========================================================================
-   iOS 27 VisionOS Glass Sheet Modals
+   iOS 27 VisionOS Glass Sheet Modals & Background Scroll Lock
    ========================================================================== */
+html.modal-open,
+body.modal-open {
+  overflow: hidden !important;
+  overscroll-behavior: none !important;
+}
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -1961,6 +1967,8 @@ main {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.25s var(--ease-smooth);
+  overscroll-behavior: contain;
+  touch-action: none;
 }
 
 .modal-overlay.active {
@@ -1981,6 +1989,9 @@ main {
   transition: transform 0.28s var(--ease-spring), opacity 0.25s var(--ease-smooth);
   max-height: 90vh;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
 }
 
 .modal-overlay.active .modal-card {

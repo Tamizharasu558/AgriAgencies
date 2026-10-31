@@ -144,6 +144,50 @@ function t(key) {
   return dict[key] || translations.en[key] || key;
 }
 
+// Background Scroll Lock Controller for Modals
+let savedScrollPosition = 0;
+
+function lockBodyScroll() {
+  const activeModals = document.querySelectorAll('.modal-overlay.active');
+  if (activeModals.length <= 1) {
+    savedScrollPosition = window.pageYOffset || document.documentElement.scrollTop || 0;
+  }
+  document.documentElement.classList.add('modal-open');
+  document.body.classList.add('modal-open');
+}
+
+function unlockBodyScroll() {
+  // Only release background lock if no modal is active
+  const activeModals = document.querySelectorAll('.modal-overlay.active');
+  if (activeModals.length === 0) {
+    document.documentElement.classList.remove('modal-open');
+    document.body.classList.remove('modal-open');
+    if (savedScrollPosition) {
+      window.scrollTo(0, savedScrollPosition);
+    }
+  }
+}
+
+// Prevent mobile elastic touch dragging on the background when any modal is open
+document.addEventListener('touchmove', function(e) {
+  if (document.body.classList.contains('modal-open')) {
+    const insideScrollable = e.target.closest('.modal-card, .notif-drawer, #authFullPageScreen');
+    if (!insideScrollable) {
+      e.preventDefault();
+    }
+  }
+}, { passive: false });
+
+// Prevent desktop mouse wheel scrolling on background backdrop
+document.addEventListener('wheel', function(e) {
+  if (document.body.classList.contains('modal-open')) {
+    const insideScrollable = e.target.closest('.modal-card, .notif-drawer, #authFullPageScreen');
+    if (!insideScrollable) {
+      e.preventDefault();
+    }
+  }
+}, { passive: false });
+
 // Initialize App
 document.addEventListener('DOMContentLoaded', () => {
   loadData();
@@ -153,6 +197,16 @@ document.addEventListener('DOMContentLoaded', () => {
   checkInitialWelcomeAuth();
   restoreSavedTabLocation();
   checkCookieConsent();
+
+  // Attach backdrop click listeners to close and unlock scroll on all modals
+  document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', function(e) {
+      if (e.target === this) {
+        this.classList.remove('active');
+        unlockBodyScroll();
+      }
+    });
+  });
 
   // Attach focus listeners to auth screen inputs to strip readonly on click/focus and prevent browser native autofill history popups
   document.querySelectorAll('#authFullPageScreen input').forEach(input => {
@@ -409,12 +463,16 @@ function openLogoutConfirmModal() {
   if (noBtn) noBtn.textContent = currentLang === 'ta' ? 'இல்லை' : 'No';
 
   const modal = document.getElementById('logoutConfirmModal');
-  if (modal) modal.classList.add('active');
+  if (modal) {
+    modal.classList.add('active');
+    lockBodyScroll();
+  }
 }
 
 function closeLogoutConfirmModal() {
   const modal = document.getElementById('logoutConfirmModal');
   if (modal) modal.classList.remove('active');
+  unlockBodyScroll();
 }
 
 function confirmCustomerLogout() {
@@ -1200,10 +1258,12 @@ function openEditProductModal(productId) {
   document.getElementById('editImagePreviewImg').src = prod.imageUrl;
 
   document.getElementById('editProductModal').classList.add('active');
+  lockBodyScroll();
 }
 
 function closeEditProductModal() {
   document.getElementById('editProductModal').classList.remove('active');
+  unlockBodyScroll();
 }
 
 function previewEditImageFile(event) {
@@ -1370,10 +1430,12 @@ function openEditCustomerModal(custIndex) {
   document.getElementById('editCustVillage').value = cust.village;
 
   document.getElementById('editCustomerModal').classList.add('active');
+  lockBodyScroll();
 }
 
 function closeEditCustomerModal() {
   document.getElementById('editCustomerModal').classList.remove('active');
+  unlockBodyScroll();
 }
 
 function handleSaveEditCustomer(e) {
@@ -1737,10 +1799,12 @@ function showProductModal(prodId) {
   `;
 
   document.getElementById('productModal').classList.add('active');
+  lockBodyScroll();
 }
 
 function closeProductModal() {
   document.getElementById('productModal').classList.remove('active');
+  unlockBodyScroll();
 }
 
 // ----------------------------------------------------
@@ -1792,10 +1856,12 @@ function updateCartQty(productId, delta) {
 function openCartModal() {
   renderCartModal();
   document.getElementById('cartModal').classList.add('active');
+  lockBodyScroll();
 }
 
 function closeCartModal() {
   document.getElementById('cartModal').classList.remove('active');
+  unlockBodyScroll();
 }
 
 function goToStockCatalog() {
@@ -2557,10 +2623,12 @@ function openPaymentModal(custIndex) {
   document.getElementById('payModalMaxHint').textContent = `${currentLang === 'ta' ? 'அதிகபட்ச நிலுவை:' : 'Max Balance:'} ₹${totalDue.toLocaleString('en-IN')}`;
 
   document.getElementById('paymentModal').classList.add('active');
+  lockBodyScroll();
 }
 
 function closePaymentModal() {
   document.getElementById('paymentModal').classList.remove('active');
+  unlockBodyScroll();
 }
 
 function setPayMethod(method) {
@@ -2956,6 +3024,7 @@ function openAdminRecordPaymentModal(custIndex) {
   if (modal) {
     modal.style.display = 'flex';
     modal.classList.add('active');
+    lockBodyScroll();
   }
 }
 
@@ -2965,6 +3034,7 @@ function closeAdminPaymentModal() {
     modal.classList.remove('active');
     modal.style.display = 'none';
   }
+  unlockBodyScroll();
 }
 
 function handleAdminSubmitOfflinePayment(e) {
@@ -3375,6 +3445,7 @@ function openPolicyModal(policyKey = 'privacy') {
   const modal = document.getElementById('policyModal');
   if (modal) {
     modal.classList.add('active');
+    lockBodyScroll();
     // Accessibility: Focus first interactive element or content panel
     const bodyEl = document.getElementById('policyModalBody');
     if (bodyEl) bodyEl.scrollTop = 0;
@@ -3384,6 +3455,7 @@ function openPolicyModal(policyKey = 'privacy') {
 function closePolicyModal() {
   const modal = document.getElementById('policyModal');
   if (modal) modal.classList.remove('active');
+  unlockBodyScroll();
 }
 
 function switchPolicyTab(policyKey) {
@@ -3462,6 +3534,7 @@ document.addEventListener('keydown', (e) => {
     // Close any active modal
     const activeModals = document.querySelectorAll('.modal-overlay.active');
     activeModals.forEach(m => m.classList.remove('active'));
+    unlockBodyScroll();
 
     // Close notification drawer if open
     const notifDrawer = document.getElementById('notifDrawer');
