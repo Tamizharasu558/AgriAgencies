@@ -30,6 +30,50 @@ function escapeHTML(str) {
   }[tag] || tag));
 }
 
+// Date-Time Formatter in exact 12-hour format: "12:31 PM 2026-07-23"
+function formatDateTime12(raw) {
+  if (!raw) return '12:31 PM 2026-07-23';
+  if (typeof raw === 'string') {
+    const trimmed = raw.trim();
+    // If it's already in the format "12:31 PM 2026-07-23" or "10:30 AM 2026-07-23"
+    if (/^\d{1,2}:\d{2}\s+(AM|PM)\s+\d{4}-\d{2}-\d{2}$/i.test(trimmed)) {
+      return trimmed;
+    }
+    // If it's in the format "2026-07-23 10:30" or "2026-07-23 10:30:00"
+    const isoMatch = trimmed.match(/^(\d{4}-\d{2}-\d{2})[T\s](\d{1,2}):(\d{2})/);
+    if (isoMatch) {
+      const datePart = isoMatch[1];
+      let h = parseInt(isoMatch[2], 10);
+      const m = isoMatch[3];
+      const ampm = h >= 12 ? 'PM' : 'AM';
+      h = h % 12;
+      h = h ? h : 12;
+      return `${h}:${m} ${ampm} ${datePart}`;
+    }
+  }
+
+  const d = (raw instanceof Date) ? raw : new Date(raw);
+  if (isNaN(d.getTime())) return '12:31 PM 2026-07-23';
+
+  let hours = d.getHours();
+  const minutes = String(d.getMinutes()).padStart(2, '0');
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  hours = hours ? hours : 12;
+  const strTime = `${hours}:${minutes} ${ampm}`;
+
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  const strDate = `${year}-${month}-${day}`;
+
+  return `${strTime} ${strDate}`;
+}
+
+function getMarkAllReadTime() {
+  return localStorage.getItem('kisan_mark_all_read_time') || '12:31 PM 2026-07-23';
+}
+
 // Web Crypto SHA-256 Hashing with Salt (Big Tech Security Standard)
 async function hashSecret(secret, salt = 'kisan_salt_2026') {
   if (window.crypto && window.crypto.subtle) {
@@ -179,6 +223,11 @@ function loadData() {
     customers = (Array.isArray(parsedCustomers) && parsedCustomers.length > 0 && parsedCustomers[0].purchases) ? parsedCustomers : [...initialCustomers];
     orders = (Array.isArray(parsedOrders) && parsedOrders.length > 0) ? parsedOrders : [...initialOrders];
     notifications = (Array.isArray(parsedNotifs) && parsedNotifs.length > 0) ? parsedNotifs : [...initialNotifications];
+    notifications.forEach(n => {
+      if (n.timestamp) {
+        n.timestamp = formatDateTime12(n.timestamp);
+      }
+    });
     currentLang = savedLang ? savedLang : 'en';
 
     saveData();
@@ -188,6 +237,11 @@ function loadData() {
     customers = [...initialCustomers];
     orders = [...initialOrders];
     notifications = [...initialNotifications];
+    notifications.forEach(n => {
+      if (n.timestamp) {
+        n.timestamp = formatDateTime12(n.timestamp);
+      }
+    });
     currentLang = 'en';
     saveData();
   }
@@ -755,7 +809,31 @@ function applyLanguageUI() {
   document.getElementById('optAllCrops').textContent = t('allCrops');
 
   document.getElementById('printStatementBtn').textContent = t('printStatement');
-  document.getElementById('markAllReadBtn').textContent = t('markAllRead');
+
+  const markTime = getMarkAllReadTime();
+  const markBtnLabel = document.getElementById('markAllReadBtnLabel');
+  if (markBtnLabel) markBtnLabel.textContent = t('markAllRead');
+  const drawerMarkBtnLabel = document.getElementById('drawerMarkAllReadLabel');
+  if (drawerMarkBtnLabel) drawerMarkBtnLabel.textContent = t('markAllRead');
+
+  const subStatusEl = document.getElementById('markAllReadSubStatus');
+  if (subStatusEl) {
+    subStatusEl.textContent = currentLang === 'ta'
+      ? `அனைத்தும் படிக்கப்பட்டது: ${markTime}`
+      : `Marked as all read: ${markTime}`;
+  }
+
+  const btnTimeTag = document.getElementById('markAllReadBtnTimeTag');
+  if (btnTimeTag) {
+    btnTimeTag.textContent = markTime;
+  }
+
+  const drawerStatusEl = document.getElementById('drawerMarkAllReadStatus');
+  if (drawerStatusEl) {
+    drawerStatusEl.textContent = currentLang === 'ta'
+      ? `கடைசியாக படிக்கப்பட்டது: ${markTime}`
+      : `Mark as all read: ${markTime}`;
+  }
 
   document.getElementById('thInvoice').textContent = t('invoiceHeader');
   document.getElementById('thDate').textContent = t('dateHeader');
@@ -2995,7 +3073,7 @@ function addNotification(type, title, message, icon, targetPhone = null, titleTa
   const newNotif = {
     id: 'NOTIF-' + Date.now(),
     customerPhone: targetPhone,
-    timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    timestamp: formatDateTime12(new Date()),
     type: type,
     title: title,
     titleTa: titleTa || title,
@@ -3024,6 +3102,27 @@ function renderNotifications() {
 
   const unreadCount = visibleNotifs.filter(n => !n.read).length;
   document.getElementById('notifCountBadge').textContent = unreadCount;
+
+  // Update "Mark as all read" timestamp displays (Format: "12:31 PM 2026-07-23")
+  const markTime = getMarkAllReadTime();
+  const subStatusEl = document.getElementById('markAllReadSubStatus');
+  if (subStatusEl) {
+    subStatusEl.textContent = currentLang === 'ta'
+      ? `அனைத்தும் படிக்கப்பட்டது: ${markTime}`
+      : `Marked as all read: ${markTime}`;
+  }
+
+  const btnTimeTag = document.getElementById('markAllReadBtnTimeTag');
+  if (btnTimeTag) {
+    btnTimeTag.textContent = markTime;
+  }
+
+  const drawerStatusEl = document.getElementById('drawerMarkAllReadStatus');
+  if (drawerStatusEl) {
+    drawerStatusEl.textContent = currentLang === 'ta'
+      ? `கடைசியாக படிக்கப்பட்டது: ${markTime}`
+      : `Mark as all read: ${markTime}`;
+  }
 
   const isCustomerView = (currentAuthRole === 'customer' || currentRole === 'customer');
   const activeCust = isCustomerView ? customers[loggedInCustomerIndex] : null;
@@ -3074,13 +3173,14 @@ function renderNotifications() {
     drawerList.innerHTML = visibleNotifs.slice(0, 10).map(n => {
       const rawTitle = (currentLang === 'ta' && n.titleTa) ? n.titleTa : n.title;
       const rawMsg = (currentLang === 'ta' && n.messageTa) ? n.messageTa : n.message;
+      const formattedTime = formatDateTime12(n.timestamp);
       return `
         <div class="notif-item ${!n.read ? 'unread' : ''}">
           <div style="display: flex; justify-content: space-between; font-weight: 600; color: var(--text-primary);">
             <span>${n.icon} ${processText(rawTitle)}</span>
           </div>
           <p style="color: var(--text-secondary); margin-top: 2px;">${processText(rawMsg)}</p>
-          <div class="notif-time">${n.timestamp}</div>
+          <div class="notif-time">${formattedTime}</div>
         </div>
       `;
     }).join('');
@@ -3093,15 +3193,16 @@ function renderNotifications() {
     fullContainer.innerHTML = visibleNotifs.map(n => {
       const rawTitle = (currentLang === 'ta' && n.titleTa) ? n.titleTa : n.title;
       const rawMsg = (currentLang === 'ta' && n.messageTa) ? n.messageTa : n.message;
+      const formattedTime = formatDateTime12(n.timestamp);
       return `
         <div style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 16px 20px; border-radius: var(--radius-md); display: flex; align-items: flex-start; gap: 14px; box-shadow: var(--shadow-sm);">
           <div style="font-size: 24px; width: 40px; height: 40px; background: var(--bg-card-subtle); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid var(--border-color);">
             ${n.icon}
           </div>
           <div style="flex: 1;">
-            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+            <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 6px;">
               <h4 style="font-size: 15px; font-weight: 600; color: var(--text-primary);">${processText(rawTitle)}</h4>
-              <span style="font-size: 11px; color: var(--text-muted);">${n.timestamp}</span>
+              <span style="font-size: 11.5px; color: var(--text-muted); font-weight: 500;">${formattedTime}</span>
             </div>
             <p style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">${processText(rawMsg)}</p>
           </div>
@@ -3133,6 +3234,9 @@ function toggleNotifDrawer() {
 }
 
 function clearAllNotifications() {
+  const newMarkTime = formatDateTime12(new Date());
+  localStorage.setItem('kisan_mark_all_read_time', newMarkTime);
+
   if (currentAuthRole === 'customer' || currentRole === 'customer') {
     const activeCust = customers[loggedInCustomerIndex];
     if (activeCust) {
@@ -3146,7 +3250,11 @@ function clearAllNotifications() {
   }
   saveData();
   renderNotifications();
-  showToast(currentLang === 'ta' ? 'அறிவிப்புகள் படிக்கப்பட்டன' : 'Cleared', 'Read all notifications', '');
+  showToast(
+    currentLang === 'ta' ? 'அனைத்தும் படிக்கப்பட்டன' : 'Marked as all read',
+    newMarkTime,
+    '✓'
+  );
 }
 
 // Toast

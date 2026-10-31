@@ -292,9 +292,17 @@
 
     <!-- Tab 4: Process Notifications Center -->
     <section id="tabNotifs" class="tab-content">
-      <div class="section-title">
-        <span id="tabNotifsTitle">Process Notifications & Event Logs</span>
-        <button class="btn-action" id="markAllReadBtn" onclick="clearAllNotifications()">Mark All as Read</button>
+      <div class="section-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+        <div>
+          <span id="tabNotifsTitle">Process Notifications & Event Logs</span>
+          <div id="markAllReadSubStatus" style="font-size: 12px; color: var(--text-muted); margin-top: 3px; font-weight: 500;">
+            Marked as all read: 12:31 PM 2026-07-23
+          </div>
+        </div>
+        <button class="btn-action" id="markAllReadBtn" onclick="clearAllNotifications()" style="display: inline-flex; align-items: center; gap: 6px;">
+          <span id="markAllReadBtnLabel">Mark as all read</span>
+          <span id="markAllReadBtnTimeTag" style="font-size: 11px; padding: 2px 8px; background: rgba(0,0,0,0.06); border-radius: var(--radius-pill); font-weight: 600;">12:31 PM 2026-07-23</span>
+        </button>
       </div>
       <div id="fullNotifContainer" style="display: flex; flex-direction: column; gap: 12px;">
         <!-- Rendered dynamically -->
@@ -1121,9 +1129,19 @@
 
   <!-- Notification Drawer -->
   <div class="notif-drawer" id="notifDrawer">
-    <div class="notif-drawer-header">
-      <h4 id="notifDrawerTitle">Process Notifications</h4>
-      <button class="close-btn" style="width: 24px; height: 24px; font-size: 12px;" onclick="toggleNotifDrawer()">✕</button>
+    <div class="notif-drawer-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+      <div>
+        <h4 id="notifDrawerTitle">Process Notifications</h4>
+        <div id="drawerMarkAllReadStatus" style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">
+          Mark as all read: 12:31 PM 2026-07-23
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <button class="btn-action" id="drawerMarkAllReadBtn" onclick="clearAllNotifications()" style="font-size: 11px; padding: 4px 10px;">
+          <span id="drawerMarkAllReadLabel">Mark as all read</span>
+        </button>
+        <button class="close-btn" style="width: 24px; height: 24px; font-size: 12px;" onclick="toggleNotifDrawer()">✕</button>
+      </div>
     </div>
     <div class="notif-list" id="notifDrawerList">
       <!-- Populated dynamically -->

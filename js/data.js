@@ -55,7 +55,7 @@ const translations = {
     statusDueSoon: "DUE SOON",
     payBillBtn: "Pay Bill",
     clearedLabel: "Cleared",
-    markAllRead: "Mark All as Read",
+    markAllRead: "Mark as all read",
     logOfflineTitle: "Log Offline Purchase (Credit Tab)",
     logOfflineSub: "Record offline purchases made at your shop. Updates stock and appends bill to customer credit ledger.",
     selectCustomerLabel: "Select Customer",
@@ -541,25 +541,25 @@ const initialNotifications = [
   {
     id: "NOTIF-101",
     customerPhone: "9876543210",
-    timestamp: "2026-07-23 10:30",
+    timestamp: "10:30 AM 2026-07-23",
     type: "ORDER_UPDATE",
     title: "Order ORD-2026-501 Packed & Ready!",
     titleTa: "ஆர்டர் ORD-2026-501 பேக் செய்யப்பட்டது!",
     message: "Ramesh Kumar's order of 5x Urea & 1x Bayer Fame has been packed by shop team. Ready for shop pickup.",
     messageTa: "ரமேஷ் குமாரின் ஆர்டர் பேக் செய்யப்பட்டுள்ளது. கடையில் வந்து பெறலாம்.",
-    icon: "",
+    icon: "📦",
     read: false
   },
   {
     id: "NOTIF-102",
     customerPhone: "9876543211",
-    timestamp: "2026-07-23 10:15",
+    timestamp: "10:15 AM 2026-07-23",
     type: "ORDER_UPDATE",
     title: "New Farm Delivery Order Received",
     titleTa: "புதிய பண்ணை டெலிவரி ஆர்டர் வந்தது",
     message: "Anita Devi placed order ORD-2026-502 for farm delivery at Krishi Nagar.",
     messageTa: "அனிதா தேவி பண்ணை டெலிவரி ஆர்டர் கொடுத்துள்ளார்.",
-    icon: "",
+    icon: "🚜",
     read: false
   }
 ];
