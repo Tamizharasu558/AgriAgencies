@@ -847,7 +847,7 @@ body {
   min-height: 100vh;
   line-height: 1.5;
   letter-spacing: -0.011em;
-  overflow-x: hidden;
+  overflow-x: clip;
   position: relative;
 }
 
@@ -911,9 +911,10 @@ header {
   margin: 0 auto;
   padding: 12px 28px;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
+  gap: 14px 20px;
   box-sizing: border-box;
 }
 
@@ -1216,9 +1217,10 @@ main {
   padding: 32px 36px;
   margin-bottom: 24px;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 32px;
+  gap: 24px 32px;
   box-shadow: var(--glass-shadow);
   position: relative;
   overflow: hidden;
@@ -1397,7 +1399,7 @@ main {
    ========================================================================== */
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
   gap: 22px;
 }
 
@@ -1541,9 +1543,10 @@ main {
 
 .product-price-row {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 8px 12px;
   margin-top: 14px;
   padding-top: 14px;
   border-top: 1px solid rgba(0, 0, 0, 0.06);
@@ -2242,11 +2245,12 @@ main {
 /* Large Desktop & Ultrawide Displays (1400px+) */
 @media (min-width: 1400px) {
   .product-grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
     gap: 22px;
   }
   .controls-bar {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     gap: 14px;
@@ -2256,7 +2260,8 @@ main {
     flex-direction: row;
     align-items: center;
     gap: 10px;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
+    max-width: 100%;
   }
 }
 
@@ -2268,7 +2273,8 @@ main {
   }
   .top-bar {
     padding: 12px 24px;
-    gap: 16px;
+    gap: 14px 16px;
+    flex-wrap: wrap;
   }
   .brand-text h1 {
     font-size: 17px;
@@ -2279,11 +2285,12 @@ main {
   .nav-tabs {
     padding: 0 24px 8px;
   }
-  /* Compact Hero Banner: fits neatly above the fold on laptop screens */
+  /* Compact Hero Banner: fits neatly above the fold on laptop screens and zoomed displays */
   .hero-banner {
     padding: 22px 26px;
     margin-bottom: 20px;
-    gap: 22px;
+    gap: 18px 22px;
+    flex-wrap: wrap;
   }
   .hero-content h2 {
     font-size: 22px;
@@ -2304,9 +2311,8 @@ main {
   .stat-label {
     font-size: 10.5px;
   }
-  /* 3 Clean Product Columns on Laptops (perfect ~300-340px card width) */
   .product-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
     gap: 18px;
   }
   .product-card {
@@ -2315,6 +2321,7 @@ main {
   /* Controls bar & horizontal filters */
   .controls-bar {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
@@ -2326,8 +2333,8 @@ main {
     flex-direction: row;
     align-items: center;
     gap: 10px;
-    flex-wrap: nowrap;
-    flex-shrink: 0;
+    flex-wrap: wrap;
+    max-width: 100%;
   }
   .search-box input {
     font-size: 13.5px;
@@ -2391,9 +2398,8 @@ main {
   .stat-value {
     font-size: 18px;
   }
-  /* 2 Clean Columns on Tablets & Small Screens */
   .product-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
     gap: 16px;
   }
   .product-card {
@@ -2417,8 +2423,8 @@ main {
     flex-direction: row;
     align-items: center;
     gap: 8px;
-    flex-wrap: nowrap;
-    overflow-x: auto;
+    flex-wrap: wrap;
+    max-width: 100%;
   }
   .footer-grid {
     grid-template-columns: 1fr 1fr;
@@ -3632,15 +3638,13 @@ textarea:focus-visible {
 }
 
 /* ==========================================================================
-   Smooth Mobile Motion & Rendering Pipeline (60fps/120fps ProMotion)
+   Zoom-Safe Component Isolation & Rendering Pipeline
    ========================================================================== */
 .product-card,
 .admin-card,
 .table-card,
 .ledger-header-card {
-  contain: layout style;
-  content-visibility: auto;
-  contain-intrinsic-size: 0 420px;
+  contain: style;
 }
 
 /* ==========================================================================
