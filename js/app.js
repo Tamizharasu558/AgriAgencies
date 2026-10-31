@@ -12,7 +12,87 @@ let selectedPayMethod = 'UPI';
 let tempUploadedImageBase64 = ''; // Base64 data URL of direct uploaded chemical image file
 let tempEditImageBase64 = '';
 
-let currentAuthRole = 'customer'; // 'customer' or 'admin'
+let currentAuthRole = 'guest'; // 'guest', 'customer', or 'admin'
+
+// ----------------------------------------------------
+// Security & Store Compliance Utilities
+// ----------------------------------------------------
+
+// XSS Sanitizer for dynamically injected user content
+function escapeHTML(str) {
+  if (typeof str !== 'string') return str;
+  return str.replace(/[&<>'"]/g, tag => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#39;',
+    '"': '&quot;'
+  }[tag] || tag));
+}
+
+// Web Crypto SHA-256 Hashing with Salt (Big Tech Security Standard)
+async function hashSecret(secret, salt = 'kisan_salt_2026') {
+  if (window.crypto && window.crypto.subtle) {
+    try {
+      const enc = new TextEncoder();
+      const data = enc.encode(secret + salt);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    } catch (e) {
+      console.warn('Web Crypto digest failed, falling back:', e);
+    }
+  }
+  // Deterministic fallback
+  let hash = 0;
+  const combined = secret + salt;
+  for (let i = 0; i < combined.length; i++) {
+    hash = ((hash << 5) - hash) + combined.charCodeAt(i);
+    hash |= 0;
+  }
+  return 'h_' + Math.abs(hash).toString(16);
+}
+
+// Brute-force rate limiting (Locks for 60 seconds after 5 consecutive failed attempts)
+const AUTH_RATE_LIMIT_KEY = 'kisan_auth_rate_limit';
+const MAX_AUTH_ATTEMPTS = 5;
+const AUTH_LOCKOUT_MS = 60 * 1000;
+
+function checkAuthRateLimit() {
+  try {
+    const raw = sessionStorage.getItem(AUTH_RATE_LIMIT_KEY);
+    if (!raw) return { allowed: true };
+    const data = JSON.parse(raw);
+    const now = Date.now();
+    if (data.lockoutUntil && data.lockoutUntil > now) {
+      const waitSec = Math.ceil((data.lockoutUntil - now) / 1000);
+      return { allowed: false, waitSec };
+    }
+    return { allowed: true };
+  } catch (e) {
+    return { allowed: true };
+  }
+}
+
+function recordAuthFailure() {
+  try {
+    const raw = sessionStorage.getItem(AUTH_RATE_LIMIT_KEY);
+    const data = raw ? JSON.parse(raw) : { attempts: 0, lockoutUntil: 0 };
+    const now = Date.now();
+    data.attempts = (data.attempts || 0) + 1;
+    if (data.attempts >= MAX_AUTH_ATTEMPTS) {
+      data.lockoutUntil = now + AUTH_LOCKOUT_MS;
+      data.attempts = 0;
+    }
+    sessionStorage.setItem(AUTH_RATE_LIMIT_KEY, JSON.stringify(data));
+  } catch (e) {}
+}
+
+function resetAuthRateLimit() {
+  try {
+    sessionStorage.removeItem(AUTH_RATE_LIMIT_KEY);
+  } catch (e) {}
+}
 
 // Helper for i18n translation key
 function t(key) {
@@ -114,9 +194,14 @@ function loadData() {
 
   const sessionCustIdx = sessionStorage.getItem('kisan_active_cust_idx') !== null ? sessionStorage.getItem('kisan_active_cust_idx') : localStorage.getItem('kisan_active_cust_idx');
   const sessionAuthRole = sessionStorage.getItem('kisan_auth_role') || localStorage.getItem('kisan_auth_role');
+  const hasAuth = localStorage.getItem('kisan_has_authenticated');
 
   loggedInCustomerIndex = sessionCustIdx !== null ? parseInt(sessionCustIdx, 10) : 0;
-  currentAuthRole = sessionAuthRole ? sessionAuthRole : 'customer';
+  if (!hasAuth) {
+    currentAuthRole = 'guest';
+  } else {
+    currentAuthRole = sessionAuthRole ? sessionAuthRole : 'customer';
+  }
 
   if (isNaN(loggedInCustomerIndex) || loggedInCustomerIndex < 0 || loggedInCustomerIndex >= customers.length) {
     loggedInCustomerIndex = 0;
@@ -155,7 +240,7 @@ window.addEventListener('storage', (e) => {
 });
 
 // ----------------------------------------------------
-// Access Control Rules: Customer View vs Admin View
+// Access Control Rules: Guest vs Customer vs Admin View
 // ----------------------------------------------------
 function applyAuthAccessRules() {
   const adminSwitcher = document.getElementById('adminRoleSwitcherContainer');
@@ -193,6 +278,30 @@ function applyAuthAccessRules() {
       badgeEl.style.color = '#991b1b';
       badgeEl.style.borderColor = '#fca5a5';
     }
+  } else if (currentAuthRole === 'guest') {
+    // Public Guest Mode: Browse stock, view prices, search, toggle lang/theme
+    currentRole = 'customer';
+    if (cartBtn) cartBtn.style.display = 'inline-flex';
+    if (adminSwitcher) adminSwitcher.style.display = 'none';
+    if (stockTabBtn) stockTabBtn.style.display = 'inline-flex';
+    if (ordersTabBtn) ordersTabBtn.style.display = 'inline-flex';
+    if (ledgerTabBtn) ledgerTabBtn.style.display = 'inline-flex';
+    if (ownerTabBtn) ownerTabBtn.style.display = 'none';
+
+    if (authBtnIcon) authBtnIcon.textContent = '';
+    if (authBtnText) authBtnText.textContent = currentLang === 'ta' ? 'உள்நுழைய' : 'Sign In';
+
+    const activeTab = document.querySelector('.tab-btn.active');
+    if (activeTab && activeTab.dataset.tab === 'tabOwner') {
+      setActiveTab('tabStock');
+    }
+
+    if (badgeEl) {
+      badgeEl.innerHTML = currentLang === 'ta' ? '👤 <strong>விருந்தினர்</strong>' : '👤 <strong>Guest Farmer</strong>';
+      badgeEl.style.background = 'rgba(120, 120, 128, 0.1)';
+      badgeEl.style.color = 'var(--text-secondary)';
+      badgeEl.style.borderColor = 'var(--border-color)';
+    }
   } else {
     // Customer login: Show Cart button & Customer tabs, hide Shop Owner Control Center & role switcher
     currentRole = 'customer';
@@ -214,7 +323,7 @@ function applyAuthAccessRules() {
     const activeCust = customers[loggedInCustomerIndex];
     if (badgeEl && activeCust) {
       const cName = (currentLang === 'ta' && activeCust.nameTa) ? activeCust.nameTa : activeCust.name;
-      badgeEl.innerHTML = `<strong>${cName}</strong> (${activeCust.phone})`;
+      badgeEl.innerHTML = `<strong>${escapeHTML(cName)}</strong> (${escapeHTML(activeCust.phone)})`;
       badgeEl.style.background = 'var(--primary-light)';
       badgeEl.style.color = 'var(--primary-color)';
       badgeEl.style.borderColor = '#a7f3d0';
@@ -226,6 +335,8 @@ function applyAuthAccessRules() {
 
 function handleHeaderAuthAction() {
   if (currentAuthRole === 'customer') {
+    openLogoutConfirmModal();
+  } else if (currentAuthRole === 'admin') {
     openLogoutConfirmModal();
   } else {
     openLoginModal();
@@ -260,32 +371,48 @@ function confirmCustomerLogout() {
   localStorage.removeItem('kisan_active_cust_idx');
 
   loggedInCustomerIndex = 0;
-  currentAuthRole = 'customer';
-  sessionStorage.setItem('kisan_auth_role', 'customer');
-  localStorage.setItem('kisan_auth_role', 'customer');
+  currentAuthRole = 'guest';
+  sessionStorage.setItem('kisan_auth_role', 'guest');
+  localStorage.setItem('kisan_auth_role', 'guest');
 
   applyAuthAccessRules();
   renderAll();
-
-  openLoginModal();
+  setActiveTab('tabStock');
 
   showToast(
     currentLang === 'ta' ? 'வெளியேறப்பட்டது' : 'Logged Out',
-    currentLang === 'ta' ? 'நீங்கள் வெற்றிகரமாக வெளியேறிவிட்டீர்கள்.' : 'You have logged out successfully.',
+    currentLang === 'ta' ? 'விருந்தினர் முறையில் பொருட்கள் மற்றும் விலைகளை பார்க்கலாம்.' : 'You are now browsing as a Guest Farmer.',
     ''
   );
 }
 
 // ----------------------------------------------------
-// Initial Welcome Authentication (Show Login/Register First)
+// Initial Welcome Authentication (Public Guest Browsing)
 // ----------------------------------------------------
 function checkInitialWelcomeAuth() {
   const hasAuth = localStorage.getItem('kisan_has_authenticated');
   if (!hasAuth) {
-    openLoginModal();
+    currentAuthRole = 'guest';
+    closeLoginModal();
   } else {
     closeLoginModal();
   }
+}
+
+function continueAsGuest() {
+  currentAuthRole = 'guest';
+  sessionStorage.setItem('kisan_auth_role', 'guest');
+  localStorage.setItem('kisan_auth_role', 'guest');
+  closeLoginModal();
+  applyAuthAccessRules();
+  renderAll();
+  setActiveTab('tabStock');
+
+  showToast(
+    currentLang === 'ta' ? 'விருந்தினர் முறை' : 'Guest Browsing',
+    currentLang === 'ta' ? 'பொருட்கள் மற்றும் விலைகளை தாராளமாக பார்வையிடலாம்.' : 'You can browse products and live prices freely.',
+    ''
+  );
 }
 
 function openLoginModal() {
@@ -355,8 +482,18 @@ function validatePin4Digits(pin) {
   return regex.test(pin);
 }
 
-function handleCustomerSignIn(e) {
+async function handleCustomerSignIn(e) {
   e.preventDefault();
+
+  // Rate Limiting Security Check
+  const rateLimit = checkAuthRateLimit();
+  if (!rateLimit.allowed) {
+    alert(currentLang === 'ta'
+      ? `அதிகப்படியான தவறான முயற்சிகள்! தயவுசெய்து ${rateLimit.waitSec} வினாடிகள் காத்திருக்கவும்.`
+      : `Too many failed login attempts! For security, please wait ${rateLimit.waitSec} seconds before trying again.`);
+    return;
+  }
+
   const phone = document.getElementById('signInPhoneInput').value.trim();
   const pinElem = document.getElementById('signInPinInput');
   const pin = pinElem ? pinElem.value.trim() : '';
@@ -376,13 +513,29 @@ function handleCustomerSignIn(e) {
   const foundIdx = customers.findIndex(c => c.phone.trim() === phone);
   if (foundIdx !== -1) {
     const cust = customers[foundIdx];
-    const custPin = cust.pin ? String(cust.pin).trim() : '1234';
+    const enteredHash = await hashSecret(pin);
+    let pinValid = false;
 
-    if (pin !== custPin) {
+    if (cust.pinHash) {
+      pinValid = (enteredHash === cust.pinHash);
+    } else {
+      const custPin = cust.pin ? String(cust.pin).trim() : '1234';
+      if (pin === custPin) {
+        pinValid = true;
+        // Seamless cryptographic upgrade to SHA-256 hash
+        cust.pinHash = enteredHash;
+        delete cust.pin;
+        saveData();
+      }
+    }
+
+    if (!pinValid) {
+      recordAuthFailure();
       alert(currentLang === 'ta' ? 'தவறான 4-இலக்க PIN! உங்கள் கணக்கிற்குரிய சரியான PIN-ஐ உள்ளிடவும்.' : 'Incorrect 4-digit Security PIN! Please enter the correct PIN for your account.');
       return;
     }
 
+    resetAuthRateLimit();
     loggedInCustomerIndex = foundIdx;
     currentAuthRole = 'customer';
     currentRole = 'customer';
@@ -400,6 +553,7 @@ function handleCustomerSignIn(e) {
       ''
     );
   } else {
+    recordAuthFailure();
     alert(currentLang === 'ta' ? 'இந்த போன் எண் பதிவு செய்யப்படவில்லை. தயவுசெய்து "பதிவு" மூலம் பதிவு செய்யவும்.' : 'Phone number not found! Please click "Register" to create your account.');
     switchAuthTab('register');
     const regPhone = document.getElementById('regPhoneInput');
@@ -407,8 +561,18 @@ function handleCustomerSignIn(e) {
   }
 }
 
-function handleCustomerRegister(e) {
+async function handleCustomerRegister(e) {
   e.preventDefault();
+
+  // Rate Limiting Security Check
+  const rateLimit = checkAuthRateLimit();
+  if (!rateLimit.allowed) {
+    alert(currentLang === 'ta'
+      ? `அதிகப்படியான முயற்சிகள்! தயவுசெய்து ${rateLimit.waitSec} வினாடிகள் காத்திருக்கவும்.`
+      : `Too many attempts! Please wait ${rateLimit.waitSec} seconds.`);
+    return;
+  }
+
   const name = document.getElementById('regNameInput').value.trim();
   const phone = document.getElementById('regPhoneInput').value.trim();
   const village = document.getElementById('regVillageInput').value.trim();
@@ -464,6 +628,9 @@ function handleCustomerRegister(e) {
     return;
   }
 
+  // Generate SHA-256 cryptographic salt-hash for PIN
+  const pinHash = await hashSecret(pin);
+
   const newCust = {
     id: 'CUST-' + Date.now(),
     name: name,
@@ -471,7 +638,7 @@ function handleCustomerRegister(e) {
     phone: phone,
     village: village,
     villageTa: village,
-    pin: pin,
+    pinHash: pinHash,
     landSize: "Farm Land",
     landSizeTa: "விவசாய நிலம்",
     purchases: [],
@@ -480,6 +647,7 @@ function handleCustomerRegister(e) {
   customers.push(newCust);
   loggedInCustomerIndex = customers.length - 1;
 
+  resetAuthRateLimit();
   currentAuthRole = 'customer';
   currentRole = 'customer';
   localStorage.setItem('kisan_has_authenticated', 'true');
@@ -498,8 +666,19 @@ function handleCustomerRegister(e) {
 
 function handleAdminSignIn(e) {
   e.preventDefault();
+
+  // Rate Limiting Security Check
+  const rateLimit = checkAuthRateLimit();
+  if (!rateLimit.allowed) {
+    alert(currentLang === 'ta'
+      ? `அதிகப்படியான தவறான முயற்சிகள்! தயவுசெய்து ${rateLimit.waitSec} வினாடிகள் காத்திருக்கவும்.`
+      : `Too many failed login attempts! For security, please wait ${rateLimit.waitSec} seconds before trying again.`);
+    return;
+  }
+
   const passcode = document.getElementById('adminPasscodeInput').value.trim();
   if (passcode === '1234' || passcode.toLowerCase() === 'admin' || passcode === 'admin123') {
+    resetAuthRateLimit();
     currentAuthRole = 'admin';
     currentRole = 'owner';
     localStorage.setItem('kisan_has_authenticated', 'true');
@@ -515,6 +694,7 @@ function handleAdminSignIn(e) {
       ''
     );
   } else {
+    recordAuthFailure();
     alert(currentLang === 'ta' ? 'தவறான பாஸ்கோடு! (1234)' : 'Incorrect Admin Passcode! (Default: 1234)');
   }
 }
@@ -658,6 +838,29 @@ function applyLanguageUI() {
   if (heroTitle && heroSubtitle) {
     heroTitle.innerHTML = t('heroCustomerTitle');
     heroSubtitle.innerHTML = t('heroCustomerSubtitle');
+  }
+
+  // Guest Mode & Privacy Translations
+  const continueGuestEl = document.getElementById('continueGuestText');
+  if (continueGuestEl) {
+    continueGuestEl.textContent = currentLang === 'ta' ? 'விருந்தினராக தொடரவும்' : 'Continue Browsing as Guest';
+  }
+
+  const privTitle = document.getElementById('lblAccountPrivacyTitle');
+  if (privTitle) {
+    privTitle.textContent = currentLang === 'ta' ? 'கணக்கு தனியுரிமை & தரவு பாதுகாப்பு' : 'Account Privacy & Data Governance';
+  }
+
+  const privSub = document.getElementById('lblAccountPrivacySub');
+  if (privSub) {
+    privSub.textContent = currentLang === 'ta'
+      ? 'ஆப்பிள் மற்றும் கூகுள் பிளே கொள்கைகளின்படி உங்கள் கணக்கு மற்றும் தனிப்பட்ட தரவை நிரந்தரமாக நீக்கலாம்.'
+      : 'In accordance with Apple App Store and Google Play policies, you can permanently delete your account and personal data.';
+  }
+
+  const deleteBtn = document.getElementById('btnDeleteAccountAction');
+  if (deleteBtn) {
+    deleteBtn.textContent = currentLang === 'ta' ? 'கணக்கை நீக்கு' : 'Delete My Account';
   }
 }
 
@@ -1486,8 +1689,27 @@ function renderCartModal() {
     `;
   }).join('');
 
-  const activeCust = customers[loggedInCustomerIndex];
-  const activeCustName = (currentLang === 'ta' && activeCust.nameTa) ? activeCust.nameTa : activeCust.name;
+  const activeCust = (currentAuthRole !== 'guest' && customers[loggedInCustomerIndex]) ? customers[loggedInCustomerIndex] : null;
+  const activeCustName = activeCust ? ((currentLang === 'ta' && activeCust.nameTa) ? activeCust.nameTa : activeCust.name) : '';
+
+  const orderingAccountHtml = (currentAuthRole === 'guest')
+    ? `
+      <div class="form-group">
+        <label>Ordering Account</label>
+        <div style="background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.25); padding: 12px 14px; border-radius: var(--radius-sm); font-size: 13px; color: var(--text-primary); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+          <span>👤 <strong>${currentLang === 'ta' ? 'விருந்தினர் முறை' : 'Guest Farmer'}</strong> (${currentLang === 'ta' ? 'முன்பதிவு செய்ய உள்நுழையவும்' : 'Sign in to reserve'})</span>
+          <button type="button" class="btn-action" onclick="closeCartModal(); openLoginModal();" style="font-weight: 600; padding: 6px 14px; font-size: 12px; background: var(--primary-color); color: #fff; border: none; border-radius: var(--radius-pill); cursor: pointer;">${currentLang === 'ta' ? 'உள்நுழைய / பதிவு' : 'Sign In / Register'}</button>
+        </div>
+      </div>
+    `
+    : `
+      <div class="form-group">
+        <label>Ordering Account</label>
+        <div style="background: var(--primary-light); border: 1px solid #a7f3d0; padding: 10px 14px; border-radius: var(--radius-sm); font-weight: 700; color: var(--primary-color); font-size: 14px;">
+          ${escapeHTML(activeCustName)} (${escapeHTML(activeCust ? activeCust.phone : '')})
+        </div>
+      </div>
+    `;
 
   container.innerHTML = `
     <div style="max-height: 220px; overflow-y: auto; margin-bottom: 16px;">
@@ -1501,12 +1723,7 @@ function renderCartModal() {
       </div>
     </div>
 
-    <div class="form-group">
-      <label>Ordering Account</label>
-      <div style="background: var(--primary-light); border: 1px solid #a7f3d0; padding: 10px 14px; border-radius: var(--radius-sm); font-weight: 700; color: var(--primary-color); font-size: 14px;">
-        ${activeCustName} (${activeCust.phone})
-      </div>
-    </div>
+    ${orderingAccountHtml}
 
     <div class="form-group">
       <label>${t('fulfillmentLabel')}</label>
@@ -1554,6 +1771,15 @@ function toggleDeliveryAddressField() {
 
 function submitCustomerOrder() {
   if (cart.length === 0) return;
+
+  if (currentAuthRole === 'guest') {
+    alert(currentLang === 'ta'
+      ? 'முன்பதிவை உறுதி செய்ய தயவுசெய்து உங்கள் 10-இலக்க மொபைல் எண் மூலம் உள்நுழையவும் அல்லது பதிவு செய்யவும்.'
+      : 'Please Sign In or Register with your 10-digit mobile number to confirm your order reservation.');
+    closeCartModal();
+    openLoginModal();
+    return;
+  }
 
   const cust = customers[loggedInCustomerIndex];
   if (!cust) return;
@@ -1635,10 +1861,27 @@ function submitCustomerOrder() {
 }
 
 // ----------------------------------------------------
-// Customer Orders Tab (PRIVACY PROTECTED)
+// Customer Orders Tab (PRIVACY PROTECTED & GUEST AWARE)
 // ----------------------------------------------------
 function renderCustomerOrders() {
   const container = document.getElementById('customerOrdersContainer');
+
+  if (currentAuthRole === 'guest') {
+    container.innerHTML = `
+      <div style="text-align: center; padding: 48px 24px; background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border-color); max-width: 520px; margin: 24px auto; box-shadow: var(--shadow-sm);">
+        <div style="width: 56px; height: 56px; background: var(--primary-light); color: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; margin: 0 auto 16px;">📦</div>
+        <h4 style="font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">${currentLang === 'ta' ? 'உங்கள் ஆர்டர்களைக் காண உள்நுழையவும்' : 'Sign In to View Your Orders'}</h4>
+        <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.5; margin-bottom: 20px;">
+          ${currentLang === 'ta' ? 'உங்கள் பதிவு செய்யப்பட்ட 10-இலக்க போன் எண் மூலம் உள்நுழைந்து பேக்கிங் மற்றும் டெலிவரி நிலையை கண்காணிக்கவும்.' : 'Sign in or register with your 10-digit mobile number to view live order tracking, packing status, and delivery details.'}
+        </p>
+        <button class="btn-primary" onclick="openLoginModal()" style="padding: 10px 24px; border-radius: var(--radius-pill); font-weight: 600;">
+          ${currentLang === 'ta' ? 'உள்நுழைய அல்லது பதிவு செய்ய' : 'Sign In / Register'}
+        </button>
+      </div>
+    `;
+    return;
+  }
+
   const cust = customers[loggedInCustomerIndex];
   if (!cust) return;
 
@@ -1671,14 +1914,14 @@ function renderCustomerOrders() {
 
     const itemsSummary = ord.items.map(i => {
       const iName = (currentLang === 'ta' && i.nameTa) ? i.nameTa : i.name;
-      return `${i.qty}x ${iName}`;
+      return `${i.qty}x ${escapeHTML(iName)}`;
     }).join(', ');
 
     return `
       <div class="order-card" style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 20px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm);">
         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
           <div>
-            <h4 style="font-size: 16px; font-weight: 700; color: var(--text-primary);">${ord.orderId}</h4>
+            <h4 style="font-size: 16px; font-weight: 700; color: var(--text-primary);">${escapeHTML(ord.orderId)}</h4>
             <div style="font-size: 12px; color: var(--text-muted);">${ord.date} • ${ord.fulfillmentType === 'PICKUP' ? t('pickupOption') : t('deliveryOption')}</div>
           </div>
           <div>${statusBadge}</div>
@@ -1697,7 +1940,7 @@ function renderCustomerOrders() {
 
         <div class="order-card-footer" style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 12px; font-size: 13px;">
           <div>
-            <div>${currentLang === 'ta' ? 'முகவரி:' : 'Address:'} <span style="color: var(--text-primary); font-weight: 500;">${ord.deliveryAddress}</span></div>
+            <div>${currentLang === 'ta' ? 'முகவரி:' : 'Address:'} <span style="color: var(--text-primary); font-weight: 500;">${escapeHTML(ord.deliveryAddress)}</span></div>
             <div style="font-size: 11px; margin-top: 4px;">
               ${ord.paymentChoice === 'ONLINE'
                 ? `<span style="background: #ecfdf5; color: #047857; padding: 2px 8px; border-radius: 4px; font-weight: 600; border: 1px solid #a7f3d0;">${currentLang === 'ta' ? 'ஆன்லைனில் செலுத்தப்பட்டது' : 'Paid Online'}</span>`
@@ -1713,9 +1956,41 @@ function renderCustomerOrders() {
 }
 
 // ----------------------------------------------------
-// Customer Ledger (PRIVACY PROTECTED)
+// Customer Ledger (PRIVACY PROTECTED & GUEST AWARE)
 // ----------------------------------------------------
 function renderCustomerLedger() {
+  const privacyBox = document.getElementById('accountPrivacyBox');
+  const printBtn = document.getElementById('printStatementBtn');
+
+  if (currentAuthRole === 'guest') {
+    if (privacyBox) privacyBox.style.display = 'none';
+    if (printBtn) printBtn.style.display = 'none';
+
+    const ledgerCard = document.getElementById('ledgerHeaderCard');
+    const tbody = document.getElementById('ledgerTableBody');
+    if (ledgerCard) {
+      ledgerCard.innerHTML = `
+        <div style="text-align: center; padding: 48px 24px; max-width: 520px; margin: 0 auto;">
+          <div style="width: 56px; height: 56px; background: var(--primary-light); color: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 26px; margin: 0 auto 16px;">📋</div>
+          <h4 style="font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">${currentLang === 'ta' ? 'கடன் பாஸ்புக் காண உள்நுழையவும்' : 'Sign In to Access Farmer Ledger'}</h4>
+          <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.5; margin-bottom: 20px;">
+            ${currentLang === 'ta' ? 'உங்கள் உரம் மற்றும் பூச்சிக்கொல்லி கடன் கணக்கு, நிலுவை தொகை மற்றும் UPI செலுத்துதலை நிர்வகிக்க உள்நுழையவும்.' : 'View your farm credit balance, transaction history, and pay outstanding fertilizer balances securely via UPI.'}
+          </p>
+          <button class="btn-primary" onclick="openLoginModal()" style="padding: 10px 24px; border-radius: var(--radius-pill); font-weight: 600;">
+            ${currentLang === 'ta' ? 'உள்நுழைய அல்லது பதிவு செய்ய' : 'Sign In / Register'}
+          </button>
+        </div>
+      `;
+    }
+    if (tbody) {
+      tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; padding: 24px; color: var(--text-muted);">${currentLang === 'ta' ? 'கடன் அறிக்கையைக் காண தயவுசெய்து உள்நுழையவும்.' : 'Please sign in to view your personalized purchase records.'}</td></tr>`;
+    }
+    return;
+  }
+
+  if (privacyBox) privacyBox.style.display = (currentAuthRole === 'customer') ? 'flex' : 'none';
+  if (printBtn) printBtn.style.display = 'inline-flex';
+
   const cust = customers[loggedInCustomerIndex];
   if (!cust) return;
 
@@ -1736,10 +2011,10 @@ function renderCustomerLedger() {
   const ledgerCard = document.getElementById('ledgerHeaderCard');
   ledgerCard.innerHTML = `
     <div class="customer-info-box">
-      <h3>${cName}</h3>
+      <h3>${escapeHTML(cName)}</h3>
       <div class="customer-meta">
-        <span><strong>Location / Village:</strong> ${cVillage}</span>
-        <span><strong>Mobile:</strong> ${cust.phone}</span>
+        <span><strong>Location / Village:</strong> ${escapeHTML(cVillage)}</span>
+        <span><strong>Mobile:</strong> ${escapeHTML(cust.phone)}</span>
       </div>
     </div>
 
@@ -1780,12 +2055,10 @@ function renderCustomerLedger() {
     const isZeroA = a.balance === 0 ? 1 : 0;
     const isZeroB = b.balance === 0 ? 1 : 0;
 
-    // Primary sort: Unpaid balance (isZero = 0) FIRST, Zero balance (isZero = 1) LAST
     if (isZeroA !== isZeroB) {
       return isZeroA - isZeroB;
     }
 
-    // Secondary sort: Product purchase order (newest date first)
     const dateA = new Date(a.date || 0).getTime();
     const dateB = new Date(b.date || 0).getTime();
     return dateB - dateA;
@@ -1801,12 +2074,12 @@ function renderCustomerLedger() {
 
     const itemsSummary = inv.items.map(item => {
       const iName = (currentLang === 'ta' && item.nameTa) ? item.nameTa : item.name;
-      return `${item.qty}x ${iName}`;
+      return `${item.qty}x ${escapeHTML(iName)}`;
     }).join(', ');
 
     return `
       <tr>
-        <td><strong>${inv.invoiceId}</strong></td>
+        <td><strong>${escapeHTML(inv.invoiceId)}</strong></td>
         <td>${inv.date}</td>
         <td><span style="color: var(--text-primary); font-weight: 500;">${itemsSummary}</span></td>
         <td>₹${inv.totalAmount.toLocaleString('en-IN')}</td>
@@ -1823,6 +2096,62 @@ function renderCustomerLedger() {
       </tr>
     `;
   }).join('');
+}
+
+// ----------------------------------------------------
+// Store Compliance: In-App Account Deletion (Apple 5.1.1(v) & Google Play)
+// ----------------------------------------------------
+async function initiateAccountDeletion() {
+  const cust = customers[loggedInCustomerIndex];
+  if (!cust) return;
+
+  const cName = (currentLang === 'ta' && cust.nameTa) ? cust.nameTa : cust.name;
+  const confirmMsg = currentLang === 'ta'
+    ? `எச்சரிக்கை: ${cName} (${cust.phone}) கணக்கை நிரந்தரமாக நீக்க விரும்புகிறீர்களா? உங்கள் கடன் பதிவுகள் மற்றும் தனிப்பட்ட தரவு அனைத்தும் இந்த சாதனத்திலிருந்து நீக்கப்படும்.`
+    : `Warning: Are you sure you want to permanently delete your account (${cName} - ${cust.phone})? In compliance with Apple and Google Play store standards, all your personal details, order records, and local data will be permanently wiped.`;
+
+  if (confirm(confirmMsg)) {
+    const promptPin = prompt(currentLang === 'ta' ? 'கணக்கு நீக்கத்தை உறுதிப்படுத்த உங்கள் 4-இலக்க PIN-ஐ உள்ளிடவும்:' : 'Please enter your 4-digit PIN to confirm deletion:');
+    if (!promptPin) return;
+
+    const enteredHash = await hashSecret(promptPin.trim());
+    let pinValid = false;
+
+    if (cust.pinHash) {
+      pinValid = (enteredHash === cust.pinHash);
+    } else {
+      const custPin = cust.pin ? String(cust.pin).trim() : '1234';
+      pinValid = (promptPin.trim() === custPin);
+    }
+
+    if (pinValid) {
+      customers.splice(loggedInCustomerIndex, 1);
+      if (customers.length === 0) {
+        customers = [...initialCustomers];
+      }
+      saveData();
+
+      // Clear authentication and return to public guest browsing
+      localStorage.removeItem('kisan_has_authenticated');
+      sessionStorage.removeItem('kisan_active_cust_idx');
+      localStorage.removeItem('kisan_active_cust_idx');
+
+      loggedInCustomerIndex = 0;
+      currentAuthRole = 'guest';
+      sessionStorage.setItem('kisan_auth_role', 'guest');
+      localStorage.setItem('kisan_auth_role', 'guest');
+
+      applyAuthAccessRules();
+      renderAll();
+      setActiveTab('tabStock');
+
+      alert(currentLang === 'ta'
+        ? 'உங்கள் கணக்கு மற்றும் தனிப்பட்ட தரவு வெற்றிகரமாக நீக்கப்பட்டது.'
+        : 'Your account and personal data have been permanently deleted.');
+    } else {
+      alert(currentLang === 'ta' ? 'தவறான PIN! கணக்கு நீக்கம் ரத்து செய்யப்பட்டது.' : 'Incorrect PIN! Account deletion cancelled.');
+    }
+  }
 }
 
 function printLedgerReceipt() {

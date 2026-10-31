@@ -2,9 +2,60 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KisanAgri - Agro Chemical & Fertilizer Stock Availability, Orders & Pay-Later Ledger</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>KisanAgri Hub - Agro Chemical & Fertilizer Stock Availability, Orders & Pay-Later Ledger</title>
   <meta name="description" content="Check live fertilizer & agro-chemical stock availability, reserve products for shop pickup or farm delivery, manage store credit, and pay online.">
+  <link rel="canonical" href="https://kisanagri.com/">
+
+  <!-- PWA & Mobile Store Meta -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="alternate icon" type="image/png" href="assets/favicon.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta name="theme-color" content="#15803d" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121814" media="(prefers-color-scheme: dark)">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="KisanAgri">
+  <meta name="application-name" content="KisanAgri">
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <!-- Open Graph & Social Meta (WWW Indexing) -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://kisanagri.com/">
+  <meta property="og:title" content="KisanAgri Hub - Agro Chemical & Fertilizer Store">
+  <meta property="og:description" content="Live stock availability, fast reservation for farm pickup & delivery, and transparent farmer credit ledger.">
+  <meta property="og:image" content="https://kisanagri.com/assets/icon-512.png">
+
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="KisanAgri Hub">
+  <meta name="twitter:description" content="Live fertilizer stock tracking, farmer order reservation, and transparent passbook credit ledger.">
+  <meta name="twitter:image" content="https://kisanagri.com/assets/icon-512.png">
+
+  <!-- Security & Privacy Directives -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Schema.org JSON-LD Structured Data for Search Engine Crawlers -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "KisanAgri Hub",
+    "url": "https://kisanagri.com/",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "AggregateOffer",
+      "priceCurrency": "INR",
+      "price": "145",
+      "highPrice": "1450"
+    },
+    "description": "Agro-chemical & fertilizer live stock tracking, farmer order reservation, and transparent passbook credit ledger."
+  }
+  </script>
+
   <link rel="stylesheet" href="css/styles.css?v=zoom-responsive-11.0">
   <!-- System-Theme Default Dark Mode Script (runs before body renders to avoid flash) -->
   <script>
@@ -225,6 +276,17 @@
             <!-- Rendered dynamically -->
           </tbody>
         </table>
+      </div>
+
+      <!-- Store Compliance: In-App Account Privacy & Deletion (Apple Guideline 5.1.1(v) & Google Play Policy) -->
+      <div id="accountPrivacyBox" style="margin-top: 24px; padding: 20px; border-radius: var(--radius-md); border: 1px dashed rgba(239, 68, 68, 0.35); background: rgba(239, 68, 68, 0.04); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+        <div>
+          <div style="font-weight: 700; color: #dc2626; font-size: 14px;" id="lblAccountPrivacyTitle">Account Privacy & Data Governance</div>
+          <div style="font-size: 12.5px; color: var(--text-secondary); margin-top: 3px;" id="lblAccountPrivacySub">In accordance with Apple App Store and Google Play policies, you can permanently delete your account and personal data.</div>
+        </div>
+        <button type="button" class="btn-action" onclick="initiateAccountDeletion()" style="background: #ef4444; color: #ffffff; border: none; font-weight: 600; padding: 9px 18px; border-radius: var(--radius-pill); cursor: pointer;" id="btnDeleteAccountAction">
+          Delete My Account
+        </button>
       </div>
     </section>
 
@@ -663,7 +725,8 @@
     </div>
 
     <!-- Fresh Auth Card Container -->
-    <div class="modal-card" style="max-width: 440px; width: 100%; padding: 32px 34px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(30px) saturate(190%); -webkit-backdrop-filter: blur(30px) saturate(190%); border-radius: 28px; box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35); border: 1px solid rgba(255, 255, 255, 0.8);">
+    <div class="modal-card" style="position: relative; max-width: 440px; width: 100%; padding: 32px 34px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(30px) saturate(190%); -webkit-backdrop-filter: blur(30px) saturate(190%); border-radius: 28px; box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35); border: 1px solid rgba(255, 255, 255, 0.8);">
+      <button type="button" class="close-btn" onclick="continueAsGuest()" style="position: absolute; top: 16px; right: 18px; font-size: 20px; color: var(--text-muted); background: none; border: none; cursor: pointer; padding: 6px; border-radius: 50%;" title="Continue Browsing as Guest">✕</button>
       <div style="margin-bottom: 22px; text-align: center;">
         <h3 id="authPageTitle" style="font-size: 21px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.025em;">KisanAgri Portal Sign In</h3>
         <p id="authPageSub" style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">Select Customer Sign In or Admin Login</p>
@@ -768,6 +831,13 @@
 
           <button type="submit" id="btnAdminSignInSubmit" class="btn-primary" style="margin-top: 16px; padding: 12px 20px; font-size: 14.5px; font-weight: 600; background: linear-gradient(135deg, #1d1d1f, #2d2d30); box-shadow: 0 4px 14px rgba(0,0,0,0.25); border-radius: var(--radius-pill);">Sign In as Admin</button>
         </form>
+      </div>
+
+      <!-- Public Guest Access Divider & Action (Store Guideline 5.1.1(v) Compliant) -->
+      <div style="margin-top: 20px; text-align: center; border-top: 1px solid rgba(0,0,0,0.08); padding-top: 16px;">
+        <button type="button" class="btn-action" onclick="continueAsGuest()" style="background: transparent; border: 1px solid var(--border-color); color: var(--text-secondary); width: 100%; border-radius: var(--radius-pill); font-size: 13px; font-weight: 600; padding: 11px 18px; cursor: pointer; transition: all 0.2s ease;">
+          ← <span id="continueGuestText">Continue Browsing as Guest</span>
+        </button>
       </div>
     </div>
   </div>
@@ -1145,6 +1215,21 @@
         }
       }
     })();
+  </script>
+
+  <!-- PWA Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then(registration => {
+            console.log('KisanAgri Service Worker registered successfully:', registration.scope);
+          })
+          .catch(error => {
+            console.log('Service Worker registration skipped or failed:', error);
+          });
+      });
+    }
   </script>
 </body>
 </html>

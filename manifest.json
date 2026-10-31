@@ -1,0 +1,63 @@
+{
+  "name": "KisanAgri Hub - Agro Chemical & Fertilizer Store",
+  "short_name": "KisanAgri",
+  "description": "Live fertilizer & agro-chemical stock availability, farm order reservations, and pay-later ledger.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#000000",
+  "theme_color": "#15803d",
+  "categories": ["shopping", "business"],
+  "lang": "en",
+  "dir": "ltr",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icon-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Check Stock Availability",
+      "short_name": "Live Stock",
+      "description": "Check current fertilizer and chemical stock levels",
+      "url": "./#tabStock",
+      "icons": [{ "src": "assets/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "My Orders & Packing",
+      "short_name": "Orders",
+      "description": "Track advance packing and fulfillment status",
+      "url": "./#tabOrders",
+      "icons": [{ "src": "assets/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "My Pay-Later Ledger",
+      "short_name": "Ledger",
+      "description": "View store credit balance and pay online",
+      "url": "./#tabLedger",
+      "icons": [{ "src": "assets/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}
