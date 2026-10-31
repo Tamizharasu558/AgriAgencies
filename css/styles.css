@@ -2231,12 +2231,65 @@ main {
 }
 
 #authFullPageScreen .modal-card {
+  position: relative !important;
   background: rgba(255, 255, 255, 0.96) !important;
   backdrop-filter: blur(16px) !important;
   -webkit-backdrop-filter: blur(16px) !important;
   border: 1px solid rgba(255, 255, 255, 0.95) !important;
   border-radius: 28px !important;
   box-shadow: 0 36px 84px rgba(0, 0, 0, 0.45) !important;
+}
+
+/* Dedicated Pixel-Perfect Close Button for Auth Modal Screen */
+.auth-modal-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  border-radius: 50%;
+  background: rgba(120, 120, 128, 0.12);
+  border: 1px solid rgba(120, 120, 128, 0.18);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.auth-modal-close-btn:hover {
+  background: rgba(120, 120, 128, 0.22);
+  color: var(--text-primary);
+  transform: scale(1.06);
+}
+
+.auth-modal-close-btn:active {
+  transform: scale(0.92);
+}
+
+[data-theme="dark"] .auth-modal-close-btn {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #d1d1d6;
+}
+
+[data-theme="dark"] .auth-modal-close-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+}
+
+.auth-modal-header {
+  margin-bottom: 22px;
+  text-align: center;
+  padding: 0 40px;
 }
 
 /* ==========================================================================
@@ -3074,14 +3127,31 @@ main {
   }
 
   #authFullPageScreen .modal-card {
+    position: relative !important;
     border-radius: 20px !important;
-    padding: 22px 16px !important;
+    padding: 20px 16px 24px 16px !important;
     margin: auto 0 !important;
     max-width: 100% !important;
   }
 
+  .auth-modal-header {
+    padding: 0 36px !important; /* Prevents title from ever touching or overlapping the close button */
+    margin-bottom: 18px !important;
+    text-align: center !important;
+  }
+
+  .auth-modal-close-btn {
+    top: 12px !important;
+    right: 12px !important;
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+  }
+
   #authPageTitle {
-    font-size: 18px !important;
+    font-size: 17px !important;
+    line-height: 1.3 !important;
   }
 
   .brand-text p {
