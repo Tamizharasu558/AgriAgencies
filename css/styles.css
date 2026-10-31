@@ -903,7 +903,6 @@ header {
   border-bottom: 1px solid var(--border-color);
   box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.03);
   transition: var(--transition-fast);
-  transform: translateZ(0);
 }
 
 .top-bar {
@@ -1414,7 +1413,6 @@ main {
   position: relative;
   box-shadow: var(--glass-shadow);
   overflow: hidden;
-  transform: translateZ(0);
 }
 
 .product-card::before {
@@ -2438,20 +2436,50 @@ main {
     display: none !important;
   }
 
-  /* Disable heavy GPU backdrop blurs on mobile for instantaneous 60/120fps performance */
-  header,
-  [data-theme="dark"] header,
-  .hero-banner,
-  .controls-bar,
-  .product-card,
-  .table-card,
-  .admin-card,
-  .ledger-header-card,
-  .stat-pill,
-  .order-card,
-  .owner-order-card {
+  /* Disable heavy GPU backdrop blurs on mobile for fluid 60/120fps motion */
+  *,
+  *::before,
+  *::after {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
+  }
+
+  /* Fast 60fps/120fps Mobile Scrolling Momentum */
+  html, body {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: auto !important;
+  }
+
+  .nav-tabs,
+  .filter-group,
+  .policy-tabs-bar {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+
+  /* Neutralize touch hover shifts — prevents scroll-hitching on finger drag */
+  .product-card:hover,
+  .stat-pill:hover,
+  .btn-primary:hover,
+  .btn-action:hover,
+  .btn-details:hover,
+  .tab-btn:hover,
+  .role-btn:hover,
+  .ledger-stat-box:hover,
+  .brand:hover,
+  .notif-btn:hover,
+  .cookie-btn-secondary:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Lightweight tab motion without layout reflows */
+  .tab-content.active {
+    animation: mobileFastFade 0.12s ease-out !important;
+  }
+  @keyframes mobileFastFade {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 
   /* Instantaneous 0ms theme swap on mobile (eliminates GPU raster lag and sluggish transitions) */
@@ -2491,7 +2519,12 @@ main {
 
   /* Mobile Header & Top Bar Navigation */
   header {
+    background: var(--bg-card) !important;
     border-bottom: 1px solid var(--border-color);
+  }
+
+  [data-theme="dark"] header {
+    background: #161618 !important;
   }
 
   .top-bar {
@@ -3599,28 +3632,15 @@ textarea:focus-visible {
 }
 
 /* ==========================================================================
-   GPU Compositing Hints — Eliminates layout-triggered repaints on hover
+   Smooth Mobile Motion & Rendering Pipeline (60fps/120fps ProMotion)
    ========================================================================== */
-.product-card,
-.stat-pill,
-.ledger-stat-box,
-.btn-primary,
-.btn-action,
-.btn-details,
-.btn-pay-now,
-.modal-card,
-.toast,
-.notif-drawer,
-.cookie-banner {
-  will-change: transform;
-}
-
-/* Contain paint to card boundaries — prevents scroll-triggered full-page repaints */
 .product-card,
 .admin-card,
 .table-card,
 .ledger-header-card {
   contain: layout style;
+  content-visibility: auto;
+  contain-intrinsic-size: 0 420px;
 }
 
 /* ==========================================================================

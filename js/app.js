@@ -1275,10 +1275,12 @@ function renderStockGrid() {
           <div style="width: 100%; height: 180px; border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 14px; border: 1px solid var(--border-color); background: #f5f5f7; position: relative;">
             <img src="${p.imageUrl || 'assets/iffco_urea.jpg'}" 
                  alt="${prodName} - ${p.brand} ${p.category} ${prodUnit}" 
+                 loading="lazy"
+                 decoding="async"
                  style="width: 100%; height: 100%; object-fit: cover;"
                  onerror="this.onerror=null; this.src='assets/iffco_urea.jpg';">
             <span class="product-badge ${badgeClass}">${badgeText}</span>
-            <span style="position: absolute; bottom: 10px; left: 10px; background: rgba(0,0,0,0.65); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: white; padding: 3px 10px; border-radius: var(--radius-pill); font-size: 11px; font-weight: 600;">
+            <span style="position: absolute; bottom: 10px; left: 10px; background: rgba(18, 18, 20, 0.85); color: white; padding: 3px 10px; border-radius: var(--radius-pill); font-size: 11px; font-weight: 600;">
               ${p.category}
             </span>
           </div>
