@@ -1,5 +1,5 @@
 // KisanAgri Hub Service Worker (PWA & Offline First)
-const CACHE_NAME = 'kisanagri-cache-v1.4';
+const CACHE_NAME = 'kisanagri-cache-v1.5';
 const STATIC_ASSETS = [
   './',
   './index.html',

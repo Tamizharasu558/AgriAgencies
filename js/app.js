@@ -932,6 +932,52 @@ function applyLanguageUI() {
   const createOrderBtn = document.getElementById('createNewOrderBtn');
   if (createOrderBtn) createOrderBtn.textContent = `Cart`;
 
+  // Admin Sub-Tab & Customer Registration Form Translations
+  const crudProdBtn = document.getElementById('crudTabProductsBtn');
+  if (crudProdBtn) crudProdBtn.textContent = currentLang === 'ta' ? 'பொருள் பட்டியல்' : 'Product Catalog';
+  const crudCustBtn = document.getElementById('crudTabCustomersBtn');
+  if (crudCustBtn) crudCustBtn.textContent = currentLang === 'ta' ? 'வாடிக்கையாளர் கணக்குகள்' : 'Customer Accounts';
+  const crudOrdBtn = document.getElementById('crudTabOrdersBtn');
+  if (crudOrdBtn) crudOrdBtn.textContent = currentLang === 'ta' ? 'ஆர்டர்கள் & பில்லிங்' : 'Orders & Billing';
+
+  const addCustTitle = document.getElementById('ownerAddCustTitle');
+  if (addCustTitle) addCustTitle.textContent = currentLang === 'ta' ? 'புதிய வாடிக்கையாளர் கணக்கு சேர்க்க' : 'Add New Customer Account';
+
+  const lblOwnerName = document.getElementById('lblOwnerCustName');
+  if (lblOwnerName) {
+    lblOwnerName.innerHTML = currentLang === 'ta'
+      ? `<span class="label-text">விவசாயி பெயர்</span><span class="form-label-hint">(எழுத்துக்கள் மட்டும்)</span>`
+      : `<span class="label-text">Farmer Name</span><span class="form-label-hint">(Letters & Spaces Only)</span>`;
+  }
+  const lblOwnerPhone = document.getElementById('lblOwnerCustPhone');
+  if (lblOwnerPhone) {
+    lblOwnerPhone.innerHTML = currentLang === 'ta'
+      ? `<span class="label-text">தொலைபேசி எண்</span><span class="form-label-hint">(10 இலக்கங்கள்)</span>`
+      : `<span class="label-text">Phone Number</span><span class="form-label-hint">(10 Digits)</span>`;
+  }
+  const lblOwnerVillage = document.getElementById('lblOwnerCustVillage');
+  if (lblOwnerVillage) {
+    lblOwnerVillage.innerHTML = currentLang === 'ta'
+      ? `<span class="label-text">கிராமம் / இடம்</span><span class="form-label-hint">(எழுத்துக்கள் மட்டும்)</span>`
+      : `<span class="label-text">Village Location</span><span class="form-label-hint">(Letters & Spaces Only)</span>`;
+  }
+  const lblOwnerPin = document.getElementById('lblOwnerCustPin');
+  if (lblOwnerPin) {
+    lblOwnerPin.innerHTML = currentLang === 'ta'
+      ? `<span class="label-text">4-இலக்க PIN அமைக்க</span><span class="form-label-hint">(4 இலக்கங்கள்)</span>`
+      : `<span class="label-text">Create 4-Digit PIN</span><span class="form-label-hint">(4 Digits)</span>`;
+  }
+  const lblOwnerConfirmPin = document.getElementById('lblOwnerCustConfirmPin');
+  if (lblOwnerConfirmPin) {
+    lblOwnerConfirmPin.innerHTML = currentLang === 'ta'
+      ? `<span class="label-text">PIN மீண்டும் உள்ளிட</span><span class="form-label-hint">(பொருந்த வேண்டும்)</span>`
+      : `<span class="label-text">Re-enter 4-Digit PIN</span><span class="form-label-hint">(Must Match)</span>`;
+  }
+  const btnOwnerAddCust = document.getElementById('btnOwnerAddCustSubmit');
+  if (btnOwnerAddCust) {
+    btnOwnerAddCust.textContent = currentLang === 'ta' ? 'புதிய வாடிக்கையாளர் கணக்கை பதிவு செய்' : 'Register New Customer Account';
+  }
+
   // Footer Dynamic Translations
   const footerSubtitleEl = document.getElementById('footerBrandSubtitle');
   if (footerSubtitleEl) footerSubtitleEl.textContent = t('brandSubtitle');
@@ -1103,18 +1149,33 @@ function renderAll() {
 // CRUD SUB-TAB SWITCHING (EXCLUSIVE TO SHOP OWNER)
 // ----------------------------------------------------
 function switchCrudSubTab(tabName) {
-  document.getElementById('crudProductsSection').style.display = tabName === 'products' ? 'block' : 'none';
-  document.getElementById('crudCustomersSection').style.display = tabName === 'customers' ? 'block' : 'none';
-  document.getElementById('crudOrdersSection').style.display = tabName === 'orders' ? 'block' : 'none';
+  const prodSec = document.getElementById('crudProductsSection');
+  const custSec = document.getElementById('crudCustomersSection');
+  const ordSec = document.getElementById('crudOrdersSection');
 
-  document.getElementById('crudTabProductsBtn').style.background = tabName === 'products' ? 'var(--primary-light)' : '#ffffff';
-  document.getElementById('crudTabProductsBtn').style.color = tabName === 'products' ? 'var(--primary-color)' : 'var(--text-muted)';
-  
-  document.getElementById('crudTabCustomersBtn').style.background = tabName === 'customers' ? 'var(--primary-light)' : '#ffffff';
-  document.getElementById('crudTabCustomersBtn').style.color = tabName === 'customers' ? 'var(--primary-color)' : 'var(--text-muted)';
+  if (prodSec) prodSec.style.display = tabName === 'products' ? 'block' : 'none';
+  if (custSec) custSec.style.display = tabName === 'customers' ? 'block' : 'none';
+  if (ordSec) ordSec.style.display = tabName === 'orders' ? 'block' : 'none';
 
-  document.getElementById('crudTabOrdersBtn').style.background = tabName === 'orders' ? 'var(--primary-light)' : '#ffffff';
-  document.getElementById('crudTabOrdersBtn').style.color = tabName === 'orders' ? 'var(--primary-color)' : 'var(--text-muted)';
+  const btnProducts = document.getElementById('crudTabProductsBtn');
+  const btnCustomers = document.getElementById('crudTabCustomersBtn');
+  const btnOrders = document.getElementById('crudTabOrdersBtn');
+
+  if (btnProducts) {
+    btnProducts.classList.toggle('active', tabName === 'products');
+    btnProducts.style.removeProperty('background');
+    btnProducts.style.removeProperty('color');
+  }
+  if (btnCustomers) {
+    btnCustomers.classList.toggle('active', tabName === 'customers');
+    btnCustomers.style.removeProperty('background');
+    btnCustomers.style.removeProperty('color');
+  }
+  if (btnOrders) {
+    btnOrders.classList.toggle('active', tabName === 'orders');
+    btnOrders.style.removeProperty('background');
+    btnOrders.style.removeProperty('color');
+  }
 
   sessionStorage.setItem('kisan_active_crud_sub_tab', tabName);
   localStorage.setItem('kisan_active_crud_sub_tab', tabName);

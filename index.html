@@ -56,7 +56,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="css/styles.css?v=scroll-lock-14.0">
+  <link rel="stylesheet" href="css/styles.css?v=admin-pin-align-15.0">
   <!-- System-Theme Default Dark Mode Script (runs before body renders to avoid flash) -->
   <script>
     (function () {
@@ -312,9 +312,9 @@
     <!-- Tab 5: Shop Owner Control Center (EXCLUSIVE TO ADMIN) -->
     <section id="tabOwner" class="tab-content">
       <!-- CRUD Section Selector Bar -->
-      <div class="controls-bar">
-        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-          <button class="btn-action active" id="crudTabProductsBtn" onclick="switchCrudSubTab('products')" style="font-weight: 700; background: var(--primary-light); color: var(--primary-color); border-color: #a7f3d0;">
+      <div class="controls-bar admin-controls-bar">
+        <div class="admin-subtab-container">
+          <button class="btn-action active" id="crudTabProductsBtn" onclick="switchCrudSubTab('products')" style="font-weight: 700;">
             Product Catalog
           </button>
           <button class="btn-action" id="crudTabCustomersBtn" onclick="switchCrudSubTab('customers')" style="font-weight: 700;">
@@ -434,48 +434,48 @@
         <!-- Add Customer Account Form -->
         <div class="admin-card" style="margin-bottom: 24px;">
           <div class="section-title">
-            <span>Add New Customer Account</span>
+            <span id="ownerAddCustTitle">Add New Customer Account</span>
           </div>
           <form id="ownerAddCustForm" onsubmit="handleOwnerAddCustomer(event)" autocomplete="off">
             <div class="customer-account-form-grid">
-              <div class="form-group col-3" style="margin-bottom: 0;">
-                <label for="ownerCustName" class="form-label-even">
-                  <span>Farmer Name</span>
+              <div class="form-group col-name" style="margin-bottom: 0;">
+                <label for="ownerCustName" class="form-label-even" id="lblOwnerCustName">
+                  <span class="label-text">Farmer Name</span>
                   <span class="form-label-hint">(Letters & Spaces Only)</span>
                 </label>
                 <input type="text" id="ownerCustName" class="form-control" placeholder="e.g. Balu Swamy" required pattern="[A-Za-z\u0B80-\u0BFF\s\.-]+" title="Name must contain letters only, no numbers or special symbols" autocomplete="off">
               </div>
-              <div class="form-group col-3" style="margin-bottom: 0;">
-                <label for="ownerCustPhone" class="form-label-even">
-                  <span>Phone Number</span>
+              <div class="form-group col-phone" style="margin-bottom: 0;">
+                <label for="ownerCustPhone" class="form-label-even" id="lblOwnerCustPhone">
+                  <span class="label-text">Phone Number</span>
                   <span class="form-label-hint">(10 Digits)</span>
                 </label>
                 <input type="tel" id="ownerCustPhone" class="form-control" placeholder="9876543210" required pattern="[0-9]{10}" maxlength="10" minlength="10" title="Must be exactly 10 digits" autocomplete="off">
               </div>
-              <div class="form-group col-3" style="margin-bottom: 0;">
-                <label for="ownerCustVillage" class="form-label-even">
-                  <span>Village Location</span>
+              <div class="form-group col-village" style="margin-bottom: 0;">
+                <label for="ownerCustVillage" class="form-label-even" id="lblOwnerCustVillage">
+                  <span class="label-text">Village Location</span>
                   <span class="form-label-hint">(Letters & Spaces Only)</span>
                 </label>
                 <input type="text" id="ownerCustVillage" class="form-control" placeholder="Green Field" required pattern="[A-Za-z\u0B80-\u0BFF\s\.-]+" title="Location must contain letters only, no numbers or special symbols" autocomplete="off">
               </div>
-              <div class="form-group col-2" style="margin-bottom: 0;">
-                <label for="ownerCustPin" class="form-label-even">
-                  <span>Set 4-Digit Security PIN</span>
+              <div class="form-group col-pin" style="margin-bottom: 0;">
+                <label for="ownerCustPin" class="form-label-pin" id="lblOwnerCustPin">
+                  <span class="label-text">Create 4-Digit PIN</span>
                   <span class="form-label-hint">(4 Digits)</span>
                 </label>
                 <input type="password" id="ownerCustPin" class="form-control" placeholder="Create 4-digit PIN" required pattern="[0-9]{4}" maxlength="4" minlength="4" inputmode="numeric" title="Must be exactly 4 digits" autocomplete="new-password">
               </div>
-              <div class="form-group col-2" style="margin-bottom: 0;">
-                <label for="ownerCustConfirmPin" class="form-label-even">
-                  <span>Confirm 4-Digit Security PIN</span>
-                  <span class="form-label-hint">(Must Match PIN)</span>
+              <div class="form-group col-confirm-pin" style="margin-bottom: 0;">
+                <label for="ownerCustConfirmPin" class="form-label-pin" id="lblOwnerCustConfirmPin">
+                  <span class="label-text">Re-enter 4-Digit PIN</span>
+                  <span class="form-label-hint">(Must Match)</span>
                 </label>
                 <input type="password" id="ownerCustConfirmPin" class="form-control" placeholder="Re-enter 4-digit PIN" required pattern="[0-9]{4}" maxlength="4" minlength="4" inputmode="numeric" title="Must match set PIN" autocomplete="new-password">
               </div>
             </div>
-            <div style="display: flex; justify-content: flex-start; margin-top: 18px;">
-              <button type="submit" class="btn-primary" style="padding: 12px 24px; font-size: 14px; font-weight: 600; border-radius: var(--radius-pill); box-shadow: 0 4px 14px rgba(21, 128, 61, 0.25);">
+            <div class="customer-form-submit-row">
+              <button type="submit" class="btn-primary customer-form-submit-btn" id="btnOwnerAddCustSubmit">
                 Register New Customer Account
               </button>
             </div>
@@ -1155,7 +1155,7 @@
 
   <!-- Scripts -->
   <script src="js/data.js?v=guest-lang-sync-12.0"></script>
-  <script src="js/app.js?v=scroll-lock-14.0"></script>
+  <script src="js/app.js?v=admin-pin-align-15.0"></script>
   <script>
     // ── Instant 0ms Theme Switcher ─────────────────────────────────────────────
     let lastThemeToggleTime = 0;
