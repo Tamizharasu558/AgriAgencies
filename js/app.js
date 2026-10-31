@@ -14,6 +14,14 @@ let tempEditImageBase64 = '';
 
 let currentAuthRole = 'guest'; // 'guest', 'customer', or 'admin'
 
+// Clean vector SVG icons matching the notification bell logo (no emoji)
+const ICONS = {
+  user: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; vertical-align: -2px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`,
+  admin: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; vertical-align: -2px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>`,
+  logIn: `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; vertical-align: -1px;"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>`,
+  logOut: `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; vertical-align: -1px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>`
+};
+
 // ----------------------------------------------------
 // Security & Store Compliance Utilities
 // ----------------------------------------------------
@@ -372,7 +380,7 @@ function applyAuthAccessRules() {
     if (ledgerTabBtn) ledgerTabBtn.style.display = 'none';
     if (ownerTabBtn) ownerTabBtn.style.display = 'inline-flex';
 
-    if (authBtnIcon) authBtnIcon.textContent = '';
+    if (authBtnIcon) authBtnIcon.innerHTML = ICONS.logOut;
     if (authBtnText) authBtnText.textContent = currentLang === 'ta' ? 'கணக்கை மாற்று' : 'Switch Account';
 
     const activeTab = document.querySelector('.tab-btn.active');
@@ -381,7 +389,7 @@ function applyAuthAccessRules() {
     }
 
     if (badgeEl) {
-      badgeEl.innerHTML = ` <strong>Admin</strong>`;
+      badgeEl.innerHTML = `${ICONS.admin} <strong>Admin</strong>`;
       badgeEl.style.background = '#fef2f2';
       badgeEl.style.color = '#991b1b';
       badgeEl.style.borderColor = '#fca5a5';
@@ -396,7 +404,7 @@ function applyAuthAccessRules() {
     if (ledgerTabBtn) ledgerTabBtn.style.display = 'inline-flex';
     if (ownerTabBtn) ownerTabBtn.style.display = 'none';
 
-    if (authBtnIcon) authBtnIcon.textContent = '';
+    if (authBtnIcon) authBtnIcon.innerHTML = ICONS.logIn;
     if (authBtnText) authBtnText.textContent = currentLang === 'ta' ? 'உள்நுழைய' : 'Sign In';
 
     const activeTab = document.querySelector('.tab-btn.active');
@@ -405,7 +413,7 @@ function applyAuthAccessRules() {
     }
 
     if (badgeEl) {
-      badgeEl.innerHTML = currentLang === 'ta' ? '👤 <strong>விருந்தினர்</strong>' : '👤 <strong>Guest Farmer</strong>';
+      badgeEl.innerHTML = `${ICONS.user} <strong>${currentLang === 'ta' ? 'விருந்தினர்' : 'Guest Farmer'}</strong>`;
       badgeEl.style.background = 'rgba(120, 120, 128, 0.1)';
       badgeEl.style.color = 'var(--text-secondary)';
       badgeEl.style.borderColor = 'var(--border-color)';
@@ -420,7 +428,7 @@ function applyAuthAccessRules() {
     if (ledgerTabBtn) ledgerTabBtn.style.display = 'inline-flex';
     if (ownerTabBtn) ownerTabBtn.style.display = 'none';
 
-    if (authBtnIcon) authBtnIcon.textContent = '';
+    if (authBtnIcon) authBtnIcon.innerHTML = ICONS.logOut;
     if (authBtnText) authBtnText.textContent = currentLang === 'ta' ? 'வெளியேறு' : 'Log Out';
 
     const activeTab = document.querySelector('.tab-btn.active');
@@ -431,7 +439,7 @@ function applyAuthAccessRules() {
     const activeCust = customers[loggedInCustomerIndex];
     if (badgeEl && activeCust) {
       const cName = (currentLang === 'ta' && activeCust.nameTa) ? activeCust.nameTa : activeCust.name;
-      badgeEl.innerHTML = `<strong>${escapeHTML(cName)}</strong> (${escapeHTML(activeCust.phone)})`;
+      badgeEl.innerHTML = `${ICONS.user} <strong>${escapeHTML(cName)}</strong> (${escapeHTML(activeCust.phone)})`;
       badgeEl.style.background = 'var(--primary-light)';
       badgeEl.style.color = 'var(--primary-color)';
       badgeEl.style.borderColor = '#a7f3d0';
@@ -1055,23 +1063,26 @@ function applyLanguageUI() {
 
   // Active Profile Badge & Header Auth Button (Synchronous 0ms update without reloading)
   const badgeEl = document.getElementById('activeProfileBadge');
+  const authBtnIcon = document.getElementById('switchProfileBtnIcon');
   const authBtnText = document.getElementById('switchProfileBtnText');
 
   if (currentAuthRole === 'admin') {
     if (badgeEl) {
-      badgeEl.innerHTML = currentLang === 'ta' ? `<strong>அட்மின்</strong>` : `<strong>Admin</strong>`;
+      badgeEl.innerHTML = `${ICONS.admin} <strong>${currentLang === 'ta' ? 'அட்மின்' : 'Admin'}</strong>`;
       badgeEl.style.background = '#fef2f2';
       badgeEl.style.color = '#991b1b';
       badgeEl.style.borderColor = '#fca5a5';
     }
+    if (authBtnIcon) authBtnIcon.innerHTML = ICONS.logOut;
     if (authBtnText) authBtnText.textContent = currentLang === 'ta' ? 'கணக்கை மாற்று' : 'Switch Account';
   } else if (currentAuthRole === 'guest') {
     if (badgeEl) {
-      badgeEl.innerHTML = currentLang === 'ta' ? '👤 <strong>விருந்தினர்</strong>' : '👤 <strong>Guest Farmer</strong>';
+      badgeEl.innerHTML = `${ICONS.user} <strong>${currentLang === 'ta' ? 'விருந்தினர்' : 'Guest Farmer'}</strong>`;
       badgeEl.style.background = 'rgba(120, 120, 128, 0.1)';
       badgeEl.style.color = 'var(--text-secondary)';
       badgeEl.style.borderColor = 'var(--border-color)';
     }
+    if (authBtnIcon) authBtnIcon.innerHTML = ICONS.logIn;
     if (authBtnText) {
       authBtnText.textContent = currentLang === 'ta' ? 'உள்நுழைய' : 'Sign In';
     }
@@ -1079,11 +1090,12 @@ function applyLanguageUI() {
     const activeCust = customers[loggedInCustomerIndex];
     if (badgeEl && activeCust) {
       const cName = (currentLang === 'ta' && activeCust.nameTa) ? activeCust.nameTa : activeCust.name;
-      badgeEl.innerHTML = `<strong>${escapeHTML(cName)}</strong> (${escapeHTML(activeCust.phone)})`;
+      badgeEl.innerHTML = `${ICONS.user} <strong>${escapeHTML(cName)}</strong> (${escapeHTML(activeCust.phone)})`;
       badgeEl.style.background = 'var(--primary-light)';
       badgeEl.style.color = 'var(--primary-color)';
       badgeEl.style.borderColor = '#a7f3d0';
     }
+    if (authBtnIcon) authBtnIcon.innerHTML = ICONS.logOut;
     if (authBtnText) {
       authBtnText.textContent = currentLang === 'ta' ? 'வெளியேறு' : 'Log Out';
     }
@@ -1987,7 +1999,7 @@ function renderCartModal() {
       <div class="form-group">
         <label>Ordering Account</label>
         <div style="background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.25); padding: 12px 14px; border-radius: var(--radius-sm); font-size: 13px; color: var(--text-primary); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
-          <span>👤 <strong>${currentLang === 'ta' ? 'விருந்தினர் முறை' : 'Guest Farmer'}</strong> (${currentLang === 'ta' ? 'முன்பதிவு செய்ய உள்நுழையவும்' : 'Sign in to reserve'})</span>
+          <span>${ICONS.user} <strong>${currentLang === 'ta' ? 'விருந்தினர் முறை' : 'Guest Farmer'}</strong> (${currentLang === 'ta' ? 'முன்பதிவு செய்ய உள்நுழையவும்' : 'Sign in to reserve'})</span>
           <button type="button" class="btn-action" onclick="closeCartModal(); openLoginModal();" style="font-weight: 600; padding: 6px 14px; font-size: 12px; background: var(--primary-color); color: #fff; border: none; border-radius: var(--radius-pill); cursor: pointer;">${currentLang === 'ta' ? 'உள்நுழைய / பதிவு' : 'Sign In / Register'}</button>
         </div>
       </div>

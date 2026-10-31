@@ -56,7 +56,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="css/styles.css?v=admin-pin-align-15.0">
+  <link rel="stylesheet" href="css/styles.css?v=svg-icons-16.0">
   <!-- System-Theme Default Dark Mode Script (runs before body renders to avoid flash) -->
   <script>
     (function () {
@@ -101,7 +101,8 @@
           <div id="activeProfileBadge">
             <!-- Rendered dynamically: " Admin" or " Customer Name" -->
           </div>
-          <button class="btn-action" id="headerAuthActionBtn" onclick="handleHeaderAuthAction()">
+          <button class="btn-action" id="headerAuthActionBtn" onclick="handleHeaderAuthAction()" style="display: inline-flex; align-items: center; gap: 5px;">
+            <span id="switchProfileBtnIcon" style="display: inline-flex; align-items: center;"></span>
             <span id="switchProfileBtnText">Log Out</span>
           </button>
         </div>
@@ -134,7 +135,9 @@
       <div class="header-actions">
         <!-- Dark Mode Toggle -->
         <button class="notif-btn" id="darkModeToggle" title="Toggle Dark Mode" aria-label="Toggle Dark Mode" onclick="toggleDarkMode(event)" style="width: 38px;">
-          <span id="darkModeIcon">🌙</span>
+          <span id="darkModeIcon" style="display: inline-flex; align-items: center; justify-content: center;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </span>
         </button>
 
         <!-- Cart Button -->
@@ -1155,7 +1158,7 @@
 
   <!-- Scripts -->
   <script src="js/data.js?v=guest-lang-sync-12.0"></script>
-  <script src="js/app.js?v=admin-pin-align-15.0"></script>
+  <script src="js/app.js?v=svg-icons-16.0"></script>
   <script>
     // ── Instant 0ms Theme Switcher ─────────────────────────────────────────────
     let lastThemeToggleTime = 0;
@@ -1187,10 +1190,13 @@
       updateDarkModeIcon(next === 'dark');
     }
 
+    const moonSvg = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
+    const sunSvg = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
+
     function updateDarkModeIcon(isDark) {
       const icon = document.getElementById('darkModeIcon');
       if (icon) {
-        icon.textContent = isDark ? '☀️' : '🌙';
+        icon.innerHTML = isDark ? sunSvg : moonSvg;
       }
       const toggleBtn = document.getElementById('darkModeToggle');
       if (toggleBtn) {
