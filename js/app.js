@@ -761,8 +761,16 @@ function setLanguage(lang) {
 
   currentLang = lang;
   saveData();
+  applyAuthAccessRules();
   applyLanguageUI();
   renderAll();
+
+  // If cart modal is open, re-render it so its ordering account and buttons update immediately
+  const cartModal = document.getElementById('cartModal');
+  if (cartModal && cartModal.classList.contains('active')) {
+    renderCartModal();
+  }
+
   showToast(
     lang === 'ta' ? 'மொழி மாற்றப்பட்டது' : 'Language Changed',
     lang === 'ta' ? 'தமிழ் மொழி தேர்ந்தெடுக்கப்பட்டது' : 'Simple English language activated',
@@ -940,6 +948,83 @@ function applyLanguageUI() {
   if (deleteBtn) {
     deleteBtn.textContent = currentLang === 'ta' ? 'கணக்கை நீக்கு' : 'Delete My Account';
   }
+
+  // Active Profile Badge & Header Auth Button (Synchronous 0ms update without reloading)
+  const badgeEl = document.getElementById('activeProfileBadge');
+  const authBtnText = document.getElementById('switchProfileBtnText');
+
+  if (currentAuthRole === 'admin') {
+    if (badgeEl) {
+      badgeEl.innerHTML = currentLang === 'ta' ? `<strong>அட்மின்</strong>` : `<strong>Admin</strong>`;
+      badgeEl.style.background = '#fef2f2';
+      badgeEl.style.color = '#991b1b';
+      badgeEl.style.borderColor = '#fca5a5';
+    }
+    if (authBtnText) authBtnText.textContent = currentLang === 'ta' ? 'கணக்கை மாற்று' : 'Switch Account';
+  } else if (currentAuthRole === 'guest') {
+    if (badgeEl) {
+      badgeEl.innerHTML = currentLang === 'ta' ? '👤 <strong>விருந்தினர்</strong>' : '👤 <strong>Guest Farmer</strong>';
+      badgeEl.style.background = 'rgba(120, 120, 128, 0.1)';
+      badgeEl.style.color = 'var(--text-secondary)';
+      badgeEl.style.borderColor = 'var(--border-color)';
+    }
+    if (authBtnText) {
+      authBtnText.textContent = currentLang === 'ta' ? 'உள்நுழைய' : 'Sign In';
+    }
+  } else {
+    const activeCust = customers[loggedInCustomerIndex];
+    if (badgeEl && activeCust) {
+      const cName = (currentLang === 'ta' && activeCust.nameTa) ? activeCust.nameTa : activeCust.name;
+      badgeEl.innerHTML = `<strong>${escapeHTML(cName)}</strong> (${escapeHTML(activeCust.phone)})`;
+      badgeEl.style.background = 'var(--primary-light)';
+      badgeEl.style.color = 'var(--primary-color)';
+      badgeEl.style.borderColor = '#a7f3d0';
+    }
+    if (authBtnText) {
+      authBtnText.textContent = currentLang === 'ta' ? 'வெளியேறு' : 'Log Out';
+    }
+  }
+
+  // Auth Screen Dynamic Translations
+  const authTitle = document.getElementById('authPageTitle');
+  if (authTitle) authTitle.textContent = currentLang === 'ta' ? 'கிசான் அக்ரி போர்ட்டல் உள்நுழைவு' : 'KisanAgri Portal Sign In';
+  const authSub = document.getElementById('authPageSub');
+  if (authSub) authSub.textContent = currentLang === 'ta' ? 'வாடிக்கையாளர் உள்நுழைவு அல்லது அட்மின் உள்நுழைவைத் தேர்ந்தெடுக்கவும்' : 'Select Customer Sign In or Admin Login';
+  const tabSignIn = document.getElementById('authTabSignInBtn');
+  if (tabSignIn) tabSignIn.textContent = currentLang === 'ta' ? 'உள்நுழைக' : 'Login';
+  const tabReg = document.getElementById('authTabRegisterBtn');
+  if (tabReg) tabReg.textContent = currentLang === 'ta' ? 'பதிவு' : 'Register';
+  const tabAdmin = document.getElementById('authTabAdminBtn');
+  if (tabAdmin) tabAdmin.textContent = currentLang === 'ta' ? 'அட்மின்' : 'Admin';
+
+  const lblPhone = document.getElementById('lblSignInPhone');
+  if (lblPhone) lblPhone.textContent = currentLang === 'ta' ? 'பதிவு செய்யப்பட்ட மொபைல் எண் (10 இலக்கங்கள்)' : 'Registered Mobile Phone Number (10 Digits)';
+  const lblPin = document.getElementById('lblSignInPin');
+  if (lblPin) lblPin.textContent = currentLang === 'ta' ? '4-இலக்க பாதுகாப்பு PIN' : '4-Digit Security PIN';
+  const btnSignIn = document.getElementById('btnSignInSubmit');
+  if (btnSignIn) btnSignIn.textContent = currentLang === 'ta' ? 'உள்நுழைய & கடைக்கு செல்ல' : 'Login & Enter Store';
+
+  const lblRegName = document.getElementById('lblRegName');
+  if (lblRegName) lblRegName.textContent = currentLang === 'ta' ? 'முழு பெயர் (எழுத்துக்கள் மற்றும் இடைவெளிகள் மட்டும்)' : 'Full Name (Letters & Spaces Only)';
+  const lblRegPhone = document.getElementById('lblRegPhone');
+  if (lblRegPhone) lblRegPhone.textContent = currentLang === 'ta' ? 'மொபைல் எண் (சரியாக 10 இலக்கங்கள்)' : 'Phone Number (Exactly 10 Digits)';
+  const lblRegVillage = document.getElementById('lblRegVillage');
+  if (lblRegVillage) lblRegVillage.textContent = currentLang === 'ta' ? 'கிராமம் / பண்ணை இருப்பிடம்' : 'Village / Farm Location (Letters & Spaces Only)';
+  const lblRegPin = document.getElementById('lblRegPin');
+  if (lblRegPin) lblRegPin.textContent = currentLang === 'ta' ? '4-இலக்க PIN அமைக்கவும்' : 'Set 4-Digit PIN';
+  const lblRegConfirmPin = document.getElementById('lblRegConfirmPin');
+  if (lblRegConfirmPin) lblRegConfirmPin.textContent = currentLang === 'ta' ? 'PIN-ஐ உறுதிப்படுத்தவும்' : 'Confirm PIN';
+  const btnRegSubmit = document.getElementById('btnRegSubmit');
+  if (btnRegSubmit) btnRegSubmit.textContent = currentLang === 'ta' ? 'பதிவு செய்து கடைக்கு செல்ல' : 'Register & Enter Store';
+
+  const adminNoticeTitle = document.getElementById('adminNoticeTitle');
+  if (adminNoticeTitle) adminNoticeTitle.textContent = currentLang === 'ta' ? 'அட்மின் அணுகல் மட்டும்' : 'Only for Admin Access';
+  const adminNoticeSub = document.getElementById('adminNoticeSub');
+  if (adminNoticeSub) adminNoticeSub.textContent = currentLang === 'ta' ? 'அட்மின் சென்டரை அணுக பாஸ்கோடை உள்ளிடவும்.' : 'Enter Admin passcode to access Admin Center.';
+  const lblAdminPass = document.getElementById('lblAdminPasscode');
+  if (lblAdminPass) lblAdminPass.textContent = currentLang === 'ta' ? 'அட்மின் பாஸ்கோடு' : 'Admin Passcode';
+  const btnAdminSignIn = document.getElementById('btnAdminSignInSubmit');
+  if (btnAdminSignIn) btnAdminSignIn.textContent = currentLang === 'ta' ? 'அட்மினாக உள்நுழைக' : 'Sign In as Admin';
 }
 
 function renderAll() {
