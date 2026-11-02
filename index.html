@@ -56,7 +56,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="css/styles.css?v=no-emoji-21.0">
+  <link rel="stylesheet" href="css/styles.css?v=white-theme-22.0">
   <!-- System-Theme Default Dark Mode Script (runs before body renders to avoid flash) -->
   <script>
     (function () {
@@ -323,7 +323,7 @@
             <div class="analytics-header">
               <div>
                 <div class="analytics-badge-row">
-                  <span class="analytics-badge badge-today">
+                  <span class="analytics-badge" id="todayBadgeWrap">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                     <span id="todayBadgeLabel">Today</span>
                   </span>
@@ -342,50 +342,50 @@
 
             <!-- Metrics Breakdown Grid -->
             <div class="analytics-sub-grid">
-              <div class="analytics-metric-box metric-cash">
-                <div class="metric-icon-wrap icon-green">
+              <div class="analytics-metric-box">
+                <div class="metric-icon-wrap">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="3"></circle><path d="M6 12h.01M18 12h.01"></path></svg>
                 </div>
                 <div>
                   <div class="metric-label" id="lblTodayCashCollected">Direct Cash / Paid Today</div>
-                  <div class="metric-val text-success" id="todayCashCollectedVal">₹0.00</div>
+                  <div class="metric-val" id="todayCashCollectedVal">₹0.00</div>
                 </div>
               </div>
 
-              <div class="analytics-metric-box metric-credit">
-                <div class="metric-icon-wrap icon-amber">
+              <div class="analytics-metric-box">
+                <div class="metric-icon-wrap">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                 </div>
                 <div>
                   <div class="metric-label" id="lblTodayCreditIssued">Pay-Later Credit Issued</div>
-                  <div class="metric-val text-warning" id="todayCreditIssuedVal">₹0.00</div>
+                  <div class="metric-val" id="todayCreditIssuedVal">₹0.00</div>
                 </div>
               </div>
 
-              <div class="analytics-metric-box metric-txns">
-                <div class="metric-icon-wrap icon-blue">
+              <div class="analytics-metric-box">
+                <div class="metric-icon-wrap">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-2z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
                 </div>
                 <div>
                   <div class="metric-label" id="lblTodayTxnCount">Transactions & Bills</div>
-                  <div class="metric-val text-primary" id="todayTxnCountVal">0</div>
+                  <div class="metric-val" id="todayTxnCountVal">0</div>
                 </div>
               </div>
 
-              <div class="analytics-metric-box metric-avg">
-                <div class="metric-icon-wrap icon-purple">
+              <div class="analytics-metric-box">
+                <div class="metric-icon-wrap">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>
                 </div>
                 <div>
                   <div class="metric-label" id="lblTodayAvgTicket">Average Bill Value</div>
-                  <div class="metric-val text-purple" id="todayAvgTicketVal">₹0.00</div>
+                  <div class="metric-val" id="todayAvgTicketVal">₹0.00</div>
                 </div>
               </div>
             </div>
 
             <!-- Formula Note -->
             <div class="analytics-formula-bar" id="todayCalculationFormulaBar">
-              <span class="formula-icon" style="display: inline-flex; align-items: center; color: var(--primary-color);">
+              <span class="formula-icon" style="display: inline-flex; align-items: center; color: var(--text-primary);">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
               </span>
               <span id="todayFormulaText">Formula: Total Sales = Direct Cash/UPI Received + Pay-Later Credit Added</span>
@@ -397,7 +397,7 @@
             <div class="analytics-header">
               <div>
                 <div class="analytics-badge-row">
-                  <span class="analytics-badge badge-paylater">
+                  <span class="analytics-badge" id="overallBadgeWrap">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
                     <span id="overallBadgeLabel">Lifetime Pay-Later</span>
                   </span>
@@ -411,7 +411,7 @@
             <!-- Primary Highlight: Total Income Recovered from Pay-Later -->
             <div class="analytics-hero-metric">
               <span class="analytics-hero-label" id="lblOverallPayLaterRecovered">Total Income Recovered from Pay-Later</span>
-              <div class="analytics-hero-value text-success" id="overallPayLaterRecoveredVal">₹0.00</div>
+              <div class="analytics-hero-value" id="overallPayLaterRecoveredVal">₹0.00</div>
             </div>
 
             <!-- Recovery Progress Bar -->
@@ -427,18 +427,18 @@
 
             <!-- Metrics Breakdown Grid -->
             <div class="analytics-sub-grid">
-              <div class="analytics-metric-box metric-due">
-                <div class="metric-icon-wrap icon-danger">
+              <div class="analytics-metric-box">
+                <div class="metric-icon-wrap">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
                 </div>
                 <div>
                   <div class="metric-label" id="lblOverallOutstanding">Outstanding Credit Dues</div>
-                  <div class="metric-val text-danger" id="overallOutstandingVal">₹0.00</div>
+                  <div class="metric-val" id="overallOutstandingVal">₹0.00</div>
                 </div>
               </div>
 
-              <div class="analytics-metric-box metric-total">
-                <div class="metric-icon-wrap icon-gray">
+              <div class="analytics-metric-box">
+                <div class="metric-icon-wrap">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
                 </div>
                 <div>
@@ -447,23 +447,23 @@
                 </div>
               </div>
 
-              <div class="analytics-metric-box metric-settled">
-                <div class="metric-icon-wrap icon-green">
+              <div class="analytics-metric-box">
+                <div class="metric-icon-wrap">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
                 </div>
                 <div>
                   <div class="metric-label" id="lblSettledInvoices">Invoices Fully Settled</div>
-                  <div class="metric-val text-success" id="overallSettledInvoicesVal">0 / 0</div>
+                  <div class="metric-val" id="overallSettledInvoicesVal">0 / 0</div>
                 </div>
               </div>
 
-              <div class="analytics-metric-box metric-debtors">
-                <div class="metric-icon-wrap icon-amber">
+              <div class="analytics-metric-box">
+                <div class="metric-icon-wrap">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                 </div>
                 <div>
                   <div class="metric-label" id="lblDebtorsBreakdown">Credit Accounts Status</div>
-                  <div class="metric-val text-primary" id="overallDebtorsVal">0 Active • 0 Cleared</div>
+                  <div class="metric-val" id="overallDebtorsVal">0 Active • 0 Cleared</div>
                 </div>
               </div>
             </div>
@@ -1322,8 +1322,8 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/data.js?v=no-emoji-21.0"></script>
-  <script src="js/app.js?v=no-emoji-21.0"></script>
+  <script src="js/data.js?v=white-theme-22.0"></script>
+  <script src="js/app.js?v=white-theme-22.0"></script>
   <script>
     // ── Instant 0ms Theme Switcher ─────────────────────────────────────────────
     let lastThemeToggleTime = 0;
