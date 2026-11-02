@@ -233,20 +233,14 @@ window.addEventListener('beforeunload', () => {
 });
 
 function restoreSavedTabLocation() {
-  const savedTopTab = sessionStorage.getItem('kisan_active_top_tab') || localStorage.getItem('kisan_active_top_tab');
-  const savedSubTab = sessionStorage.getItem('kisan_active_crud_sub_tab') || localStorage.getItem('kisan_active_crud_sub_tab');
-
-  if (savedTopTab) {
-    if (savedTopTab === 'tabOwner' && currentAuthRole !== 'admin') {
-      setActiveTab('tabStock');
-    } else {
-      const targetBtn = document.querySelector(`.tab-btn[data-tab="${savedTopTab}"]`);
-      if (targetBtn) {
-        setActiveTab(savedTopTab);
-      }
-    }
+  // Always default to Home Page (tabStock: Stock Availability) when loading freshly to the site
+  if (currentAuthRole === 'admin') {
+    setActiveTab('tabOwner');
+  } else {
+    setActiveTab('tabStock');
   }
 
+  const savedSubTab = sessionStorage.getItem('kisan_active_crud_sub_tab');
   if (savedSubTab) {
     switchCrudSubTab(savedSubTab);
   }
@@ -665,6 +659,7 @@ async function handleCustomerSignIn(e) {
     closeLoginModal();
     applyAuthAccessRules();
     renderAll();
+    setActiveTab('tabStock');
 
     const cName = (currentLang === 'ta' && cust.nameTa) ? cust.nameTa : cust.name;
     showToast(
@@ -776,6 +771,7 @@ async function handleCustomerRegister(e) {
   closeLoginModal();
   applyAuthAccessRules();
   renderAll();
+  setActiveTab('tabStock');
 
   showToast(
     currentLang === 'ta' ? 'பதிவு வெற்றி!' : 'Account Registered!',

@@ -56,7 +56,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="css/styles.css?v=dark-blur-fix-19.0">
+  <link rel="stylesheet" href="css/styles.css?v=default-home-20.0">
   <!-- System-Theme Default Dark Mode Script (runs before body renders to avoid flash) -->
   <script>
     (function () {
@@ -88,7 +88,7 @@
     <header>
     <div class="top-bar">
       <div style="display: flex; flex-direction: column; gap: 4px;">
-        <a href="#" class="brand">
+        <a href="#" class="brand" onclick="setActiveTab('tabStock'); return false;">
           <div class="brand-icon" style="font-size: 13px; font-weight: 800; background: var(--primary-color); color: #fff; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; letter-spacing: -0.02em;">KA</div>
           <div class="brand-text">
             <h1 id="brandTitle">KisanAgri Hub</h1>
@@ -1320,8 +1320,8 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/data.js?v=dark-blur-fix-19.0"></script>
-  <script src="js/app.js?v=dark-blur-fix-19.0"></script>
+  <script src="js/data.js?v=default-home-20.0"></script>
+  <script src="js/app.js?v=default-home-20.0"></script>
   <script>
     // ── Instant 0ms Theme Switcher ─────────────────────────────────────────────
     let lastThemeToggleTime = 0;
