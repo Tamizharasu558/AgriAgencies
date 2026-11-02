@@ -1248,6 +1248,23 @@ function switchCrudSubTab(tabName) {
   localStorage.setItem('kisan_active_crud_sub_tab', tabName);
 }
 
+function jumpToOverdueDebtors() {
+  switchCrudSubTab('customers');
+  setTimeout(() => {
+    const target = document.getElementById('overduePanel') || document.getElementById('overdueTable');
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      target.style.transition = 'box-shadow 0.4s ease, border-color 0.4s ease';
+      target.style.borderColor = 'var(--primary-color)';
+      target.style.boxShadow = '0 0 0 3px var(--primary-light)';
+      setTimeout(() => {
+        target.style.borderColor = '';
+        target.style.boxShadow = '';
+      }, 1500);
+    }
+  }, 60);
+}
+
 // ----------------------------------------------------
 // 1. PRODUCTS CRUD (Create, Read, Update, Delete)
 // ----------------------------------------------------

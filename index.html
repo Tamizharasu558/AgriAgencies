@@ -56,7 +56,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="css/styles.css?v=white-theme-22.0">
+  <link rel="stylesheet" href="css/styles.css?v=jump-overdue-23.0">
   <!-- System-Theme Default Dark Mode Script (runs before body renders to avoid flash) -->
   <script>
     (function () {
@@ -470,7 +470,7 @@
 
             <!-- Quick Action / Jump Link -->
             <div style="margin-top: 14px; display: flex; justify-content: flex-end;">
-              <button type="button" class="btn-action" onclick="switchCrudSubTab('customers'); document.getElementById('overdueTable')?.scrollIntoView({ behavior: 'smooth' });" style="font-size: 12px; padding: 6px 14px; font-weight: 600;">
+              <button type="button" class="btn-action" onclick="jumpToOverdueDebtors()" style="font-size: 12px; padding: 6px 14px; font-weight: 600; cursor: pointer;">
                 <span id="btnViewOverdueText">View Overdue Debtors</span> →
               </button>
             </div>
@@ -675,13 +675,13 @@
         </div>
 
         <!-- Overdue Receivables & Reminders Panel -->
-        <div class="admin-card" style="margin-top: 24px;">
+        <div class="admin-card" id="overduePanel" style="margin-top: 24px;">
           <div class="section-title">
             <span id="overdueTitle">Overdue Balances & Payment Reminders</span>
           </div>
           
           <div class="table-card">
-            <table class="custom-table">
+            <table class="custom-table" id="overdueTable">
               <thead>
                 <tr>
                   <th id="thCust">Customer</th>
@@ -1322,8 +1322,8 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/data.js?v=white-theme-22.0"></script>
-  <script src="js/app.js?v=white-theme-22.0"></script>
+  <script src="js/data.js?v=jump-overdue-23.0"></script>
+  <script src="js/app.js?v=jump-overdue-23.0"></script>
   <script>
     // ── Instant 0ms Theme Switcher ─────────────────────────────────────────────
     let lastThemeToggleTime = 0;
