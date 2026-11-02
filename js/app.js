@@ -986,6 +986,64 @@ function applyLanguageUI() {
     btnOwnerAddCust.textContent = currentLang === 'ta' ? 'புதிய வாடிக்கையாளர் கணக்கை பதிவு செய்' : 'Register New Customer Account';
   }
 
+  // Admin Financial Analytics Dynamic Bilingual Labels
+  const todayRevTitle = document.getElementById('todayRevenueTitleText');
+  if (todayRevTitle) todayRevTitle.textContent = t('todayRevenueTitle');
+
+  const todayRevSub = document.getElementById('todayRevenueSubText');
+  if (todayRevSub) todayRevSub.textContent = t('todayRevenueSub');
+
+  const todayBadgeLbl = document.getElementById('todayBadgeLabel');
+  if (todayBadgeLbl) todayBadgeLbl.textContent = t('todayBadgeText');
+
+  const lblTodayTot = document.getElementById('lblTodayTotalSales');
+  if (lblTodayTot) lblTodayTot.textContent = t('todayTotalSalesLabel');
+
+  const lblTodayCash = document.getElementById('lblTodayCashCollected');
+  if (lblTodayCash) lblTodayCash.textContent = t('todayCashCollectedLabel');
+
+  const lblTodayCredit = document.getElementById('lblTodayCreditIssued');
+  if (lblTodayCredit) lblTodayCredit.textContent = t('todayCreditIssuedLabel');
+
+  const lblTodayTxn = document.getElementById('lblTodayTxnCount');
+  if (lblTodayTxn) lblTodayTxn.textContent = t('todayTxnCountLabel');
+
+  const lblTodayAvg = document.getElementById('lblTodayAvgTicket');
+  if (lblTodayAvg) lblTodayAvg.textContent = t('todayAvgTicketLabel');
+
+  const todayFormula = document.getElementById('todayFormulaText');
+  if (todayFormula) todayFormula.textContent = t('todayCalculationFormula');
+
+  const overallBadgeLbl = document.getElementById('overallBadgeLabel');
+  if (overallBadgeLbl) overallBadgeLbl.textContent = t('overallBadgeText');
+
+  const overallTitle = document.getElementById('overallPayLaterTitleText');
+  if (overallTitle) overallTitle.textContent = t('overallPayLaterTitle');
+
+  const overallSub = document.getElementById('overallPayLaterSubText');
+  if (overallSub) overallSub.textContent = t('overallPayLaterSub');
+
+  const lblOverallRec = document.getElementById('lblOverallPayLaterRecovered');
+  if (lblOverallRec) lblOverallRec.textContent = t('overallPayLaterRecoveredLabel');
+
+  const lblRecProg = document.getElementById('lblRecoveryProgress');
+  if (lblRecProg) lblRecProg.textContent = t('overallRecoveryProgressLabel');
+
+  const lblOverallOut = document.getElementById('lblOverallOutstanding');
+  if (lblOverallOut) lblOverallOut.textContent = t('overallPayLaterOutstandingLabel');
+
+  const lblOverallLife = document.getElementById('lblOverallLifetime');
+  if (lblOverallLife) lblOverallLife.textContent = t('overallPayLaterTotalLabel');
+
+  const lblSettled = document.getElementById('lblSettledInvoices');
+  if (lblSettled) lblSettled.textContent = t('overallSettledInvoicesLabel');
+
+  const lblDebtors = document.getElementById('lblDebtorsBreakdown');
+  if (lblDebtors) lblDebtors.textContent = t('overallDebtorsLabel');
+
+  const btnViewOverdue = document.getElementById('btnViewOverdueText');
+  if (btnViewOverdue) btnViewOverdue.textContent = t('btnViewOverdueAccounts');
+
   // Footer Dynamic Translations
   const footerSubtitleEl = document.getElementById('footerBrandSubtitle');
   if (footerSubtitleEl) footerSubtitleEl.textContent = t('brandSubtitle');
@@ -1152,6 +1210,7 @@ function renderAll() {
   renderOverdueTable();
   renderCrudProductsTable();
   renderCrudCustomersTable();
+  renderAdminFinancialAnalytics();
   populateAdminFormSelects();
   renderNotifications();
   updateCartBadge();
@@ -2749,6 +2808,15 @@ function submitOnlinePayment() {
     }
   });
 
+  if (!cust.paymentHistory) cust.paymentHistory = [];
+  cust.paymentHistory.unshift({
+    date: new Date().toISOString().split('T')[0],
+    amount: payAmt,
+    type: 'ONLINE',
+    isRepayment: true,
+    note: 'Online UPI/Card Settlement'
+  });
+
   saveData();
   closePaymentModal();
   renderAll();
@@ -2955,6 +3023,15 @@ function handleLogOfflineBill(e) {
         }
       }
     });
+
+    if (!cust.paymentHistory) cust.paymentHistory = [];
+    cust.paymentHistory.unshift({
+      date: today,
+      amount: excessForPrevDues,
+      type: 'OFFLINE_CASH',
+      isRepayment: true,
+      note: `Excess payment on ${invId} applied to past dues`
+    });
   }
 
   const finalCustomerDue = cust.purchases.reduce((acc, p) => acc + (p.balance || 0), 0);
@@ -3067,6 +3144,200 @@ function renderOverdueTable() {
   }).join('');
 }
 
+// ==========================================================================
+// Admin Financial Analytics: Today's Revenue & Lifetime Pay-Later Income
+// ==========================================================================
+function calculateAdminFinancialMetrics() {
+  const todayStr = new Date().toISOString().split('T')[0];
+
+  let todaySales = 0;
+  let todayBillCash = 0;
+  let todayRepayments = 0;
+  let todayCreditIssued = 0;
+  let todayInvoicesCount = 0;
+
+  let totalPayLaterSales = 0;
+  let totalPayLaterIncome = 0;
+  let totalPayLaterOutstanding = 0;
+  let totalInvoicesCount = 0;
+  let paidInvoicesCount = 0;
+
+  let activeDebtorsCount = 0;
+  let clearedCustomersCount = 0;
+
+  (customers || []).forEach(cust => {
+    let custBalance = 0;
+    let custPurchasesCount = 0;
+
+    (cust.purchases || []).forEach(p => {
+      custPurchasesCount++;
+      const tot = Number(p.totalAmount) || 0;
+      const paid = Number(p.paidAmount) || 0;
+      const bal = Number(p.balance) || 0;
+
+      totalPayLaterSales += tot;
+      totalPayLaterIncome += paid;
+      totalPayLaterOutstanding += bal;
+      totalInvoicesCount++;
+
+      if (bal <= 0) {
+        paidInvoicesCount++;
+      }
+      custBalance += bal;
+
+      if (p.date && p.date.startsWith(todayStr)) {
+        todaySales += tot;
+        todayBillCash += paid;
+        todayCreditIssued += bal;
+        todayInvoicesCount++;
+      }
+    });
+
+    if (Array.isArray(cust.paymentHistory)) {
+      cust.paymentHistory.forEach(pmt => {
+        if (pmt.date && pmt.date.startsWith(todayStr) && pmt.isRepayment) {
+          todayRepayments += Number(pmt.amount) || 0;
+        }
+      });
+    }
+
+    if (custPurchasesCount > 0) {
+      if (custBalance > 0) {
+        activeDebtorsCount++;
+      } else {
+        clearedCustomersCount++;
+      }
+    }
+  });
+
+  // Check online orders placed today
+  let todayOrdersCount = 0;
+  (orders || []).forEach(ord => {
+    if (ord.date && ord.date.startsWith(todayStr)) {
+      todayOrdersCount++;
+    }
+  });
+
+  const todayCashCollected = todayBillCash + todayRepayments;
+  const todayTxnCount = todayInvoicesCount + todayOrdersCount;
+  const todayAvgTicket = todayInvoicesCount > 0 ? Math.round(todaySales / todayInvoicesCount) : 0;
+  const recoveryRate = totalPayLaterSales > 0 ? Math.round((totalPayLaterIncome / totalPayLaterSales) * 100) : 0;
+
+  return {
+    todayStr,
+    todaySales,
+    todayCashCollected,
+    todayBillCash,
+    todayRepayments,
+    todayCreditIssued,
+    todayInvoicesCount,
+    todayOrdersCount,
+    todayTxnCount,
+    todayAvgTicket,
+    totalPayLaterSales,
+    totalPayLaterIncome,
+    totalPayLaterOutstanding,
+    totalInvoicesCount,
+    paidInvoicesCount,
+    recoveryRate,
+    activeDebtorsCount,
+    clearedCustomersCount,
+    totalCustomersCount: (customers || []).length
+  };
+}
+
+function renderAdminFinancialAnalytics() {
+  const m = calculateAdminFinancialMetrics();
+
+  // Date badge
+  const dateValEl = document.getElementById('todayDateVal');
+  if (dateValEl) {
+    dateValEl.textContent = m.todayStr;
+  }
+
+  // Today's Sales
+  const todaySalesEl = document.getElementById('todaySalesVal');
+  if (todaySalesEl) {
+    todaySalesEl.textContent = `₹${m.todaySales.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  }
+
+  // Today's Cash Collected
+  const todayCashEl = document.getElementById('todayCashCollectedVal');
+  if (todayCashEl) {
+    todayCashEl.textContent = `₹${m.todayCashCollected.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  }
+
+  // Today's Credit Issued
+  const todayCreditEl = document.getElementById('todayCreditIssuedVal');
+  if (todayCreditEl) {
+    todayCreditEl.textContent = `₹${m.todayCreditIssued.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  }
+
+  // Today's Transactions
+  const todayTxnEl = document.getElementById('todayTxnCountVal');
+  if (todayTxnEl) {
+    todayTxnEl.textContent = currentLang === 'ta'
+      ? `${m.todayInvoicesCount} பில் • ${m.todayOrdersCount} ஆர்டர்`
+      : `${m.todayInvoicesCount} Bills • ${m.todayOrdersCount} Orders`;
+  }
+
+  // Today's Avg Bill
+  const todayAvgEl = document.getElementById('todayAvgTicketVal');
+  if (todayAvgEl) {
+    todayAvgEl.textContent = `₹${m.todayAvgTicket.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  }
+
+  // Overall Pay-Later Recovered
+  const overallRecEl = document.getElementById('overallPayLaterRecoveredVal');
+  if (overallRecEl) {
+    overallRecEl.textContent = `₹${m.totalPayLaterIncome.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  }
+
+  // Recovery Rate Progress & Badges
+  const recBadgeEl = document.getElementById('overallRecoveryRateBadge');
+  if (recBadgeEl) {
+    recBadgeEl.textContent = currentLang === 'ta'
+      ? `${m.recoveryRate}% வசூல் செய்யப்பட்டது`
+      : `${m.recoveryRate}% Recovered`;
+  }
+
+  const recProgressText = document.getElementById('recoveryProgressText');
+  if (recProgressText) {
+    recProgressText.textContent = `${m.recoveryRate}%`;
+  }
+
+  const recProgressFill = document.getElementById('recoveryProgressFill');
+  if (recProgressFill) {
+    recProgressFill.style.width = `${Math.min(100, Math.max(0, m.recoveryRate))}%`;
+  }
+
+  // Outstanding Dues
+  const overallOutEl = document.getElementById('overallOutstandingVal');
+  if (overallOutEl) {
+    overallOutEl.textContent = `₹${m.totalPayLaterOutstanding.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  }
+
+  // Lifetime Credit Extended
+  const overallLifeEl = document.getElementById('overallLifetimeVal');
+  if (overallLifeEl) {
+    overallLifeEl.textContent = `₹${m.totalPayLaterSales.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  }
+
+  // Settled Invoices
+  const settledEl = document.getElementById('overallSettledInvoicesVal');
+  if (settledEl) {
+    settledEl.textContent = `${m.paidInvoicesCount} / ${m.totalInvoicesCount}`;
+  }
+
+  // Debtors Breakdown
+  const debtorsEl = document.getElementById('overallDebtorsVal');
+  if (debtorsEl) {
+    debtorsEl.textContent = currentLang === 'ta'
+      ? `${m.activeDebtorsCount} பாக்கி • ${m.clearedCustomersCount} முடிந்தது`
+      : `${m.activeDebtorsCount} Active • ${m.clearedCustomersCount} Cleared`;
+  }
+}
+
 // Admin Offline Cash Payment Handlers
 function openAdminRecordPaymentModal(custIndex) {
   let idx = parseInt(custIndex, 10);
@@ -3142,6 +3413,15 @@ function handleAdminSubmitOfflinePayment(e) {
         inv.status = 'PAID';
       }
     }
+  });
+
+  if (!cust.paymentHistory) cust.paymentHistory = [];
+  cust.paymentHistory.unshift({
+    date: new Date().toISOString().split('T')[0],
+    amount: payAmt,
+    type: 'OFFLINE_CASH',
+    isRepayment: true,
+    note: note
   });
 
   const totalRemainingDue = cust.purchases.reduce((acc, p) => acc + p.balance, 0);
