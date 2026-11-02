@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>KisanAgri Hub - Agro Chemical & Fertilizer Stock Availability, Orders & Pay-Later Ledger</title>
-  <meta name="description" content="Check live fertilizer & agro-chemical stock availability, reserve products for shop pickup or farm delivery, manage store credit, and pay online.">
+  <meta name="description"
+    content="Check live fertilizer & agro-chemical stock availability, reserve products for shop pickup or farm delivery, manage store credit, and pay online.">
   <link rel="canonical" href="https://kisanagri.com/">
 
   <!-- PWA & Mobile Store Meta -->
@@ -24,13 +26,15 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://kisanagri.com/">
   <meta property="og:title" content="KisanAgri Hub - Agro Chemical & Fertilizer Store">
-  <meta property="og:description" content="Live stock availability, fast reservation for farm pickup & delivery, and transparent farmer credit ledger.">
+  <meta property="og:description"
+    content="Live stock availability, fast reservation for farm pickup & delivery, and transparent farmer credit ledger.">
   <meta property="og:image" content="https://kisanagri.com/assets/icon-512.png">
 
   <!-- Twitter Cards -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="KisanAgri Hub">
-  <meta name="twitter:description" content="Live fertilizer stock tracking, farmer order reservation, and transparent passbook credit ledger.">
+  <meta name="twitter:description"
+    content="Live fertilizer stock tracking, farmer order reservation, and transparent passbook credit ledger.">
   <meta name="twitter:image" content="https://kisanagri.com/assets/icon-512.png">
 
   <!-- Security & Privacy Directives -->
@@ -56,7 +60,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="css/styles.css?v=admin-signin-dark-24.0">
+  <link rel="stylesheet" href="css/styles.css?v=admin-signin-green-25.0">
   <!-- System-Theme Default Dark Mode Script (runs before body renders to avoid flash) -->
   <script>
     (function () {
@@ -74,10 +78,11 @@
         } else {
           document.documentElement.removeAttribute('data-theme');
         }
-      } catch (e) {}
+      } catch (e) { }
     })();
   </script>
 </head>
+
 <body>
   <!-- Accessibility Skip Link -->
   <a href="#mainAppContainer" class="skip-link">Skip to main content</a>
@@ -86,842 +91,1014 @@
   <div id="mainAppContainer">
     <!-- Top Bar & Header -->
     <header>
-    <div class="top-bar">
-      <div style="display: flex; flex-direction: column; gap: 4px;">
-        <a href="#" class="brand" onclick="setActiveTab('tabStock'); return false;">
-          <div class="brand-icon" style="font-size: 13px; font-weight: 800; background: var(--primary-color); color: #fff; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; letter-spacing: -0.02em;">KA</div>
-          <div class="brand-text">
-            <h1 id="brandTitle">KisanAgri Hub</h1>
-            <p id="brandSubtitle">Agro Chemical & Fertilizer Store</p>
-          </div>
-        </a>
+      <div class="top-bar">
+        <div style="display: flex; flex-direction: column; gap: 4px;">
+          <a href="#" class="brand" onclick="setActiveTab('tabStock'); return false;">
+            <div class="brand-icon"
+              style="font-size: 13px; font-weight: 800; background: var(--primary-color); color: #fff; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; letter-spacing: -0.02em;">
+              KA</div>
+            <div class="brand-text">
+              <h1 id="brandTitle">KisanAgri Hub</h1>
+              <p id="brandSubtitle">Agro Chemical & Fertilizer Store</p>
+            </div>
+          </a>
 
-        <!-- Positioned Below Company Logo & Name: Active Account Badge / Admin Label -->
-        <div id="headerProfileSubBar">
-          <div id="activeProfileBadge">
-            <!-- Rendered dynamically: " Admin" or " Customer Name" -->
+          <!-- Positioned Below Company Logo & Name: Active Account Badge / Admin Label -->
+          <div id="headerProfileSubBar">
+            <div id="activeProfileBadge">
+              <!-- Rendered dynamically: " Admin" or " Customer Name" -->
+            </div>
+            <button class="btn-action" id="headerAuthActionBtn" onclick="handleHeaderAuthAction()"
+              style="display: inline-flex; align-items: center; gap: 5px;">
+              <span id="switchProfileBtnIcon" style="display: inline-flex; align-items: center;"></span>
+              <span id="switchProfileBtnText">Log Out</span>
+            </button>
           </div>
-          <button class="btn-action" id="headerAuthActionBtn" onclick="handleHeaderAuthAction()" style="display: inline-flex; align-items: center; gap: 5px;">
-            <span id="switchProfileBtnIcon" style="display: inline-flex; align-items: center;"></span>
-            <span id="switchProfileBtnText">Log Out</span>
+        </div>
+
+        <!-- Controls: Role Switcher (Visible ONLY when Admin is logged in) & Language Switcher -->
+        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+          <!-- Language Switcher Pill (English / தமிழ்) -->
+          <div class="role-switcher-container">
+            <button id="langEnBtn" class="role-btn active" onclick="setLanguage('en')">
+              English
+            </button>
+            <button id="langTaBtn" class="role-btn" onclick="setLanguage('ta')">
+              தமிழ்
+            </button>
+          </div>
+
+          <!-- Role Switcher (Hidden for Customer Login; Visible ONLY for Admin Login) -->
+          <div class="role-switcher-container" id="adminRoleSwitcherContainer" style="display: none;">
+            <button id="roleCustomerBtn" class="role-btn active" onclick="switchRole('customer')">
+              Customer View
+            </button>
+            <button id="roleOwnerBtn" class="role-btn" onclick="switchRole('owner')">
+              Shop Owner View
+            </button>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="header-actions">
+          <!-- Dark Mode Toggle -->
+          <button class="notif-btn" id="darkModeToggle" title="Toggle Dark Mode" aria-label="Toggle Dark Mode"
+            onclick="toggleDarkMode(event)" style="width: 38px;">
+            <span id="darkModeIcon" style="display: inline-flex; align-items: center; justify-content: center;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+              </svg>
+            </span>
+          </button>
+
+          <!-- Cart Button -->
+          <button class="notif-btn" id="cartBtn" title="Shopping Cart / Order List" onclick="openCartModal()"
+            style="width: auto; padding: 0 16px; gap: 8px;">
+            <span id="cartBtnText" style="font-size: 13px; font-weight: 600;">Cart</span>
+            <span class="notif-badge" id="cartCountBadge">0</span>
+          </button>
+
+          <button class="notif-btn" id="notifBellBtn" title="Notifications" aria-label="Notifications"
+            onclick="toggleNotifDrawer()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+            <span class="notif-badge" id="notifCountBadge">0</span>
           </button>
         </div>
       </div>
 
-      <!-- Controls: Role Switcher (Visible ONLY when Admin is logged in) & Language Switcher -->
-      <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-        <!-- Language Switcher Pill (English / தமிழ்) -->
-        <div class="role-switcher-container">
-          <button id="langEnBtn" class="role-btn active" onclick="setLanguage('en')">
-            English
-          </button>
-          <button id="langTaBtn" class="role-btn" onclick="setLanguage('ta')">
-            தமிழ்
-          </button>
-        </div>
-
-        <!-- Role Switcher (Hidden for Customer Login; Visible ONLY for Admin Login) -->
-        <div class="role-switcher-container" id="adminRoleSwitcherContainer" style="display: none;">
-          <button id="roleCustomerBtn" class="role-btn active" onclick="switchRole('customer')">
-            Customer View
-          </button>
-          <button id="roleOwnerBtn" class="role-btn" onclick="switchRole('owner')">
-            Shop Owner View
-          </button>
-        </div>
-      </div>
-
-      <!-- Action Buttons -->
-      <div class="header-actions">
-        <!-- Dark Mode Toggle -->
-        <button class="notif-btn" id="darkModeToggle" title="Toggle Dark Mode" aria-label="Toggle Dark Mode" onclick="toggleDarkMode(event)" style="width: 38px;">
-          <span id="darkModeIcon" style="display: inline-flex; align-items: center; justify-content: center;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-          </span>
+      <!-- Main Navigation Tabs -->
+      <div class="nav-tabs">
+        <button class="tab-btn active" id="tabStockBtn" data-tab="tabStock" onclick="setActiveTab('tabStock')">
+          Stock Availability
         </button>
-
-        <!-- Cart Button -->
-        <button class="notif-btn" id="cartBtn" title="Shopping Cart / Order List" onclick="openCartModal()" style="width: auto; padding: 0 16px; gap: 8px;">
-          <span id="cartBtnText" style="font-size: 13px; font-weight: 600;">Cart</span>
-          <span class="notif-badge" id="cartCountBadge">0</span>
+        <button class="tab-btn" id="tabOrdersBtn" data-tab="tabOrders" onclick="setActiveTab('tabOrders')">
+          My Orders & Packing
         </button>
-
-        <button class="notif-btn" id="notifBellBtn" title="Notifications" aria-label="Notifications" onclick="toggleNotifDrawer()">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-          <span class="notif-badge" id="notifCountBadge">0</span>
+        <button class="tab-btn" id="tabLedgerBtn" data-tab="tabLedger" onclick="setActiveTab('tabLedger')">
+          My Ledger & Pay-Later
         </button>
-      </div>
-    </div>
-
-    <!-- Main Navigation Tabs -->
-    <div class="nav-tabs">
-      <button class="tab-btn active" id="tabStockBtn" data-tab="tabStock" onclick="setActiveTab('tabStock')">
-        Stock Availability
-      </button>
-      <button class="tab-btn" id="tabOrdersBtn" data-tab="tabOrders" onclick="setActiveTab('tabOrders')">
-        My Orders & Packing
-      </button>
-      <button class="tab-btn" id="tabLedgerBtn" data-tab="tabLedger" onclick="setActiveTab('tabLedger')">
-        My Ledger & Pay-Later
-      </button>
-      <!-- Owner Control Center Tab (1st Priority in Admin View over Notifications) -->
-      <button class="tab-btn owner-only-tab" id="tabOwnerBtn" data-tab="tabOwner" onclick="setActiveTab('tabOwner')" style="display: none;">
-        Admin Center
-      </button>
-      <button class="tab-btn" id="tabNotifsBtn" data-tab="tabNotifs" onclick="setActiveTab('tabNotifs')">
-        Notifications
-      </button>
-    </div>
-  </header>
-
-  <!-- Main View Container -->
-  <main>
-    <!-- Tab 1: Stock Availability Catalog -->
-    <section id="tabStock" class="tab-content active">
-      <!-- Fertilizer & Chemical Stock Availability Banner (Exclusive to Stock Tab) -->
-      <div class="hero-banner" id="heroBanner">
-        <div class="hero-content">
-          <h2 id="heroTitle">Live Fertilizer & Chemical Stock Availability</h2>
-          <p id="heroSubtitle">Check real-time stock levels of genuine fertilizers, pesticides & crop boosters. View product photos, reserve online for shop pickup or farm delivery, track packing status, and pay online or later.</p>
-        </div>
-        <div class="hero-stats">
-          <div class="stat-pill">
-            <div class="stat-value" id="statInStockCount">0</div>
-            <div class="stat-label" id="statInStockLabel">In Stock Items</div>
-          </div>
-          <div class="stat-pill">
-            <div class="stat-value" id="statActiveOrdersCount">0</div>
-            <div class="stat-label" id="statActiveOrdersLabel">Active Orders</div>
-          </div>
-          <div class="stat-pill">
-            <div class="stat-value" id="statTotalDueVal">₹0</div>
-            <div class="stat-label" id="statPendingCreditLabel">Pending Credit</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="controls-bar">
-        <div class="search-box">
-          <span class="search-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
-          <input type="text" id="stockSearchInput" placeholder="Search fertilizer, chemical name, or brand..." oninput="renderStockGrid()">
-        </div>
-        <div class="filter-group">
-          <select id="categoryFilter" class="filter-select" onchange="renderStockGrid()">
-            <option value="ALL" id="optAllCat">All Categories</option>
-            <option value="Fertilizers" id="optFertilizers">Fertilizers</option>
-            <option value="Chemicals" id="optChemicals">Pesticides & Chemicals</option>
-            <option value="Organic" id="optOrganic">Organic Bio-Fertilizers</option>
-            <option value="Growth Bio" id="optGrowth">Growth Boosters</option>
-          </select>
-
-          <select id="stockStatusFilter" class="filter-select" onchange="renderStockGrid()">
-            <option value="ALL" id="optAllStock">All Stock Status</option>
-            <option value="INSTOCK" id="optInStock">In Stock Only</option>
-            <option value="OUTSTOCK" id="optOutStock">Out of Stock</option>
-          </select>
-
-          <select id="cropFilter" class="filter-select" onchange="renderStockGrid()">
-            <option value="ALL" id="optAllCrops">All Crop Types</option>
-            <option value="Paddy">Paddy / Rice</option>
-            <option value="Wheat">Wheat</option>
-            <option value="Cotton">Cotton</option>
-            <option value="Sugarcane">Sugarcane</option>
-            <option value="Vegetables">Vegetables & Chilli</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- Product Cards Grid -->
-      <div class="product-grid" id="productGridContainer">
-        <!-- Rendered dynamically by app.js -->
-      </div>
-    </section>
-
-    <!-- Tab 2: Customer Orders & Packing Status -->
-    <section id="tabOrders" class="tab-content">
-      <div class="section-title">
-        <span id="tabOrdersTitle">Track My Orders, Packing & Pickup / Delivery Status</span>
-        <button class="btn-action" id="createNewOrderBtn" onclick="openCartModal()">Create New Order</button>
-      </div>
-      <div id="customerOrdersContainer" style="display: flex; flex-direction: column; gap: 16px;">
-        <!-- Rendered dynamically -->
-      </div>
-    </section>
-
-    <!-- Tab 3: Customer Ledger & Pay-Later Tab -->
-    <section id="tabLedger" class="tab-content">
-      <!-- Ledger Summary Card -->
-      <div class="ledger-header-card" id="ledgerHeaderCard">
-        <!-- Rendered dynamically for active logged-in customer ONLY -->
-      </div>
-
-      <!-- Itemized Purchase History -->
-      <div class="section-title">
-        <span id="purchasedItemsTitle">Purchased Items & Bill Breakdown</span>
-        <button class="btn-action" id="printStatementBtn" onclick="printLedgerReceipt()">Print Statement</button>
-      </div>
-
-      <div class="table-card">
-        <table class="custom-table" id="ledgerTable">
-          <thead>
-            <tr>
-              <th id="thInvoice">Invoice #</th>
-              <th id="thDate">Date</th>
-              <th id="thItems">Items Bought</th>
-              <th id="thTotal">Total Bill</th>
-              <th id="thPaid">Paid Amount</th>
-              <th id="thBalance">Remaining Balance</th>
-              <th id="thStatus">Status</th>
-              <th id="thAction">Action</th>
-            </tr>
-          </thead>
-          <tbody id="ledgerTableBody">
-            <!-- Rendered dynamically -->
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Store Compliance: In-App Account Privacy & Deletion (Apple Guideline 5.1.1(v) & Google Play Policy) -->
-      <div id="accountPrivacyBox" style="margin-top: 24px; padding: 20px; border-radius: var(--radius-md); border: 1px dashed rgba(239, 68, 68, 0.35); background: rgba(239, 68, 68, 0.04); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
-        <div>
-          <div style="font-weight: 700; color: #dc2626; font-size: 14px;" id="lblAccountPrivacyTitle">Account Privacy & Data Governance</div>
-          <div style="font-size: 12.5px; color: var(--text-secondary); margin-top: 3px;" id="lblAccountPrivacySub">In accordance with Apple App Store and Google Play policies, you can permanently delete your account and personal data.</div>
-        </div>
-        <button type="button" class="btn-action" onclick="initiateAccountDeletion()" style="background: #ef4444; color: #ffffff; border: none; font-weight: 600; padding: 9px 18px; border-radius: var(--radius-pill); cursor: pointer;" id="btnDeleteAccountAction">
-          Delete My Account
+        <!-- Owner Control Center Tab (1st Priority in Admin View over Notifications) -->
+        <button class="tab-btn owner-only-tab" id="tabOwnerBtn" data-tab="tabOwner" onclick="setActiveTab('tabOwner')"
+          style="display: none;">
+          Admin Center
+        </button>
+        <button class="tab-btn" id="tabNotifsBtn" data-tab="tabNotifs" onclick="setActiveTab('tabNotifs')">
+          Notifications
         </button>
       </div>
-    </section>
+    </header>
 
-    <!-- Tab 4: Process Notifications Center -->
-    <section id="tabNotifs" class="tab-content">
-      <div class="section-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-        <div>
-          <span id="tabNotifsTitle">Process Notifications & Event Logs</span>
-          <div id="markAllReadSubStatus" style="font-size: 12px; color: var(--text-muted); margin-top: 3px; font-weight: 500;">
-            Marked as all read: 12:31 PM 2026-07-23
+    <!-- Main View Container -->
+    <main>
+      <!-- Tab 1: Stock Availability Catalog -->
+      <section id="tabStock" class="tab-content active">
+        <!-- Fertilizer & Chemical Stock Availability Banner (Exclusive to Stock Tab) -->
+        <div class="hero-banner" id="heroBanner">
+          <div class="hero-content">
+            <h2 id="heroTitle">Live Fertilizer & Chemical Stock Availability</h2>
+            <p id="heroSubtitle">Check real-time stock levels of genuine fertilizers, pesticides & crop boosters. View
+              product photos, reserve online for shop pickup or farm delivery, track packing status, and pay online or
+              later.</p>
+          </div>
+          <div class="hero-stats">
+            <div class="stat-pill">
+              <div class="stat-value" id="statInStockCount">0</div>
+              <div class="stat-label" id="statInStockLabel">In Stock Items</div>
+            </div>
+            <div class="stat-pill">
+              <div class="stat-value" id="statActiveOrdersCount">0</div>
+              <div class="stat-label" id="statActiveOrdersLabel">Active Orders</div>
+            </div>
+            <div class="stat-pill">
+              <div class="stat-value" id="statTotalDueVal">₹0</div>
+              <div class="stat-label" id="statPendingCreditLabel">Pending Credit</div>
+            </div>
           </div>
         </div>
-        <button class="btn-action" id="markAllReadBtn" onclick="clearAllNotifications()" style="display: inline-flex; align-items: center; gap: 6px;">
-          <span id="markAllReadBtnLabel">Mark as all read</span>
-          <span id="markAllReadBtnTimeTag" style="font-size: 11px; padding: 2px 8px; background: rgba(0,0,0,0.06); border-radius: var(--radius-pill); font-weight: 600;">12:31 PM 2026-07-23</span>
-        </button>
-      </div>
-      <div id="fullNotifContainer" style="display: flex; flex-direction: column; gap: 12px;">
-        <!-- Rendered dynamically -->
-      </div>
-    </section>
 
-    <!-- Tab 5: Shop Owner Control Center (EXCLUSIVE TO ADMIN) -->
-    <section id="tabOwner" class="tab-content">
-      <!-- Admin Financial Analytics: Today's Revenue Calculation & Overall Pay-Later Income -->
-      <div class="admin-financial-analytics-wrapper" id="adminFinancialOverview" style="margin-bottom: 24px;">
-        <div class="admin-analytics-grid">
-          
-          <!-- Section 1: Today's Revenue Calculation -->
-          <div class="admin-card analytics-card" id="todayRevenueCard">
-            <div class="analytics-header">
-              <div>
-                <div class="analytics-badge-row">
-                  <span class="analytics-badge" id="todayBadgeWrap">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                    <span id="todayBadgeLabel">Today</span>
-                  </span>
-                  <span class="analytics-badge-tag" id="todayDateVal">2026-11-02</span>
-                </div>
-                <h3 class="analytics-title" id="todayRevenueTitleText">Today's Revenue Calculation</h3>
-                <p class="analytics-subtitle" id="todayRevenueSubText">Live calculation of sales, cash collections, and credit extended today.</p>
-              </div>
-            </div>
-
-            <!-- Primary Highlight: Today's Total Sales -->
-            <div class="analytics-hero-metric">
-              <span class="analytics-hero-label" id="lblTodayTotalSales">Today's Total Sales</span>
-              <div class="analytics-hero-value" id="todaySalesVal">₹0.00</div>
-            </div>
-
-            <!-- Metrics Breakdown Grid -->
-            <div class="analytics-sub-grid">
-              <div class="analytics-metric-box">
-                <div class="metric-icon-wrap">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="3"></circle><path d="M6 12h.01M18 12h.01"></path></svg>
-                </div>
-                <div>
-                  <div class="metric-label" id="lblTodayCashCollected">Direct Cash / Paid Today</div>
-                  <div class="metric-val" id="todayCashCollectedVal">₹0.00</div>
-                </div>
-              </div>
-
-              <div class="analytics-metric-box">
-                <div class="metric-icon-wrap">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                </div>
-                <div>
-                  <div class="metric-label" id="lblTodayCreditIssued">Pay-Later Credit Issued</div>
-                  <div class="metric-val" id="todayCreditIssuedVal">₹0.00</div>
-                </div>
-              </div>
-
-              <div class="analytics-metric-box">
-                <div class="metric-icon-wrap">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-2z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-                </div>
-                <div>
-                  <div class="metric-label" id="lblTodayTxnCount">Transactions & Bills</div>
-                  <div class="metric-val" id="todayTxnCountVal">0</div>
-                </div>
-              </div>
-
-              <div class="analytics-metric-box">
-                <div class="metric-icon-wrap">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>
-                </div>
-                <div>
-                  <div class="metric-label" id="lblTodayAvgTicket">Average Bill Value</div>
-                  <div class="metric-val" id="todayAvgTicketVal">₹0.00</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Formula Note -->
-            <div class="analytics-formula-bar" id="todayCalculationFormulaBar">
-              <span class="formula-icon" style="display: inline-flex; align-items: center; color: var(--text-primary);">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-              </span>
-              <span id="todayFormulaText">Formula: Total Sales = Direct Cash/UPI Received + Pay-Later Credit Added</span>
-            </div>
+        <div class="controls-bar">
+          <div class="search-box">
+            <span class="search-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg></span>
+            <input type="text" id="stockSearchInput" placeholder="Search fertilizer, chemical name, or brand..."
+              oninput="renderStockGrid()">
           </div>
+          <div class="filter-group">
+            <select id="categoryFilter" class="filter-select" onchange="renderStockGrid()">
+              <option value="ALL" id="optAllCat">All Categories</option>
+              <option value="Fertilizers" id="optFertilizers">Fertilizers</option>
+              <option value="Chemicals" id="optChemicals">Pesticides & Chemicals</option>
+              <option value="Organic" id="optOrganic">Organic Bio-Fertilizers</option>
+              <option value="Growth Bio" id="optGrowth">Growth Boosters</option>
+            </select>
 
-          <!-- Section 2: Overall Income from Pay-Later -->
-          <div class="admin-card analytics-card" id="overallPayLaterCard">
-            <div class="analytics-header">
-              <div>
-                <div class="analytics-badge-row">
-                  <span class="analytics-badge" id="overallBadgeWrap">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-                    <span id="overallBadgeLabel">Lifetime Pay-Later</span>
-                  </span>
-                  <span class="analytics-badge-tag" id="overallRecoveryRateBadge">0% Recovered</span>
-                </div>
-                <h3 class="analytics-title" id="overallPayLaterTitleText">Overall Income from Pay-Later</h3>
-                <p class="analytics-subtitle" id="overallPayLaterSubText">Total debt recovery, cumulative cash repayments, and outstanding farmer balances.</p>
-              </div>
-            </div>
+            <select id="stockStatusFilter" class="filter-select" onchange="renderStockGrid()">
+              <option value="ALL" id="optAllStock">All Stock Status</option>
+              <option value="INSTOCK" id="optInStock">In Stock Only</option>
+              <option value="OUTSTOCK" id="optOutStock">Out of Stock</option>
+            </select>
 
-            <!-- Primary Highlight: Total Income Recovered from Pay-Later -->
-            <div class="analytics-hero-metric">
-              <span class="analytics-hero-label" id="lblOverallPayLaterRecovered">Total Income Recovered from Pay-Later</span>
-              <div class="analytics-hero-value" id="overallPayLaterRecoveredVal">₹0.00</div>
-            </div>
-
-            <!-- Recovery Progress Bar -->
-            <div class="analytics-progress-container">
-              <div class="progress-info-row">
-                <span id="lblRecoveryProgress">Recovery Progress</span>
-                <strong id="recoveryProgressText">0%</strong>
-              </div>
-              <div class="analytics-progress-track">
-                <div class="analytics-progress-fill" id="recoveryProgressFill" style="width: 0%;"></div>
-              </div>
-            </div>
-
-            <!-- Metrics Breakdown Grid -->
-            <div class="analytics-sub-grid">
-              <div class="analytics-metric-box">
-                <div class="metric-icon-wrap">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-                </div>
-                <div>
-                  <div class="metric-label" id="lblOverallOutstanding">Outstanding Credit Dues</div>
-                  <div class="metric-val" id="overallOutstandingVal">₹0.00</div>
-                </div>
-              </div>
-
-              <div class="analytics-metric-box">
-                <div class="metric-icon-wrap">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
-                </div>
-                <div>
-                  <div class="metric-label" id="lblOverallLifetime">Total Lifetime Credit Extended</div>
-                  <div class="metric-val" id="overallLifetimeVal">₹0.00</div>
-                </div>
-              </div>
-
-              <div class="analytics-metric-box">
-                <div class="metric-icon-wrap">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                </div>
-                <div>
-                  <div class="metric-label" id="lblSettledInvoices">Invoices Fully Settled</div>
-                  <div class="metric-val" id="overallSettledInvoicesVal">0 / 0</div>
-                </div>
-              </div>
-
-              <div class="analytics-metric-box">
-                <div class="metric-icon-wrap">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                </div>
-                <div>
-                  <div class="metric-label" id="lblDebtorsBreakdown">Credit Accounts Status</div>
-                  <div class="metric-val" id="overallDebtorsVal">0 Active • 0 Cleared</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Quick Action / Jump Link -->
-            <div style="margin-top: 14px; display: flex; justify-content: flex-end;">
-              <button type="button" class="btn-action" onclick="jumpToOverdueDebtors()" style="font-size: 12px; padding: 6px 14px; font-weight: 600; cursor: pointer;">
-                <span id="btnViewOverdueText">View Overdue Debtors</span> →
-              </button>
-            </div>
+            <select id="cropFilter" class="filter-select" onchange="renderStockGrid()">
+              <option value="ALL" id="optAllCrops">All Crop Types</option>
+              <option value="Paddy">Paddy / Rice</option>
+              <option value="Wheat">Wheat</option>
+              <option value="Cotton">Cotton</option>
+              <option value="Sugarcane">Sugarcane</option>
+              <option value="Vegetables">Vegetables & Chilli</option>
+            </select>
           </div>
-
         </div>
-      </div>
 
-      <!-- CRUD Section Selector Bar -->
-      <div class="controls-bar admin-controls-bar">
-        <div class="admin-subtab-container">
-          <button class="btn-action active" id="crudTabProductsBtn" onclick="switchCrudSubTab('products')" style="font-weight: 700;">
-            Product Catalog
-          </button>
-          <button class="btn-action" id="crudTabCustomersBtn" onclick="switchCrudSubTab('customers')" style="font-weight: 700;">
-            Customer Accounts
-          </button>
-          <button class="btn-action" id="crudTabOrdersBtn" onclick="switchCrudSubTab('orders')" style="font-weight: 700;">
-            Orders & Billing
+        <!-- Product Cards Grid -->
+        <div class="product-grid" id="productGridContainer">
+          <!-- Rendered dynamically by app.js -->
+        </div>
+      </section>
+
+      <!-- Tab 2: Customer Orders & Packing Status -->
+      <section id="tabOrders" class="tab-content">
+        <div class="section-title">
+          <span id="tabOrdersTitle">Track My Orders, Packing & Pickup / Delivery Status</span>
+          <button class="btn-action" id="createNewOrderBtn" onclick="openCartModal()">Create New Order</button>
+        </div>
+        <div id="customerOrdersContainer" style="display: flex; flex-direction: column; gap: 16px;">
+          <!-- Rendered dynamically -->
+        </div>
+      </section>
+
+      <!-- Tab 3: Customer Ledger & Pay-Later Tab -->
+      <section id="tabLedger" class="tab-content">
+        <!-- Ledger Summary Card -->
+        <div class="ledger-header-card" id="ledgerHeaderCard">
+          <!-- Rendered dynamically for active logged-in customer ONLY -->
+        </div>
+
+        <!-- Itemized Purchase History -->
+        <div class="section-title">
+          <span id="purchasedItemsTitle">Purchased Items & Bill Breakdown</span>
+          <button class="btn-action" id="printStatementBtn" onclick="printLedgerReceipt()">Print Statement</button>
+        </div>
+
+        <div class="table-card">
+          <table class="custom-table" id="ledgerTable">
+            <thead>
+              <tr>
+                <th id="thInvoice">Invoice #</th>
+                <th id="thDate">Date</th>
+                <th id="thItems">Items Bought</th>
+                <th id="thTotal">Total Bill</th>
+                <th id="thPaid">Paid Amount</th>
+                <th id="thBalance">Remaining Balance</th>
+                <th id="thStatus">Status</th>
+                <th id="thAction">Action</th>
+              </tr>
+            </thead>
+            <tbody id="ledgerTableBody">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Store Compliance: In-App Account Privacy & Deletion (Apple Guideline 5.1.1(v) & Google Play Policy) -->
+        <div id="accountPrivacyBox"
+          style="margin-top: 24px; padding: 20px; border-radius: var(--radius-md); border: 1px dashed rgba(239, 68, 68, 0.35); background: rgba(239, 68, 68, 0.04); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+          <div>
+            <div style="font-weight: 700; color: #dc2626; font-size: 14px;" id="lblAccountPrivacyTitle">Account Privacy
+              & Data Governance</div>
+            <div style="font-size: 12.5px; color: var(--text-secondary); margin-top: 3px;" id="lblAccountPrivacySub">In
+              accordance with Apple App Store and Google Play policies, you can permanently delete your account and
+              personal data.</div>
+          </div>
+          <button type="button" class="btn-action" onclick="initiateAccountDeletion()"
+            style="background: #ef4444; color: #ffffff; border: none; font-weight: 600; padding: 9px 18px; border-radius: var(--radius-pill); cursor: pointer;"
+            id="btnDeleteAccountAction">
+            Delete My Account
           </button>
         </div>
-      </div>
+      </section>
 
-      <!-- CRUD Sub-Section 1: PRODUCTS -->
-      <div id="crudProductsSection" class="crud-sub-section">
-        <!-- Create Product Form with Image Upload -->
-        <div class="admin-card" style="margin-bottom: 24px;">
-          <div class="section-title">
-            <span>Create New Product Item</span>
+      <!-- Tab 4: Process Notifications Center -->
+      <section id="tabNotifs" class="tab-content">
+        <div class="section-title"
+          style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <span id="tabNotifsTitle">Process Notifications & Event Logs</span>
+            <div id="markAllReadSubStatus"
+              style="font-size: 12px; color: var(--text-muted); margin-top: 3px; font-weight: 500;">
+              Marked as all read: 12:31 PM 2026-07-23
+            </div>
+          </div>
+          <button class="btn-action" id="markAllReadBtn" onclick="clearAllNotifications()"
+            style="display: inline-flex; align-items: center; gap: 6px;">
+            <span id="markAllReadBtnLabel">Mark as all read</span>
+            <span id="markAllReadBtnTimeTag"
+              style="font-size: 11px; padding: 2px 8px; background: rgba(0,0,0,0.06); border-radius: var(--radius-pill); font-weight: 600;">12:31
+              PM 2026-07-23</span>
+          </button>
+        </div>
+        <div id="fullNotifContainer" style="display: flex; flex-direction: column; gap: 12px;">
+          <!-- Rendered dynamically -->
+        </div>
+      </section>
+
+      <!-- Tab 5: Shop Owner Control Center (EXCLUSIVE TO ADMIN) -->
+      <section id="tabOwner" class="tab-content">
+        <!-- Admin Financial Analytics: Today's Revenue Calculation & Overall Pay-Later Income -->
+        <div class="admin-financial-analytics-wrapper" id="adminFinancialOverview" style="margin-bottom: 24px;">
+          <div class="admin-analytics-grid">
+
+            <!-- Section 1: Today's Revenue Calculation -->
+            <div class="admin-card analytics-card" id="todayRevenueCard">
+              <div class="analytics-header">
+                <div>
+                  <div class="analytics-badge-row">
+                    <span class="analytics-badge" id="todayBadgeWrap">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                      </svg>
+                      <span id="todayBadgeLabel">Today</span>
+                    </span>
+                    <span class="analytics-badge-tag" id="todayDateVal">2026-11-02</span>
+                  </div>
+                  <h3 class="analytics-title" id="todayRevenueTitleText">Today's Revenue Calculation</h3>
+                  <p class="analytics-subtitle" id="todayRevenueSubText">Live calculation of sales, cash collections,
+                    and credit extended today.</p>
+                </div>
+              </div>
+
+              <!-- Primary Highlight: Today's Total Sales -->
+              <div class="analytics-hero-metric">
+                <span class="analytics-hero-label" id="lblTodayTotalSales">Today's Total Sales</span>
+                <div class="analytics-hero-value" id="todaySalesVal">₹0.00</div>
+              </div>
+
+              <!-- Metrics Breakdown Grid -->
+              <div class="analytics-sub-grid">
+                <div class="analytics-metric-box">
+                  <div class="metric-icon-wrap">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+                      <circle cx="12" cy="12" r="3"></circle>
+                      <path d="M6 12h.01M18 12h.01"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="metric-label" id="lblTodayCashCollected">Direct Cash / Paid Today</div>
+                    <div class="metric-val" id="todayCashCollectedVal">₹0.00</div>
+                  </div>
+                </div>
+
+                <div class="analytics-metric-box">
+                  <div class="metric-icon-wrap">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                      <polyline points="14 2 14 8 20 8"></polyline>
+                      <line x1="16" y1="13" x2="8" y2="13"></line>
+                      <line x1="16" y1="17" x2="8" y2="17"></line>
+                      <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="metric-label" id="lblTodayCreditIssued">Pay-Later Credit Issued</div>
+                    <div class="metric-val" id="todayCreditIssuedVal">₹0.00</div>
+                  </div>
+                </div>
+
+                <div class="analytics-metric-box">
+                  <div class="metric-icon-wrap">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-2z"></path>
+                      <line x1="3" y1="6" x2="21" y2="6"></line>
+                      <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="metric-label" id="lblTodayTxnCount">Transactions & Bills</div>
+                    <div class="metric-val" id="todayTxnCountVal">0</div>
+                  </div>
+                </div>
+
+                <div class="analytics-metric-box">
+                  <div class="metric-icon-wrap">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                      <polyline points="16 7 22 7 22 13"></polyline>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="metric-label" id="lblTodayAvgTicket">Average Bill Value</div>
+                    <div class="metric-val" id="todayAvgTicketVal">₹0.00</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Formula Note -->
+              <div class="analytics-formula-bar" id="todayCalculationFormulaBar">
+                <span class="formula-icon"
+                  style="display: inline-flex; align-items: center; color: var(--text-primary);">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                  </svg>
+                </span>
+                <span id="todayFormulaText">Formula: Total Sales = Direct Cash/UPI Received + Pay-Later Credit
+                  Added</span>
+              </div>
+            </div>
+
+            <!-- Section 2: Overall Income from Pay-Later -->
+            <div class="admin-card analytics-card" id="overallPayLaterCard">
+              <div class="analytics-header">
+                <div>
+                  <div class="analytics-badge-row">
+                    <span class="analytics-badge" id="overallBadgeWrap">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                      </svg>
+                      <span id="overallBadgeLabel">Lifetime Pay-Later</span>
+                    </span>
+                    <span class="analytics-badge-tag" id="overallRecoveryRateBadge">0% Recovered</span>
+                  </div>
+                  <h3 class="analytics-title" id="overallPayLaterTitleText">Overall Income from Pay-Later</h3>
+                  <p class="analytics-subtitle" id="overallPayLaterSubText">Total debt recovery, cumulative cash
+                    repayments, and outstanding farmer balances.</p>
+                </div>
+              </div>
+
+              <!-- Primary Highlight: Total Income Recovered from Pay-Later -->
+              <div class="analytics-hero-metric">
+                <span class="analytics-hero-label" id="lblOverallPayLaterRecovered">Total Income Recovered from
+                  Pay-Later</span>
+                <div class="analytics-hero-value" id="overallPayLaterRecoveredVal">₹0.00</div>
+              </div>
+
+              <!-- Recovery Progress Bar -->
+              <div class="analytics-progress-container">
+                <div class="progress-info-row">
+                  <span id="lblRecoveryProgress">Recovery Progress</span>
+                  <strong id="recoveryProgressText">0%</strong>
+                </div>
+                <div class="analytics-progress-track">
+                  <div class="analytics-progress-fill" id="recoveryProgressFill" style="width: 0%;"></div>
+                </div>
+              </div>
+
+              <!-- Metrics Breakdown Grid -->
+              <div class="analytics-sub-grid">
+                <div class="analytics-metric-box">
+                  <div class="metric-icon-wrap">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <line x1="12" y1="8" x2="12" y2="12"></line>
+                      <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="metric-label" id="lblOverallOutstanding">Outstanding Credit Dues</div>
+                    <div class="metric-val" id="overallOutstandingVal">₹0.00</div>
+                  </div>
+                </div>
+
+                <div class="analytics-metric-box">
+                  <div class="metric-icon-wrap">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                      <line x1="1" y1="10" x2="23" y2="10"></line>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="metric-label" id="lblOverallLifetime">Total Lifetime Credit Extended</div>
+                    <div class="metric-val" id="overallLifetimeVal">₹0.00</div>
+                  </div>
+                </div>
+
+                <div class="analytics-metric-box">
+                  <div class="metric-icon-wrap">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                      <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="metric-label" id="lblSettledInvoices">Invoices Fully Settled</div>
+                    <div class="metric-val" id="overallSettledInvoicesVal">0 / 0</div>
+                  </div>
+                </div>
+
+                <div class="analytics-metric-box">
+                  <div class="metric-icon-wrap">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="9" cy="7" r="4"></circle>
+                      <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="metric-label" id="lblDebtorsBreakdown">Credit Accounts Status</div>
+                    <div class="metric-val" id="overallDebtorsVal">0 Active • 0 Cleared</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Quick Action / Jump Link -->
+              <div style="margin-top: 14px; display: flex; justify-content: flex-end;">
+                <button type="button" class="btn-action" onclick="jumpToOverdueDebtors()"
+                  style="font-size: 12px; padding: 6px 14px; font-weight: 600; cursor: pointer;">
+                  <span id="btnViewOverdueText">View Overdue Debtors</span> →
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- CRUD Section Selector Bar -->
+        <div class="controls-bar admin-controls-bar">
+          <div class="admin-subtab-container">
+            <button class="btn-action active" id="crudTabProductsBtn" onclick="switchCrudSubTab('products')"
+              style="font-weight: 700;">
+              Product Catalog
+            </button>
+            <button class="btn-action" id="crudTabCustomersBtn" onclick="switchCrudSubTab('customers')"
+              style="font-weight: 700;">
+              Customer Accounts
+            </button>
+            <button class="btn-action" id="crudTabOrdersBtn" onclick="switchCrudSubTab('orders')"
+              style="font-weight: 700;">
+              Orders & Billing
+            </button>
+          </div>
+        </div>
+
+        <!-- CRUD Sub-Section 1: PRODUCTS -->
+        <div id="crudProductsSection" class="crud-sub-section">
+          <!-- Create Product Form with Image Upload -->
+          <div class="admin-card" style="margin-bottom: 24px;">
+            <div class="section-title">
+              <span>Create New Product Item</span>
+            </div>
+
+            <form id="addProductPhotoForm" onsubmit="handleAddProductWithPhoto(event)">
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;">
+                <div class="form-group">
+                  <label>Product Name</label>
+                  <input type="text" id="newProdName" class="form-control"
+                    placeholder="e.g. Syngenta Virtako Insecticide" required>
+                </div>
+                <div class="form-group">
+                  <label>Category</label>
+                  <select id="newProdCat" class="form-control" required>
+                    <option value="Fertilizers">Fertilizers</option>
+                    <option value="Chemicals">Pesticides & Chemicals</option>
+                    <option value="Organic">Organic Bio-Fertilizers</option>
+                    <option value="Growth Bio">Growth Boosters</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Brand & Unit</label>
+                  <input type="text" id="newProdBrandUnit" class="form-control" placeholder="e.g. Bayer • 250 ml Bottle"
+                    required>
+                </div>
+                <div class="form-group">
+                  <label>Selling Price (₹)</label>
+                  <input type="number" id="newProdPrice" class="form-control" placeholder="e.g. 650" required min="1">
+                </div>
+                <div class="form-group">
+                  <label>Initial Stock Quantity</label>
+                  <input type="number" id="newProdStock" class="form-control" placeholder="e.g. 40" required min="1">
+                </div>
+                <div class="form-group" style="grid-column: 1 / -1;">
+                  <label>Target Crop Type (Select preset or type custom crop)</label>
+                  <div class="crop-select-row" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <select id="newProdCropSelect" class="form-control" style="flex: 1; min-width: 200px;"
+                      onchange="handleCropSelectChange()">
+                      <option value="" disabled selected>-- Select Target Crop Type --</option>
+                      <option value="Paddy">Paddy / Rice (நெல்)</option>
+                      <option value="Wheat">Wheat (கோதுமை)</option>
+                      <option value="Cotton">Cotton (பருத்தி)</option>
+                      <option value="Sugarcane">Sugarcane (கரும்பு)</option>
+                      <option value="Vegetables">Vegetables & Chilli (காய்கறிகள்)</option>
+                      <option value="Groundnut">Groundnut & Pulses (நிலக்கடலை)</option>
+                      <option value="Fruits">Fruits & Horticulture (பழங்கள்)</option>
+                      <option value="All Crops">All Crops (அனைத்து பயிர்கள்)</option>
+                      <option value="CUSTOM">Enter Custom Crop Type Manually...</option>
+                    </select>
+                    <input type="text" id="newProdCropManual" class="form-control" style="flex: 1; min-width: 220px;"
+                      placeholder="Or type crop manually e.g. Paddy & Maize, Chilli, Sugarcane..." required>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Direct Image File Picker & Live Preview -->
+              <div class="form-group" style="margin-top: 10px;">
+                <label style="font-weight: 700; color: var(--primary-color);">Select Direct Chemical Image File</label>
+                <input type="file" id="newProdImageFile" accept="image/*" class="form-control"
+                  onchange="previewProductImageFile(event)" required>
+
+                <!-- Live Upload Preview Container -->
+                <div id="imagePreviewBox"
+                  style="display: none; margin-top: 12px; align-items: center; gap: 14px; background: var(--bg-card-subtle); padding: 10px; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                  <div
+                    style="width: 90px; height: 90px; border-radius: var(--radius-sm); overflow: hidden; border: 2px solid var(--primary-color);">
+                    <img id="imagePreviewImg" style="width: 100%; height: 100%; object-fit: cover;"
+                      alt="Chemical Preview">
+                  </div>
+                  <div>
+                    <div style="font-size: 13px; font-weight: 700; color: var(--success-color);">Image Selected & Ready
+                    </div>
+                    <div style="font-size: 11px; color: var(--text-muted);">This direct image will be attached to the
+                      product item.</div>
+                  </div>
+                </div>
+              </div>
+
+              <button type="submit" class="btn-primary"
+                style="margin-top: 14px; background: linear-gradient(135deg, #0f766e, #16a34a); padding: 12px; font-size: 15px;">Save
+                New Product to Catalog</button>
+            </form>
           </div>
 
-          <form id="addProductPhotoForm" onsubmit="handleAddProductWithPhoto(event)">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;">
+          <!-- Read, Update & Delete Products Table -->
+          <div class="admin-card">
+            <div class="section-title">
+              <span>Inventory Items</span>
+              <span style="font-size: 12px; color: var(--text-muted);">Shop Owner inventory management</span>
+            </div>
+
+            <div class="table-card">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Photo</th>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="crudProductsTableBody">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- CRUD Sub-Section 2: CUSTOMERS -->
+        <div id="crudCustomersSection" class="crud-sub-section" style="display: none;">
+          <!-- Add Customer Account Form -->
+          <div class="admin-card" style="margin-bottom: 24px;">
+            <div class="section-title">
+              <span id="ownerAddCustTitle">Add New Customer Account</span>
+            </div>
+            <form id="ownerAddCustForm" onsubmit="handleOwnerAddCustomer(event)" autocomplete="off">
+              <div class="customer-account-form-grid">
+                <div class="form-group col-name" style="margin-bottom: 0;">
+                  <label for="ownerCustName" class="form-label-even" id="lblOwnerCustName">
+                    <span class="label-text">Farmer Name</span>
+                    <span class="form-label-hint">(Letters & Spaces Only)</span>
+                  </label>
+                  <input type="text" id="ownerCustName" class="form-control" placeholder="e.g. Balu Swamy" required
+                    pattern="[A-Za-z\u0B80-\u0BFF\s\.-]+"
+                    title="Name must contain letters only, no numbers or special symbols" autocomplete="off">
+                </div>
+                <div class="form-group col-phone" style="margin-bottom: 0;">
+                  <label for="ownerCustPhone" class="form-label-even" id="lblOwnerCustPhone">
+                    <span class="label-text">Phone Number</span>
+                    <span class="form-label-hint">(10 Digits)</span>
+                  </label>
+                  <input type="tel" id="ownerCustPhone" class="form-control" placeholder="9876543210" required
+                    pattern="[0-9]{10}" maxlength="10" minlength="10" title="Must be exactly 10 digits"
+                    autocomplete="off">
+                </div>
+                <div class="form-group col-village" style="margin-bottom: 0;">
+                  <label for="ownerCustVillage" class="form-label-even" id="lblOwnerCustVillage">
+                    <span class="label-text">Village Location</span>
+                    <span class="form-label-hint">(Letters & Spaces Only)</span>
+                  </label>
+                  <input type="text" id="ownerCustVillage" class="form-control" placeholder="Green Field" required
+                    pattern="[A-Za-z\u0B80-\u0BFF\s\.-]+"
+                    title="Location must contain letters only, no numbers or special symbols" autocomplete="off">
+                </div>
+                <div class="form-group col-pin" style="margin-bottom: 0;">
+                  <label for="ownerCustPin" class="form-label-pin" id="lblOwnerCustPin">
+                    <span class="label-text">Create 4-Digit PIN</span>
+                    <span class="form-label-hint">(4 Digits)</span>
+                  </label>
+                  <input type="password" id="ownerCustPin" class="form-control" placeholder="Create 4-digit PIN"
+                    required pattern="[0-9]{4}" maxlength="4" minlength="4" inputmode="numeric"
+                    title="Must be exactly 4 digits" autocomplete="new-password">
+                </div>
+                <div class="form-group col-confirm-pin" style="margin-bottom: 0;">
+                  <label for="ownerCustConfirmPin" class="form-label-pin" id="lblOwnerCustConfirmPin">
+                    <span class="label-text">Re-enter 4-Digit PIN</span>
+                    <span class="form-label-hint">(Must Match)</span>
+                  </label>
+                  <input type="password" id="ownerCustConfirmPin" class="form-control"
+                    placeholder="Re-enter 4-digit PIN" required pattern="[0-9]{4}" maxlength="4" minlength="4"
+                    inputmode="numeric" title="Must match set PIN" autocomplete="new-password">
+                </div>
+              </div>
+              <div class="customer-form-submit-row">
+                <button type="submit" class="btn-primary customer-form-submit-btn" id="btnOwnerAddCustSubmit">
+                  Register New Customer Account
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Read, Edit & Delete Customers Table -->
+          <div class="admin-card">
+            <div class="section-title">
+              <span>Customer Directory</span>
+            </div>
+            <div class="table-card">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Farmer Name</th>
+                    <th>Phone</th>
+                    <th>Village Location</th>
+                    <th>Total Purchases</th>
+                    <th>Unpaid Balance</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="crudCustomersTableBody">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Overdue Receivables & Reminders Panel -->
+          <div class="admin-card" id="overduePanel" style="margin-top: 24px;">
+            <div class="section-title">
+              <span id="overdueTitle">Overdue Balances & Payment Reminders</span>
+            </div>
+
+            <div class="table-card">
+              <table class="custom-table" id="overdueTable">
+                <thead>
+                  <tr>
+                    <th id="thCust">Customer</th>
+                    <th id="thPhone">Phone</th>
+                    <th id="thVillage">Village</th>
+                    <th id="thTotalPurch">Total Purchases</th>
+                    <th id="thUnpaidDue">Unpaid Due Balance</th>
+                    <th id="thOverdueStatus">Overdue Status</th>
+                    <th id="thRemindersSent">Reminders Sent</th>
+                    <th id="thSendReminder">Send Reminder Action</th>
+                  </tr>
+                </thead>
+                <tbody id="overdueTableBody">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- CRUD Sub-Section 3: ORDERS & BILLING -->
+        <div id="crudOrdersSection" class="crud-sub-section" style="display: none;">
+          <!-- Card 1: Record Offline Customer Bill -->
+          <div class="admin-card" style="margin-bottom: 24px;">
+            <h3 class="section-title" id="logOfflineTitle" style="margin-bottom: 12px;">Log Offline Purchase</h3>
+            <p id="logOfflineSub" style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">Record offline
+              purchases made at your shop. Updates stock and appends bill to customer credit ledger.</p>
+
+            <form id="offlineBillForm" onsubmit="handleLogOfflineBill(event)">
               <div class="form-group">
-                <label>Product Name</label>
-                <input type="text" id="newProdName" class="form-control" placeholder="e.g. Syngenta Virtako Insecticide" required>
-              </div>
-              <div class="form-group">
-                <label>Category</label>
-                <select id="newProdCat" class="form-control" required>
-                  <option value="Fertilizers">Fertilizers</option>
-                  <option value="Chemicals">Pesticides & Chemicals</option>
-                  <option value="Organic">Organic Bio-Fertilizers</option>
-                  <option value="Growth Bio">Growth Boosters</option>
+                <label id="lblSelectCust">Select Customer Account</label>
+                <select id="billCustomerSelect" class="form-control" required onchange="onOfflineCustChange()">
+                  <!-- Populated dynamically -->
                 </select>
               </div>
+
               <div class="form-group">
-                <label>Brand & Unit</label>
-                <input type="text" id="newProdBrandUnit" class="form-control" placeholder="e.g. Bayer • 250 ml Bottle" required>
+                <label id="lblSelectProd">Select Product / Fertilizer</label>
+                <select id="billProductSelect" class="form-control" required onchange="onOfflineProdChange()">
+                  <!-- Populated dynamically -->
+                </select>
               </div>
-              <div class="form-group">
-                <label>Selling Price (₹)</label>
-                <input type="number" id="newProdPrice" class="form-control" placeholder="e.g. 650" required min="1">
-              </div>
-              <div class="form-group">
-                <label>Initial Stock Quantity</label>
-                <input type="number" id="newProdStock" class="form-control" placeholder="e.g. 40" required min="1">
-              </div>
-              <div class="form-group" style="grid-column: 1 / -1;">
-                <label>Target Crop Type (Select preset or type custom crop)</label>
-                <div class="crop-select-row" style="display: flex; gap: 10px; flex-wrap: wrap;">
-                  <select id="newProdCropSelect" class="form-control" style="flex: 1; min-width: 200px;" onchange="handleCropSelectChange()">
-                    <option value="" disabled selected>-- Select Target Crop Type --</option>
-                    <option value="Paddy">Paddy / Rice (நெல்)</option>
-                    <option value="Wheat">Wheat (கோதுமை)</option>
-                    <option value="Cotton">Cotton (பருத்தி)</option>
-                    <option value="Sugarcane">Sugarcane (கரும்பு)</option>
-                    <option value="Vegetables">Vegetables & Chilli (காய்கறிகள்)</option>
-                    <option value="Groundnut">Groundnut & Pulses (நிலக்கடலை)</option>
-                    <option value="Fruits">Fruits & Horticulture (பழங்கள்)</option>
-                    <option value="All Crops">All Crops (அனைத்து பயிர்கள்)</option>
-                    <option value="CUSTOM">Enter Custom Crop Type Manually...</option>
-                  </select>
-                  <input type="text" id="newProdCropManual" class="form-control" style="flex: 1; min-width: 220px;" placeholder="Or type crop manually e.g. Paddy & Maize, Chilli, Sugarcane..." required>
+
+              <div class="form-group bill-qty-upfront-row" style="display: flex; gap: 12px;">
+                <div style="flex: 1;">
+                  <label id="lblQty">Quantity</label>
+                  <input type="number" id="billQtyInput" class="form-control" value="1" min="1" required
+                    oninput="calculateBillPreview()">
+                </div>
+                <div style="flex: 1;">
+                  <label id="lblUpfront">Upfront Paid (₹)</label>
+                  <input type="number" id="billUpfrontInput" class="form-control" value="" min="0" step="any"
+                    oninput="calculateBillPreview()">
+                  <div id="billUpfrontHint"
+                    style="font-size: 11px; color: var(--primary-color); font-weight: 600; margin-top: 4px;">Max
+                    Allowed: ₹0.00</div>
                 </div>
               </div>
-            </div>
 
-            <!-- Direct Image File Picker & Live Preview -->
-            <div class="form-group" style="margin-top: 10px;">
-              <label style="font-weight: 700; color: var(--primary-color);">Select Direct Chemical Image File</label>
-              <input type="file" id="newProdImageFile" accept="image/*" class="form-control" onchange="previewProductImageFile(event)" required>
-
-              <!-- Live Upload Preview Container -->
-              <div id="imagePreviewBox" style="display: none; margin-top: 12px; align-items: center; gap: 14px; background: var(--bg-card-subtle); padding: 10px; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
-                <div style="width: 90px; height: 90px; border-radius: var(--radius-sm); overflow: hidden; border: 2px solid var(--primary-color);">
-                  <img id="imagePreviewImg" style="width: 100%; height: 100%; object-fit: cover;" alt="Chemical Preview">
+              <div
+                style="background: var(--bg-card-subtle); border: 1px solid var(--border-color); padding: 12px; border-radius: var(--radius-sm); margin-bottom: 16px; font-size: 13px;">
+                <div style="display: flex; justify-content: space-between;">
+                  <span id="lblTotalBill">Current Purchase Total:</span>
+                  <strong id="billPreviewTotal" style="color: var(--text-primary);">₹0.00</strong>
                 </div>
-                <div>
-                  <div style="font-size: 13px; font-weight: 700; color: var(--success-color);">Image Selected & Ready</div>
-                  <div style="font-size: 11px; color: var(--text-muted);">This direct image will be attached to the product item.</div>
+                <div style="display: flex; justify-content: space-between; margin-top: 4px;">
+                  <span>Previous Credit Due:</span>
+                  <strong id="billPreviewPrevDue" style="color: var(--warning-color);">₹0.00</strong>
+                </div>
+                <div
+                  style="display: flex; justify-content: space-between; margin-top: 4px; padding-top: 4px; border-top: 1px dashed var(--border-color);">
+                  <span><strong>Max Total Payable Today:</strong></span>
+                  <strong id="billPreviewMaxPayable"
+                    style="color: var(--primary-color); font-weight: 700;">₹0.00</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-top: 4px;">
+                  <span id="lblAddedCredit">Added to Pay-Later Balance:</span>
+                  <strong id="billPreviewBalance" style="color: #dc2626; font-weight: 700;">₹0.00</strong>
                 </div>
               </div>
+
+              <button type="submit" class="btn-primary" id="btnCreateBill">Create Bill & Add to Ledger</button>
+            </form>
+          </div>
+
+          <!-- Orders Packing Station & Update/Delete Controls -->
+          <div class="admin-card">
+            <div class="section-title">
+              <span id="ownerPackingStationTitle">Order Fulfillment & Packing Control Center</span>
+              <span id="ownerPackingSub" style="font-size: 12px; color: var(--primary-color);">Update status or delete
+                customer orders</span>
             </div>
 
-            <button type="submit" class="btn-primary" style="margin-top: 14px; background: linear-gradient(135deg, #0f766e, #16a34a); padding: 12px; font-size: 15px;">Save New Product to Catalog</button>
-          </form>
-        </div>
-
-        <!-- Read, Update & Delete Products Table -->
-        <div class="admin-card">
-          <div class="section-title">
-            <span>Inventory Items</span>
-            <span style="font-size: 12px; color: var(--text-muted);">Shop Owner inventory management</span>
-          </div>
-
-          <div class="table-card">
-            <table class="custom-table">
-              <thead>
-                <tr>
-                  <th>Photo</th>
-                  <th>Product Name</th>
-                  <th>Category</th>
-                  <th>Price</th>
-                  <th>Stock</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody id="crudProductsTableBody">
-                <!-- Rendered dynamically -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- CRUD Sub-Section 2: CUSTOMERS -->
-      <div id="crudCustomersSection" class="crud-sub-section" style="display: none;">
-        <!-- Add Customer Account Form -->
-        <div class="admin-card" style="margin-bottom: 24px;">
-          <div class="section-title">
-            <span id="ownerAddCustTitle">Add New Customer Account</span>
-          </div>
-          <form id="ownerAddCustForm" onsubmit="handleOwnerAddCustomer(event)" autocomplete="off">
-            <div class="customer-account-form-grid">
-              <div class="form-group col-name" style="margin-bottom: 0;">
-                <label for="ownerCustName" class="form-label-even" id="lblOwnerCustName">
-                  <span class="label-text">Farmer Name</span>
-                  <span class="form-label-hint">(Letters & Spaces Only)</span>
-                </label>
-                <input type="text" id="ownerCustName" class="form-control" placeholder="e.g. Balu Swamy" required pattern="[A-Za-z\u0B80-\u0BFF\s\.-]+" title="Name must contain letters only, no numbers or special symbols" autocomplete="off">
-              </div>
-              <div class="form-group col-phone" style="margin-bottom: 0;">
-                <label for="ownerCustPhone" class="form-label-even" id="lblOwnerCustPhone">
-                  <span class="label-text">Phone Number</span>
-                  <span class="form-label-hint">(10 Digits)</span>
-                </label>
-                <input type="tel" id="ownerCustPhone" class="form-control" placeholder="9876543210" required pattern="[0-9]{10}" maxlength="10" minlength="10" title="Must be exactly 10 digits" autocomplete="off">
-              </div>
-              <div class="form-group col-village" style="margin-bottom: 0;">
-                <label for="ownerCustVillage" class="form-label-even" id="lblOwnerCustVillage">
-                  <span class="label-text">Village Location</span>
-                  <span class="form-label-hint">(Letters & Spaces Only)</span>
-                </label>
-                <input type="text" id="ownerCustVillage" class="form-control" placeholder="Green Field" required pattern="[A-Za-z\u0B80-\u0BFF\s\.-]+" title="Location must contain letters only, no numbers or special symbols" autocomplete="off">
-              </div>
-              <div class="form-group col-pin" style="margin-bottom: 0;">
-                <label for="ownerCustPin" class="form-label-pin" id="lblOwnerCustPin">
-                  <span class="label-text">Create 4-Digit PIN</span>
-                  <span class="form-label-hint">(4 Digits)</span>
-                </label>
-                <input type="password" id="ownerCustPin" class="form-control" placeholder="Create 4-digit PIN" required pattern="[0-9]{4}" maxlength="4" minlength="4" inputmode="numeric" title="Must be exactly 4 digits" autocomplete="new-password">
-              </div>
-              <div class="form-group col-confirm-pin" style="margin-bottom: 0;">
-                <label for="ownerCustConfirmPin" class="form-label-pin" id="lblOwnerCustConfirmPin">
-                  <span class="label-text">Re-enter 4-Digit PIN</span>
-                  <span class="form-label-hint">(Must Match)</span>
-                </label>
-                <input type="password" id="ownerCustConfirmPin" class="form-control" placeholder="Re-enter 4-digit PIN" required pattern="[0-9]{4}" maxlength="4" minlength="4" inputmode="numeric" title="Must match set PIN" autocomplete="new-password">
-              </div>
+            <div id="ownerOrdersContainer" style="display: flex; flex-direction: column; gap: 14px;">
+              <!-- Rendered dynamically -->
             </div>
-            <div class="customer-form-submit-row">
-              <button type="submit" class="btn-primary customer-form-submit-btn" id="btnOwnerAddCustSubmit">
-                Register New Customer Account
-              </button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Comprehensive Site Footer (Statutory Credentials, Regulatory Licenses & Legal Policies) -->
+    <footer class="site-footer" id="siteFooter" role="contentinfo">
+      <div class="footer-inner">
+        <!-- Statutory Trust & Authentic Agronomy Banner -->
+        <div class="footer-trust-banner">
+          <div class="footer-trust-item">
+            <div class="footer-trust-icon" style="font-weight: 700; color: var(--primary-color);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <path d="m9 12 2 2 4-4"></path>
+              </svg>
             </div>
-          </form>
-        </div>
-
-        <!-- Read, Edit & Delete Customers Table -->
-        <div class="admin-card">
-          <div class="section-title">
-            <span>Customer Directory</span>
-          </div>
-          <div class="table-card">
-            <table class="custom-table">
-              <thead>
-                <tr>
-                  <th>Farmer Name</th>
-                  <th>Phone</th>
-                  <th>Village Location</th>
-                  <th>Total Purchases</th>
-                  <th>Unpaid Balance</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody id="crudCustomersTableBody">
-                <!-- Rendered dynamically -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- Overdue Receivables & Reminders Panel -->
-        <div class="admin-card" id="overduePanel" style="margin-top: 24px;">
-          <div class="section-title">
-            <span id="overdueTitle">Overdue Balances & Payment Reminders</span>
-          </div>
-          
-          <div class="table-card">
-            <table class="custom-table" id="overdueTable">
-              <thead>
-                <tr>
-                  <th id="thCust">Customer</th>
-                  <th id="thPhone">Phone</th>
-                  <th id="thVillage">Village</th>
-                  <th id="thTotalPurch">Total Purchases</th>
-                  <th id="thUnpaidDue">Unpaid Due Balance</th>
-                  <th id="thOverdueStatus">Overdue Status</th>
-                  <th id="thRemindersSent">Reminders Sent</th>
-                  <th id="thSendReminder">Send Reminder Action</th>
-                </tr>
-              </thead>
-              <tbody id="overdueTableBody">
-                <!-- Rendered dynamically -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- CRUD Sub-Section 3: ORDERS & BILLING -->
-      <div id="crudOrdersSection" class="crud-sub-section" style="display: none;">
-        <!-- Card 1: Record Offline Customer Bill -->
-        <div class="admin-card" style="margin-bottom: 24px;">
-          <h3 class="section-title" id="logOfflineTitle" style="margin-bottom: 12px;">Log Offline Purchase</h3>
-          <p id="logOfflineSub" style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">Record offline purchases made at your shop. Updates stock and appends bill to customer credit ledger.</p>
-          
-          <form id="offlineBillForm" onsubmit="handleLogOfflineBill(event)">
-            <div class="form-group">
-              <label id="lblSelectCust">Select Customer Account</label>
-              <select id="billCustomerSelect" class="form-control" required onchange="onOfflineCustChange()">
-                <!-- Populated dynamically -->
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label id="lblSelectProd">Select Product / Fertilizer</label>
-              <select id="billProductSelect" class="form-control" required onchange="onOfflineProdChange()">
-                <!-- Populated dynamically -->
-              </select>
-            </div>
-
-            <div class="form-group bill-qty-upfront-row" style="display: flex; gap: 12px;">
-              <div style="flex: 1;">
-                <label id="lblQty">Quantity</label>
-                <input type="number" id="billQtyInput" class="form-control" value="1" min="1" required oninput="calculateBillPreview()">
-              </div>
-              <div style="flex: 1;">
-                <label id="lblUpfront">Upfront Paid (₹)</label>
-                <input type="number" id="billUpfrontInput" class="form-control" value="" min="0" step="any" oninput="calculateBillPreview()">
-                <div id="billUpfrontHint" style="font-size: 11px; color: var(--primary-color); font-weight: 600; margin-top: 4px;">Max Allowed: ₹0.00</div>
-              </div>
-            </div>
-
-            <div style="background: var(--bg-card-subtle); border: 1px solid var(--border-color); padding: 12px; border-radius: var(--radius-sm); margin-bottom: 16px; font-size: 13px;">
-              <div style="display: flex; justify-content: space-between;">
-                <span id="lblTotalBill">Current Purchase Total:</span>
-                <strong id="billPreviewTotal" style="color: var(--text-primary);">₹0.00</strong>
-              </div>
-              <div style="display: flex; justify-content: space-between; margin-top: 4px;">
-                <span>Previous Credit Due:</span>
-                <strong id="billPreviewPrevDue" style="color: var(--warning-color);">₹0.00</strong>
-              </div>
-              <div style="display: flex; justify-content: space-between; margin-top: 4px; padding-top: 4px; border-top: 1px dashed var(--border-color);">
-                <span><strong>Max Total Payable Today:</strong></span>
-                <strong id="billPreviewMaxPayable" style="color: var(--primary-color); font-weight: 700;">₹0.00</strong>
-              </div>
-              <div style="display: flex; justify-content: space-between; margin-top: 4px;">
-                <span id="lblAddedCredit">Added to Pay-Later Balance:</span>
-                <strong id="billPreviewBalance" style="color: #dc2626; font-weight: 700;">₹0.00</strong>
-              </div>
-            </div>
-
-            <button type="submit" class="btn-primary" id="btnCreateBill">Create Bill & Add to Ledger</button>
-          </form>
-        </div>
-
-        <!-- Orders Packing Station & Update/Delete Controls -->
-        <div class="admin-card">
-          <div class="section-title">
-            <span id="ownerPackingStationTitle">Order Fulfillment & Packing Control Center</span>
-            <span id="ownerPackingSub" style="font-size: 12px; color: var(--primary-color);">Update status or delete customer orders</span>
-          </div>
-
-          <div id="ownerOrdersContainer" style="display: flex; flex-direction: column; gap: 14px;">
-            <!-- Rendered dynamically -->
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- Comprehensive Site Footer (Statutory Credentials, Regulatory Licenses & Legal Policies) -->
-  <footer class="site-footer" id="siteFooter" role="contentinfo">
-    <div class="footer-inner">
-      <!-- Statutory Trust & Authentic Agronomy Banner -->
-      <div class="footer-trust-banner">
-        <div class="footer-trust-item">
-          <div class="footer-trust-icon" style="font-weight: 700; color: var(--primary-color);">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
-          </div>
-          <div>
-            <div class="footer-trust-title">100% Genuine Certified Stock</div>
-            <div class="footer-trust-desc">Direct authorized sourcing: IFFCO, Coromandel, Bayer, Syngenta, UPL</div>
-          </div>
-        </div>
-        <div class="footer-trust-item">
-          <div class="footer-trust-icon" style="font-weight: 700; color: var(--primary-color);">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-          </div>
-          <div>
-            <div class="footer-trust-title">Subsidized & FCO Compliant</div>
-            <div class="footer-trust-desc">Government MRP compliance under Fertilizer Control Order 1985</div>
-          </div>
-        </div>
-        <div class="footer-trust-item">
-          <div class="footer-trust-icon" style="font-weight: 700; color: var(--primary-color);">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-          </div>
-          <div>
-            <div class="footer-trust-title">Zero Fake Reviews Guarantee</div>
-            <div class="footer-trust-desc">Ratings reflect authentic purchases by verified regional cultivators</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Main Footer Columns -->
-      <div class="footer-grid">
-        <!-- Col 1: Store & Entity Information -->
-        <div class="footer-col">
-          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
-            <div style="width: 32px; height: 32px; background: var(--primary-color); color: #fff; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800;">KA</div>
             <div>
-              <h3 style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin: 0;" id="footerBrandTitle">KisanAgri Hub</h3>
-              <p style="font-size: 12px; color: var(--text-muted); margin: 0;" id="footerBrandSubtitle">Agro Chemical & Fertilizer Store</p>
+              <div class="footer-trust-title">100% Genuine Certified Stock</div>
+              <div class="footer-trust-desc">Direct authorized sourcing: IFFCO, Coromandel, Bayer, Syngenta, UPL</div>
             </div>
           </div>
-          <p id="footerAboutDescText">
-            Authorized agrochemical and fertilizer distribution center serving regional farmers. Providing real-time stock availability, digital credit ledger management, and reliable farm deliveries.
-          </p>
-          <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px;">
-            <span class="license-badge-pill" title="Fertilizer Control Order License">FCO: FCO/TN/ERD/RET-2024/04882</span>
-            <span class="license-badge-pill" title="Pesticides Retail License">CIB-RC: TN-8921/2024</span>
-            <span class="license-badge-pill" title="Goods and Services Tax">GSTIN: 33AAACK8821P1ZP</span>
+          <div class="footer-trust-item">
+            <div class="footer-trust-icon" style="font-weight: 700; color: var(--primary-color);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+              </svg>
+            </div>
+            <div>
+              <div class="footer-trust-title">Subsidized & FCO Compliant</div>
+              <div class="footer-trust-desc">Government MRP compliance under Fertilizer Control Order 1985</div>
+            </div>
           </div>
-        </div>
-
-        <!-- Col 2: Legal Policies & Agreements -->
-        <div class="footer-col">
-          <h4 id="footerLegalHeader">Legal & Policies</h4>
-          <ul class="footer-links-list">
-            <li><button type="button" onclick="openPolicyModal('privacy')">Privacy Policy (DPDP 2023)</button></li>
-            <li><button type="button" onclick="openPolicyModal('terms')">Terms & Conditions (FCO)</button></li>
-            <li><button type="button" onclick="openPolicyModal('cookie')">Cookie & Storage Policy</button></li>
-            <li><button type="button" onclick="openPolicyModal('refund')">Refund & Return Policy</button></li>
-            <li><button type="button" onclick="openPolicyModal('datacollection')">What User Data We Collect</button></li>
-            <li><button type="button" onclick="openPolicyModal('thirdparty')">Third-Party Embeds Notice</button></li>
-          </ul>
-        </div>
-
-        <!-- Col 3: Compliance & Consumer Standards -->
-        <div class="footer-col">
-          <h4 id="footerComplianceHeader">Trust & Verification</h4>
-          <ul class="footer-links-list">
-            <li><button type="button" onclick="openPolicyModal('reviews')">Verified Customer Ratings</button></li>
-            <li><button type="button" onclick="openPolicyModal('copyright')">Trademarks & Fair Use</button></li>
-            <li><button type="button" onclick="openPolicyModal('reviews')">Business License Details</button></li>
-            <li><button type="button" onclick="showCookieSettings()">Manage Cookie Preferences</button></li>
-            <li><a href="tel:+919876543210">Farmer Helpdesk</a></li>
-          </ul>
-        </div>
-
-        <!-- Col 4: Business Location & Grievance Contact -->
-        <div class="footer-col">
-          <h4 id="footerContactHeader">Store & Grievance</h4>
-          <div class="license-info-card">
-            <strong>KisanAgri Agencies Pvt. Ltd.</strong><br>
-            Proprietor: P. Tamizharasu<br>
-            14/B, Main Agricultural Market Road, Near Uzhavar Sandhai, Erode Rural, Tamil Nadu - 638001<br>
-            Hours: Mon - Sat: 7:00 AM - 8:00 PM<br>
-            Phone: +91 98765 43210<br>
-            Email: <a href="mailto:contact@kisanagri.in" style="color: var(--primary-color);">contact@kisanagri.in</a><br>
-            <div style="margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--border-color); font-size: 11px;">
-              <strong>Grievance Officer:</strong> P. Tamizharasu (<a href="mailto:grievance@kisanagri.in" style="color: var(--primary-color);">grievance@kisanagri.in</a>)
+          <div class="footer-trust-item">
+            <div class="footer-trust-icon" style="font-weight: 700; color: var(--primary-color);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polygon
+                  points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                </polygon>
+              </svg>
+            </div>
+            <div>
+              <div class="footer-trust-title">Zero Fake Reviews Guarantee</div>
+              <div class="footer-trust-desc">Ratings reflect authentic purchases by verified regional cultivators</div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Footer Bottom Copyright Bar -->
-      <div class="footer-bottom-bar">
-        <div id="footerCopyrightText">
-          © 2026 KisanAgri Agencies Pvt. Ltd. Licensed under Fertilizer Control Order 1985 & Insecticides Act 1968.
+        <!-- Main Footer Columns -->
+        <div class="footer-grid">
+          <!-- Col 1: Store & Entity Information -->
+          <div class="footer-col">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+              <div
+                style="width: 32px; height: 32px; background: var(--primary-color); color: #fff; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800;">
+                KA</div>
+              <div>
+                <h3 style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin: 0;"
+                  id="footerBrandTitle">KisanAgri Hub</h3>
+                <p style="font-size: 12px; color: var(--text-muted); margin: 0;" id="footerBrandSubtitle">Agro Chemical
+                  & Fertilizer Store</p>
+              </div>
+            </div>
+            <p id="footerAboutDescText">
+              Authorized agrochemical and fertilizer distribution center serving regional farmers. Providing real-time
+              stock availability, digital credit ledger management, and reliable farm deliveries.
+            </p>
+            <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px;">
+              <span class="license-badge-pill" title="Fertilizer Control Order License">FCO:
+                FCO/TN/ERD/RET-2024/04882</span>
+              <span class="license-badge-pill" title="Pesticides Retail License">CIB-RC: TN-8921/2024</span>
+              <span class="license-badge-pill" title="Goods and Services Tax">GSTIN: 33AAACK8821P1ZP</span>
+            </div>
+          </div>
+
+          <!-- Col 2: Legal Policies & Agreements -->
+          <div class="footer-col">
+            <h4 id="footerLegalHeader">Legal & Policies</h4>
+            <ul class="footer-links-list">
+              <li><button type="button" onclick="openPolicyModal('privacy')">Privacy Policy (DPDP 2023)</button></li>
+              <li><button type="button" onclick="openPolicyModal('terms')">Terms & Conditions (FCO)</button></li>
+              <li><button type="button" onclick="openPolicyModal('cookie')">Cookie & Storage Policy</button></li>
+              <li><button type="button" onclick="openPolicyModal('refund')">Refund & Return Policy</button></li>
+              <li><button type="button" onclick="openPolicyModal('datacollection')">What User Data We Collect</button>
+              </li>
+              <li><button type="button" onclick="openPolicyModal('thirdparty')">Third-Party Embeds Notice</button></li>
+            </ul>
+          </div>
+
+          <!-- Col 3: Compliance & Consumer Standards -->
+          <div class="footer-col">
+            <h4 id="footerComplianceHeader">Trust & Verification</h4>
+            <ul class="footer-links-list">
+              <li><button type="button" onclick="openPolicyModal('reviews')">Verified Customer Ratings</button></li>
+              <li><button type="button" onclick="openPolicyModal('copyright')">Trademarks & Fair Use</button></li>
+              <li><button type="button" onclick="openPolicyModal('reviews')">Business License Details</button></li>
+              <li><button type="button" onclick="showCookieSettings()">Manage Cookie Preferences</button></li>
+              <li><a href="tel:+919876543210">Farmer Helpdesk</a></li>
+            </ul>
+          </div>
+
+          <!-- Col 4: Business Location & Grievance Contact -->
+          <div class="footer-col">
+            <h4 id="footerContactHeader">Store & Grievance</h4>
+            <div class="license-info-card">
+              <strong>KisanAgri Agencies Pvt. Ltd.</strong><br>
+              Proprietor: P. Tamizharasu<br>
+              14/B, Main Agricultural Market Road, Near Uzhavar Sandhai, Erode Rural, Tamil Nadu - 638001<br>
+              Hours: Mon - Sat: 7:00 AM - 8:00 PM<br>
+              Phone: +91 98765 43210<br>
+              Email: <a href="mailto:contact@kisanagri.in"
+                style="color: var(--primary-color);">contact@kisanagri.in</a><br>
+              <div
+                style="margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--border-color); font-size: 11px;">
+                <strong>Grievance Officer:</strong> P. Tamizharasu (<a href="mailto:grievance@kisanagri.in"
+                  style="color: var(--primary-color);">grievance@kisanagri.in</a>)
+              </div>
+            </div>
+          </div>
         </div>
-        <div style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
-          <button type="button" onclick="openPolicyModal('privacy')" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:12px; text-decoration:underline;">Privacy</button>
-          <button type="button" onclick="openPolicyModal('terms')" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:12px; text-decoration:underline;">Terms</button>
-          <button type="button" onclick="openPolicyModal('refund')" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:12px; text-decoration:underline;">Refunds</button>
-          <button type="button" onclick="showCookieSettings()" style="background:none; border:none; color:var(--primary-color); cursor:pointer; font-size:12px; font-weight:600;">Cookie Settings</button>
+
+        <!-- Footer Bottom Copyright Bar -->
+        <div class="footer-bottom-bar">
+          <div id="footerCopyrightText">
+            © 2026 KisanAgri Agencies Pvt. Ltd. Licensed under Fertilizer Control Order 1985 & Insecticides Act 1968.
+          </div>
+          <div style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
+            <button type="button" onclick="openPolicyModal('privacy')"
+              style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:12px; text-decoration:underline;">Privacy</button>
+            <button type="button" onclick="openPolicyModal('terms')"
+              style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:12px; text-decoration:underline;">Terms</button>
+            <button type="button" onclick="openPolicyModal('refund')"
+              style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:12px; text-decoration:underline;">Refunds</button>
+            <button type="button" onclick="showCookieSettings()"
+              style="background:none; border:none; color:var(--primary-color); cursor:pointer; font-size:12px; font-weight:600;">Cookie
+              Settings</button>
+          </div>
         </div>
       </div>
-    </div>
-  </footer>
+    </footer>
   </div> <!-- /mainAppContainer -->
 
   <!-- FRESH DEDICATED FULL-PAGE AUTHENTICATION SCREEN (APPLE MINIMALIST GLASS) -->
-  <div id="authFullPageScreen" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; min-height: 100vh; background: radial-gradient(circle at 50% 30%, rgba(21, 128, 61, 0.14), transparent 70%), #0d1510; z-index: 99999; flex-direction: column; align-items: center; justify-content: center; padding: 24px; box-sizing: border-box; overflow-y: auto;">
+  <div id="authFullPageScreen"
+    style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; min-height: 100vh; background: radial-gradient(circle at 50% 30%, rgba(21, 128, 61, 0.14), transparent 70%), #0d1510; z-index: 99999; flex-direction: column; align-items: center; justify-content: center; padding: 24px; box-sizing: border-box; overflow-y: auto;">
     <!-- Top Branding Bar -->
-    <div style="max-width: 440px; width: 100%; display: flex; justify-content: center; align-items: center; margin-bottom: 24px; text-align: center;">
+    <div
+      style="max-width: 440px; width: 100%; display: flex; justify-content: center; align-items: center; margin-bottom: 24px; text-align: center;">
       <div style="display: flex; align-items: center; gap: 12px;">
-        <div style="width: 48px; height: 48px; background: var(--primary-color); color: #ffffff; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; letter-spacing: -0.03em; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);">KA</div>
+        <div
+          style="width: 48px; height: 48px; background: var(--primary-color); color: #ffffff; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; letter-spacing: -0.03em; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);">
+          KA</div>
         <div style="text-align: left;">
-          <h2 style="color: #ffffff; font-size: 21px; font-weight: 700; letter-spacing: -0.024em; margin: 0; line-height: 1.2;">KisanAgri Hub</h2>
-          <p style="color: rgba(255, 255, 255, 0.65); font-size: 13px; font-weight: 500; margin: 0;">Agro Chemical & Fertilizer Store</p>
+          <h2
+            style="color: #ffffff; font-size: 21px; font-weight: 700; letter-spacing: -0.024em; margin: 0; line-height: 1.2;">
+            KisanAgri Hub</h2>
+          <p style="color: rgba(255, 255, 255, 0.65); font-size: 13px; font-weight: 500; margin: 0;">Agro Chemical &
+            Fertilizer Store</p>
         </div>
       </div>
     </div>
 
     <!-- Fresh Auth Card Container -->
-    <div class="modal-card" style="position: relative; max-width: 440px; width: 100%; padding: 32px 34px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(30px) saturate(190%); -webkit-backdrop-filter: blur(30px) saturate(190%); border-radius: 28px; box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35); border: 1px solid rgba(255, 255, 255, 0.8);">
-      <button type="button" class="auth-modal-close-btn" onclick="continueAsGuest()" aria-label="Close" title="Continue Browsing as Guest">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <div class="modal-card"
+      style="position: relative; max-width: 440px; width: 100%; padding: 32px 34px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(30px) saturate(190%); -webkit-backdrop-filter: blur(30px) saturate(190%); border-radius: 28px; box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35); border: 1px solid rgba(255, 255, 255, 0.8);">
+      <button type="button" class="auth-modal-close-btn" onclick="continueAsGuest()" aria-label="Close"
+        title="Continue Browsing as Guest">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
       </button>
       <div class="auth-modal-header" style="margin-bottom: 22px; text-align: center; padding: 0 36px;">
-        <h3 id="authPageTitle" style="font-size: 21px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.025em; margin: 0 0 4px 0; line-height: 1.25;">KisanAgri Portal Sign In</h3>
-        <p id="authPageSub" style="font-size: 13px; color: var(--text-muted); margin: 0;">Select Customer Sign In or Admin Login</p>
+        <h3 id="authPageTitle"
+          style="font-size: 21px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.025em; margin: 0 0 4px 0; line-height: 1.25;">
+          KisanAgri Portal Sign In</h3>
+        <p id="authPageSub" style="font-size: 13px; color: var(--text-muted); margin: 0;">Select Customer Sign In or
+          Admin Login</p>
       </div>
 
       <!-- Apple Segmented Control Tab Switcher: Login vs Register vs Admin Login -->
-      <div class="role-switcher-container" style="display: flex; background: rgba(120, 120, 128, 0.08); padding: 3px; border-radius: var(--radius-pill); margin-bottom: 22px; gap: 3px; border: 1px solid rgba(0,0,0,0.04);">
-        <button id="authTabSignInBtn" class="role-btn active" style="flex: 1; justify-content: center; font-size: 12.5px; padding: 8px 6px; font-weight: 600;" onclick="switchAuthTab('signin')">
+      <div class="role-switcher-container"
+        style="display: flex; background: rgba(120, 120, 128, 0.08); padding: 3px; border-radius: var(--radius-pill); margin-bottom: 22px; gap: 3px; border: 1px solid rgba(0,0,0,0.04);">
+        <button id="authTabSignInBtn" class="role-btn active"
+          style="flex: 1; justify-content: center; font-size: 12.5px; padding: 8px 6px; font-weight: 600;"
+          onclick="switchAuthTab('signin')">
           Login
         </button>
-        <button id="authTabRegisterBtn" class="role-btn" style="flex: 1; justify-content: center; font-size: 12.5px; padding: 8px 6px; font-weight: 600;" onclick="switchAuthTab('register')">
+        <button id="authTabRegisterBtn" class="role-btn"
+          style="flex: 1; justify-content: center; font-size: 12.5px; padding: 8px 6px; font-weight: 600;"
+          onclick="switchAuthTab('register')">
           Register
         </button>
-        <button id="authTabAdminBtn" class="role-btn" style="flex: 1; justify-content: center; font-size: 12.5px; padding: 8px 6px; font-weight: 600;" onclick="switchAuthTab('admin')">
+        <button id="authTabAdminBtn" class="role-btn"
+          style="flex: 1; justify-content: center; font-size: 12.5px; padding: 8px 6px; font-weight: 600;"
+          onclick="switchAuthTab('admin')">
           Admin
         </button>
       </div>
@@ -934,20 +1111,32 @@
 
           <div class="form-group">
             <label for="signInPhoneInput" id="lblSignInPhone">Registered Mobile Phone Number (10 Digits)</label>
-            <input type="tel" id="signInPhoneInput" name="kisan_phone_no_autofill" class="form-control" placeholder="Enter 10-digit mobile number" required pattern="[0-9]{10}" maxlength="10" minlength="10" title="Must be exactly 10 digits" readonly onfocus="this.removeAttribute('readonly')" autocomplete="one-time-code" autocorrect="off" autocapitalize="off" spellcheck="false">
+            <input type="tel" id="signInPhoneInput" name="kisan_phone_no_autofill" class="form-control"
+              placeholder="Enter 10-digit mobile number" required pattern="[0-9]{10}" maxlength="10" minlength="10"
+              title="Must be exactly 10 digits" readonly onfocus="this.removeAttribute('readonly')"
+              autocomplete="one-time-code" autocorrect="off" autocapitalize="off" spellcheck="false">
           </div>
 
           <div class="form-group">
             <label for="signInPinInput" id="lblSignInPin">4-Digit Security PIN</label>
-            <input type="password" id="signInPinInput" name="kisan_pin_no_autofill" class="form-control" placeholder="Enter 4-digit PIN (e.g. 1234)" required pattern="[0-9]{4}" maxlength="4" minlength="4" inputmode="numeric" title="Must be exactly 4 digits" readonly onfocus="this.removeAttribute('readonly')" autocomplete="one-time-code">
-            <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 5px;" id="signInPinHint">Default PIN for sample accounts: <strong style="color: var(--primary-color);">1234</strong></div>
+            <input type="password" id="signInPinInput" name="kisan_pin_no_autofill" class="form-control"
+              placeholder="Enter 4-digit PIN (e.g. 1234)" required pattern="[0-9]{4}" maxlength="4" minlength="4"
+              inputmode="numeric" title="Must be exactly 4 digits" readonly onfocus="this.removeAttribute('readonly')"
+              autocomplete="one-time-code">
+            <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 5px;" id="signInPinHint">Default PIN
+              for sample accounts: <strong style="color: var(--primary-color);">1234</strong></div>
           </div>
 
           <div style="font-size: 11.5px; color: var(--text-muted); margin: 10px 0; text-align: center;">
-            By signing in, you agree to our <a href="#" onclick="openPolicyModal('terms'); return false;" style="color: var(--primary-color); text-decoration: underline;">Terms & Conditions</a> and <a href="#" onclick="openPolicyModal('privacy'); return false;" style="color: var(--primary-color); text-decoration: underline;">Privacy Policy</a>.
+            By signing in, you agree to our <a href="#" onclick="openPolicyModal('terms'); return false;"
+              style="color: var(--primary-color); text-decoration: underline;">Terms & Conditions</a> and <a href="#"
+              onclick="openPolicyModal('privacy'); return false;"
+              style="color: var(--primary-color); text-decoration: underline;">Privacy Policy</a>.
           </div>
 
-          <button type="submit" id="btnSignInSubmit" class="btn-primary" style="margin-top: 8px; padding: 12px 20px; font-size: 14.5px; font-weight: 600; border-radius: var(--radius-pill);">Login & Enter Store</button>
+          <button type="submit" id="btnSignInSubmit" class="btn-primary"
+            style="margin-top: 8px; padding: 12px 20px; font-size: 14.5px; font-weight: 600; border-radius: var(--radius-pill);">Login
+            & Enter Store</button>
         </form>
       </div>
 
@@ -959,28 +1148,45 @@
 
           <div class="form-group">
             <label for="regNameInput" id="lblRegName">Full Name (Letters & Spaces Only)</label>
-            <input type="text" id="regNameInput" name="kisan_reg_name_no_autofill" class="form-control" placeholder="Enter full name" required pattern="[A-Za-z\u0B80-\u0BFF\s\.-]+" title="Name must contain letters only, no numbers or special symbols" readonly onfocus="this.removeAttribute('readonly')" autocomplete="one-time-code" autocorrect="off" autocapitalize="off" spellcheck="false">
+            <input type="text" id="regNameInput" name="kisan_reg_name_no_autofill" class="form-control"
+              placeholder="Enter full name" required pattern="[A-Za-z\u0B80-\u0BFF\s\.-]+"
+              title="Name must contain letters only, no numbers or special symbols" readonly
+              onfocus="this.removeAttribute('readonly')" autocomplete="one-time-code" autocorrect="off"
+              autocapitalize="off" spellcheck="false">
           </div>
 
           <div class="form-group">
             <label for="regPhoneInput" id="lblRegPhone">Phone Number (Exactly 10 Digits)</label>
-            <input type="tel" id="regPhoneInput" name="kisan_reg_phone_no_autofill" class="form-control" placeholder="Enter 10-digit phone number" required pattern="[0-9]{10}" maxlength="10" minlength="10" title="Phone number must be exactly 10 digits" readonly onfocus="this.removeAttribute('readonly')" autocomplete="one-time-code" autocorrect="off" autocapitalize="off" spellcheck="false">
+            <input type="tel" id="regPhoneInput" name="kisan_reg_phone_no_autofill" class="form-control"
+              placeholder="Enter 10-digit phone number" required pattern="[0-9]{10}" maxlength="10" minlength="10"
+              title="Phone number must be exactly 10 digits" readonly onfocus="this.removeAttribute('readonly')"
+              autocomplete="one-time-code" autocorrect="off" autocapitalize="off" spellcheck="false">
           </div>
 
           <div class="form-group">
             <label for="regVillageInput" id="lblRegVillage">Village / Farm Location (Letters & Spaces Only)</label>
-            <input type="text" id="regVillageInput" name="kisan_reg_village_no_autofill" class="form-control" placeholder="Enter village or farm location" required pattern="[A-Za-z\u0B80-\u0BFF\s\.-]+" title="Location must contain letters only, no numbers or special symbols" readonly onfocus="this.removeAttribute('readonly')" autocomplete="one-time-code" autocorrect="off" autocapitalize="off" spellcheck="false">
+            <input type="text" id="regVillageInput" name="kisan_reg_village_no_autofill" class="form-control"
+              placeholder="Enter village or farm location" required pattern="[A-Za-z\u0B80-\u0BFF\s\.-]+"
+              title="Location must contain letters only, no numbers or special symbols" readonly
+              onfocus="this.removeAttribute('readonly')" autocomplete="one-time-code" autocorrect="off"
+              autocapitalize="off" spellcheck="false">
           </div>
 
           <div style="display: flex; gap: 10px; flex-wrap: wrap;">
             <div class="form-group" style="flex: 1; min-width: 150px;">
               <label for="regPinInput" id="lblRegPin">Set 4-Digit PIN</label>
-              <input type="password" id="regPinInput" name="kisan_reg_pin_no_autofill" class="form-control" placeholder="Create 4-digit PIN" required pattern="[0-9]{4}" maxlength="4" minlength="4" inputmode="numeric" title="Must be exactly 4 digits" readonly onfocus="this.removeAttribute('readonly')" autocomplete="one-time-code">
+              <input type="password" id="regPinInput" name="kisan_reg_pin_no_autofill" class="form-control"
+                placeholder="Create 4-digit PIN" required pattern="[0-9]{4}" maxlength="4" minlength="4"
+                inputmode="numeric" title="Must be exactly 4 digits" readonly onfocus="this.removeAttribute('readonly')"
+                autocomplete="one-time-code">
             </div>
 
             <div class="form-group" style="flex: 1; min-width: 150px;">
               <label for="regConfirmPinInput" id="lblRegConfirmPin">Confirm PIN</label>
-              <input type="password" id="regConfirmPinInput" name="kisan_reg_confirm_pin_no_autofill" class="form-control" placeholder="Re-enter PIN" required pattern="[0-9]{4}" maxlength="4" minlength="4" inputmode="numeric" title="Must match set PIN" readonly onfocus="this.removeAttribute('readonly')" autocomplete="one-time-code">
+              <input type="password" id="regConfirmPinInput" name="kisan_reg_confirm_pin_no_autofill"
+                class="form-control" placeholder="Re-enter PIN" required pattern="[0-9]{4}" maxlength="4" minlength="4"
+                inputmode="numeric" title="Must match set PIN" readonly onfocus="this.removeAttribute('readonly')"
+                autocomplete="one-time-code">
             </div>
           </div>
 
@@ -988,11 +1194,15 @@
           <div class="form-consent-box">
             <input type="checkbox" id="regConsentCheckbox" required>
             <label for="regConsentCheckbox" id="lblRegConsentText">
-              I have read and agree to the <a href="#" onclick="openPolicyModal('terms'); return false;">Terms & Conditions</a>, acknowledge the <a href="#" onclick="openPolicyModal('privacy'); return false;">Privacy Policy</a>, and consent to receive transactional and crop advisory SMS/WhatsApp alerts.
+              I have read and agree to the <a href="#" onclick="openPolicyModal('terms'); return false;">Terms &
+                Conditions</a>, acknowledge the <a href="#" onclick="openPolicyModal('privacy'); return false;">Privacy
+                Policy</a>, and consent to receive transactional and crop advisory SMS/WhatsApp alerts.
             </label>
           </div>
 
-          <button type="submit" id="btnRegSubmit" class="btn-primary" style="margin-top: 10px; padding: 12px 20px; font-size: 14.5px; font-weight: 600; border-radius: var(--radius-pill);">Register & Enter Store</button>
+          <button type="submit" id="btnRegSubmit" class="btn-primary"
+            style="margin-top: 10px; padding: 12px 20px; font-size: 14.5px; font-weight: 600; border-radius: var(--radius-pill);">Register
+            & Enter Store</button>
         </form>
       </div>
 
@@ -1006,17 +1216,21 @@
 
           <div class="form-group">
             <label for="adminPasscodeInput" id="lblAdminPasscode">Admin Passcode</label>
-            <input type="password" id="adminPasscodeInput" name="kisan_admin_pass_no_autofill" class="form-control" placeholder="Enter Admin Passcode (e.g. 1234)" required readonly onfocus="this.removeAttribute('readonly')" autocomplete="one-time-code">
-            <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 5px;" id="adminPasscodeHint">Default Admin Passcode: <strong style="color: var(--primary-color);">1234</strong></div>
+            <input type="password" id="adminPasscodeInput" name="kisan_admin_pass_no_autofill" class="form-control"
+              placeholder="Enter Admin Passcode (e.g. 1234)" required readonly
+              onfocus="this.removeAttribute('readonly')" autocomplete="one-time-code">
+            <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 5px;" id="adminPasscodeHint">Default
+              Admin Passcode: <strong style="color: var(--primary-color);">1234</strong></div>
           </div>
 
-          <button type="submit" id="btnAdminSignInSubmit" class="btn-primary btn-admin-submit" style="margin-top: 16px; padding: 12px 20px; font-size: 14.5px; font-weight: 600; border-radius: var(--radius-pill);">Sign In as Admin</button>
+          <button type="submit" id="btnAdminSignInSubmit" class="btn-primary" style="margin-top: 16px; padding: 12px 20px; font-size: 14.5px; font-weight: 600; border-radius: var(--radius-pill);">Sign In as Admin</button>
         </form>
       </div>
 
       <!-- Public Guest Access Divider & Action (Store Guideline 5.1.1(v) Compliant) -->
       <div style="margin-top: 20px; text-align: center; border-top: 1px solid rgba(0,0,0,0.08); padding-top: 16px;">
-        <button type="button" class="btn-action" onclick="continueAsGuest()" style="background: transparent; border: 1px solid var(--border-color); color: var(--text-secondary); width: 100%; border-radius: var(--radius-pill); font-size: 13px; font-weight: 600; padding: 11px 18px; cursor: pointer; transition: all 0.2s ease;">
+        <button type="button" class="btn-action" onclick="continueAsGuest()"
+          style="background: transparent; border: 1px solid var(--border-color); color: var(--text-secondary); width: 100%; border-radius: var(--radius-pill); font-size: 13px; font-weight: 600; padding: 11px 18px; cursor: pointer; transition: all 0.2s ease;">
           ← <span id="continueGuestText">Continue Browsing as Guest</span>
         </button>
       </div>
@@ -1058,9 +1272,12 @@
         </div>
         <div class="form-group">
           <label>Change Image File (Optional)</label>
-          <input type="file" id="editProdImageFile" accept="image/*" class="form-control" onchange="previewEditImageFile(event)">
-          <div id="editImagePreviewBox" style="margin-top: 8px; width: 80px; height: 80px; border-radius: 6px; overflow: hidden; border: 1px solid var(--border-color);">
-            <img id="editImagePreviewImg" style="width: 100%; height: 100%; object-fit: cover;" alt="Product Image Edit Preview">
+          <input type="file" id="editProdImageFile" accept="image/*" class="form-control"
+            onchange="previewEditImageFile(event)">
+          <div id="editImagePreviewBox"
+            style="margin-top: 8px; width: 80px; height: 80px; border-radius: 6px; overflow: hidden; border: 1px solid var(--border-color);">
+            <img id="editImagePreviewImg" style="width: 100%; height: 100%; object-fit: cover;"
+              alt="Product Image Edit Preview">
           </div>
         </div>
 
@@ -1085,7 +1302,8 @@
         </div>
         <div class="form-group">
           <label>Phone Number (Login ID - Unchangeable)</label>
-          <input type="tel" id="editCustPhone" class="form-control" readonly disabled style="background: var(--bg-inset); cursor: not-allowed; opacity: 0.8;">
+          <input type="tel" id="editCustPhone" class="form-control" readonly disabled
+            style="background: var(--bg-inset); cursor: not-allowed; opacity: 0.8;">
         </div>
         <div class="form-group">
           <label>Village Location</label>
@@ -1121,7 +1339,8 @@
 
       <div style="margin-bottom: 16px;">
         <div style="font-size: 13px; color: var(--text-muted);" id="payModalForLabel">Paying Balance For:</div>
-        <div style="font-size: 18px; font-weight: 700; color: var(--text-primary);" id="payModalCustName">Ramesh Kumar</div>
+        <div style="font-size: 18px; font-weight: 700; color: var(--text-primary);" id="payModalCustName">Ramesh Kumar
+        </div>
         <div style="font-size: 12px; color: var(--primary-color);" id="payModalCustPhone">+91 98765 43210</div>
       </div>
 
@@ -1164,8 +1383,10 @@
       <!-- Amount Input -->
       <div class="form-group">
         <label id="lblPayAmount">Payment Amount (₹)</label>
-        <input type="number" id="payAmountInput" class="form-control" style="font-size: 20px; font-weight: 700; color: var(--warning-color);" min="1" step="0.5">
-        <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;" id="payModalMaxHint">Max Outstanding Balance: ₹0.00</div>
+        <input type="number" id="payAmountInput" class="form-control"
+          style="font-size: 20px; font-weight: 700; color: var(--warning-color);" min="1" step="0.5">
+        <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;" id="payModalMaxHint">Max Outstanding
+          Balance: ₹0.00</div>
       </div>
 
       <button class="btn-primary" id="btnConfirmPay" onclick="submitOnlinePayment()">Confirm & Complete Payment</button>
@@ -1196,16 +1417,20 @@
 
       <form onsubmit="handleAdminSubmitOfflinePayment(event)">
         <input type="hidden" id="adminPayCustIndex">
-        
-        <div style="background: var(--bg-card-subtle); border: 1px solid var(--border-color); padding: 14px; border-radius: var(--radius-sm); margin-bottom: 16px;">
-          <div style="font-size: 14px; font-weight: 700; color: var(--text-primary);" id="adminPayCustNamePhone">Farmer Name (Phone)</div>
+
+        <div
+          style="background: var(--bg-card-subtle); border: 1px solid var(--border-color); padding: 14px; border-radius: var(--radius-sm); margin-bottom: 16px;">
+          <div style="font-size: 14px; font-weight: 700; color: var(--text-primary);" id="adminPayCustNamePhone">Farmer
+            Name (Phone)</div>
           <div style="font-size: 12px; color: var(--text-muted);" id="adminPayCustVillage">Location: Village</div>
-          <div style="margin-top: 8px; font-size: 13px; font-weight: 700; color: var(--warning-color);" id="adminPayCustCurrentDue">Current Unpaid Due: ₹0</div>
+          <div style="margin-top: 8px; font-size: 13px; font-weight: 700; color: var(--warning-color);"
+            id="adminPayCustCurrentDue">Current Unpaid Due: ₹0</div>
         </div>
 
         <div class="form-group">
           <label id="lblCashAmountReceived">Cash Amount Received (₹)</label>
-          <input type="number" id="adminCashAmountInput" class="form-control" placeholder="Enter amount received in cash..." min="1" step="any" required>
+          <input type="number" id="adminCashAmountInput" class="form-control"
+            placeholder="Enter amount received in cash..." min="1" step="any" required>
         </div>
 
         <div class="form-group">
@@ -1214,7 +1439,8 @@
         </div>
 
         <div style="display: flex; gap: 10px; margin-top: 20px;">
-          <button type="button" class="btn-action" style="flex: 1; padding: 10px;" onclick="closeAdminPaymentModal()">Cancel</button>
+          <button type="button" class="btn-action" style="flex: 1; padding: 10px;"
+            onclick="closeAdminPaymentModal()">Cancel</button>
           <button type="submit" class="btn-primary" style="flex: 2;">Mark Paid & Update Account</button>
         </div>
       </form>
@@ -1225,19 +1451,25 @@
   <div class="modal-overlay" id="logoutConfirmModal">
     <div class="modal-card" style="max-width: 400px; text-align: center; padding: 24px; position: relative;">
       <div class="modal-header" style="border-bottom: none; padding-bottom: 0; justify-content: space-between;">
-        <h3 class="modal-title" style="font-size: 18px; color: var(--text-primary);" id="logoutConfirmTitle">Log Out Confirmation</h3>
-        <button class="close-btn" onclick="closeLogoutConfirmModal()" style="font-size: 18px; cursor: pointer;">✕</button>
+        <h3 class="modal-title" style="font-size: 18px; color: var(--text-primary);" id="logoutConfirmTitle">Log Out
+          Confirmation</h3>
+        <button class="close-btn" onclick="closeLogoutConfirmModal()"
+          style="font-size: 18px; cursor: pointer;">✕</button>
       </div>
 
-      <div style="margin: 16px 0; font-size: 15px; font-weight: 600; color: var(--text-primary);" id="logoutConfirmText">
+      <div style="margin: 16px 0; font-size: 15px; font-weight: 600; color: var(--text-primary);"
+        id="logoutConfirmText">
         Are you sure want to Log Out?
       </div>
 
       <div style="display: flex; gap: 12px; justify-content: center; margin-top: 20px;">
-        <button type="button" class="btn-primary" onclick="confirmCustomerLogout()" style="flex: 1; background: var(--danger-color); padding: 10px; font-size: 14px; font-weight: 700;" id="logoutConfirmYesBtn">
+        <button type="button" class="btn-primary" onclick="confirmCustomerLogout()"
+          style="flex: 1; background: var(--danger-color); padding: 10px; font-size: 14px; font-weight: 700;"
+          id="logoutConfirmYesBtn">
           Yes
         </button>
-        <button type="button" class="btn-action" onclick="closeLogoutConfirmModal()" style="flex: 1; padding: 10px; font-size: 14px; font-weight: 600;" id="logoutConfirmNoBtn">
+        <button type="button" class="btn-action" onclick="closeLogoutConfirmModal()"
+          style="flex: 1; padding: 10px; font-size: 14px; font-weight: 600;" id="logoutConfirmNoBtn">
           No
         </button>
       </div>
@@ -1257,14 +1489,22 @@
 
       <!-- Segmented Tabs for Policies -->
       <div class="policy-tabs-bar" role="tablist">
-        <button class="policy-tab-btn active" id="polTab_privacy" role="tab" aria-selected="true" onclick="switchPolicyTab('privacy')">Privacy</button>
-        <button class="policy-tab-btn" id="polTab_terms" role="tab" aria-selected="false" onclick="switchPolicyTab('terms')">Terms (FCO)</button>
-        <button class="policy-tab-btn" id="polTab_cookie" role="tab" aria-selected="false" onclick="switchPolicyTab('cookie')">Cookies</button>
-        <button class="policy-tab-btn" id="polTab_refund" role="tab" aria-selected="false" onclick="switchPolicyTab('refund')">Refunds</button>
-        <button class="policy-tab-btn" id="polTab_datacollection" role="tab" aria-selected="false" onclick="switchPolicyTab('datacollection')">Data We Collect</button>
-        <button class="policy-tab-btn" id="polTab_thirdparty" role="tab" aria-selected="false" onclick="switchPolicyTab('thirdparty')">Third-Party</button>
-        <button class="policy-tab-btn" id="polTab_copyright" role="tab" aria-selected="false" onclick="switchPolicyTab('copyright')">Trademarks</button>
-        <button class="policy-tab-btn" id="polTab_reviews" role="tab" aria-selected="false" onclick="switchPolicyTab('reviews')">Verified Reviews & Business</button>
+        <button class="policy-tab-btn active" id="polTab_privacy" role="tab" aria-selected="true"
+          onclick="switchPolicyTab('privacy')">Privacy</button>
+        <button class="policy-tab-btn" id="polTab_terms" role="tab" aria-selected="false"
+          onclick="switchPolicyTab('terms')">Terms (FCO)</button>
+        <button class="policy-tab-btn" id="polTab_cookie" role="tab" aria-selected="false"
+          onclick="switchPolicyTab('cookie')">Cookies</button>
+        <button class="policy-tab-btn" id="polTab_refund" role="tab" aria-selected="false"
+          onclick="switchPolicyTab('refund')">Refunds</button>
+        <button class="policy-tab-btn" id="polTab_datacollection" role="tab" aria-selected="false"
+          onclick="switchPolicyTab('datacollection')">Data We Collect</button>
+        <button class="policy-tab-btn" id="polTab_thirdparty" role="tab" aria-selected="false"
+          onclick="switchPolicyTab('thirdparty')">Third-Party</button>
+        <button class="policy-tab-btn" id="polTab_copyright" role="tab" aria-selected="false"
+          onclick="switchPolicyTab('copyright')">Trademarks</button>
+        <button class="policy-tab-btn" id="polTab_reviews" role="tab" aria-selected="false"
+          onclick="switchPolicyTab('reviews')">Verified Reviews & Business</button>
       </div>
 
       <!-- Policy Dynamic Body -->
@@ -1272,9 +1512,12 @@
         <!-- Rendered dynamically -->
       </div>
 
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border-color); flex-wrap: wrap; gap: 10px;">
-        <span style="font-size: 11.5px; color: var(--text-muted);" id="policyLastUpdatedHint">Statutory Compliance: DPDP Act 2023, FCO 1985 & Insecticides Act 1968</span>
-        <button class="btn-primary" onclick="closePolicyModal()" style="padding: 8px 22px; font-size: 13px; font-weight: 600;">Understood & Close</button>
+      <div
+        style="display: flex; justify-content: space-between; align-items: center; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border-color); flex-wrap: wrap; gap: 10px;">
+        <span style="font-size: 11.5px; color: var(--text-muted);" id="policyLastUpdatedHint">Statutory Compliance: DPDP
+          Act 2023, FCO 1985 & Insecticides Act 1968</span>
+        <button class="btn-primary" onclick="closePolicyModal()"
+          style="padding: 8px 22px; font-size: 13px; font-weight: 600;">Understood & Close</button>
       </div>
     </div>
   </div>
@@ -1287,12 +1530,16 @@
         <h4 class="cookie-banner-title" id="cookieBannerHeading">Cookie & Local Storage Preferences</h4>
       </div>
       <p class="cookie-banner-text" id="cookieBannerDesc">
-        We use essential browser local storage to preserve your language preference, shopping reservations, and secure account session. No invasive third-party tracking or advertising cookies are deployed.
+        We use essential browser local storage to preserve your language preference, shopping reservations, and secure
+        account session. No invasive third-party tracking or advertising cookies are deployed.
       </p>
       <div class="cookie-banner-actions">
-        <button type="button" class="cookie-btn-text" onclick="openPolicyModal('cookie')" id="cookieLearnMoreBtn">Customize & View Policy</button>
-        <button type="button" class="cookie-btn-secondary" onclick="acceptEssentialCookies()" id="cookieEssentialBtn">Essential Only</button>
-        <button type="button" class="cookie-btn-primary" onclick="acceptAllCookies()" id="cookieAcceptAllBtn">Accept All</button>
+        <button type="button" class="cookie-btn-text" onclick="openPolicyModal('cookie')"
+          id="cookieLearnMoreBtn">Customize & View Policy</button>
+        <button type="button" class="cookie-btn-secondary" onclick="acceptEssentialCookies()"
+          id="cookieEssentialBtn">Essential Only</button>
+        <button type="button" class="cookie-btn-primary" onclick="acceptAllCookies()" id="cookieAcceptAllBtn">Accept
+          All</button>
       </div>
     </div>
   </aside>
@@ -1302,7 +1549,8 @@
 
   <!-- Notification Drawer -->
   <div class="notif-drawer" id="notifDrawer">
-    <div class="notif-drawer-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+    <div class="notif-drawer-header"
+      style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
       <div>
         <h4 id="notifDrawerTitle">Process Notifications</h4>
         <div id="drawerMarkAllReadStatus" style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">
@@ -1310,10 +1558,12 @@
         </div>
       </div>
       <div style="display: flex; align-items: center; gap: 8px;">
-        <button class="btn-action" id="drawerMarkAllReadBtn" onclick="clearAllNotifications()" style="font-size: 11px; padding: 4px 10px;">
+        <button class="btn-action" id="drawerMarkAllReadBtn" onclick="clearAllNotifications()"
+          style="font-size: 11px; padding: 4px 10px;">
           <span id="drawerMarkAllReadLabel">Mark as all read</span>
         </button>
-        <button class="close-btn" style="width: 24px; height: 24px; font-size: 12px;" onclick="toggleNotifDrawer()">✕</button>
+        <button class="close-btn" style="width: 24px; height: 24px; font-size: 12px;"
+          onclick="toggleNotifDrawer()">✕</button>
       </div>
     </div>
     <div class="notif-list" id="notifDrawerList">
@@ -1350,7 +1600,7 @@
       // Store manual toggle for the active browsing session
       try {
         sessionStorage.setItem('kisan_theme_override', next);
-      } catch (err) {}
+      } catch (err) { }
 
       updateDarkModeIcon(next === 'dark');
     }
@@ -1391,7 +1641,7 @@
           // Whenever system setting changes, clear session override so system theme takes precedence
           try {
             sessionStorage.removeItem('kisan_theme_override');
-          } catch (err) {}
+          } catch (err) { }
 
           const isSystemDark = e.matches;
           if (isSystemDark) {
@@ -1426,4 +1676,5 @@
     }
   </script>
 </body>
+
 </html>
