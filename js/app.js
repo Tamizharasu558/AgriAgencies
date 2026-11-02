@@ -1078,7 +1078,7 @@ function applyLanguageUI() {
   const roleAlertMsg = document.getElementById('roleAlertMsg');
   if (roleAlertMsg) {
     if (currentRole === 'customer') {
-      roleAlertMsg.innerHTML = currentLang === 'ta' ? 'ℹ️ <em>உங்கள் சொந்த கடன் விவரங்கள் மட்டுமே காட்டப்படும்</em>' : 'ℹ️ <em>Privacy Protected: Showing ONLY your personal credit ledger</em>';
+      roleAlertMsg.innerHTML = currentLang === 'ta' ? '<em>உங்கள் சொந்த கடன் விவரங்கள் மட்டுமே காட்டப்படும்</em>' : '<em>Privacy Protected: Showing ONLY your personal credit ledger</em>';
     } else {
       roleAlertMsg.innerHTML = currentLang === 'ta' ? '<em>உரிமையாளர் பக்கம்: பேக்கிங் மற்றும் கடன் நினைவூட்டல்</em>' : '<em>Shop Owner Mode: Manage order packing, log sales & send reminders</em>';
     }

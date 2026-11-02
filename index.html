@@ -56,7 +56,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="css/styles.css?v=default-home-20.0">
+  <link rel="stylesheet" href="css/styles.css?v=no-emoji-21.0">
   <!-- System-Theme Default Dark Mode Script (runs before body renders to avoid flash) -->
   <script>
     (function () {
@@ -385,7 +385,9 @@
 
             <!-- Formula Note -->
             <div class="analytics-formula-bar" id="todayCalculationFormulaBar">
-              <span class="formula-icon">ℹ️</span>
+              <span class="formula-icon" style="display: inline-flex; align-items: center; color: var(--primary-color);">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+              </span>
               <span id="todayFormulaText">Formula: Total Sales = Direct Cash/UPI Received + Pay-Later Credit Added</span>
             </div>
           </div>
@@ -1320,8 +1322,8 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/data.js?v=default-home-20.0"></script>
-  <script src="js/app.js?v=default-home-20.0"></script>
+  <script src="js/data.js?v=no-emoji-21.0"></script>
+  <script src="js/app.js?v=no-emoji-21.0"></script>
   <script>
     // ── Instant 0ms Theme Switcher ─────────────────────────────────────────────
     let lastThemeToggleTime = 0;
