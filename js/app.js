@@ -253,6 +253,17 @@ function restoreSavedTabLocation() {
   }
 }
 
+function getProductFallbackImage(p) {
+  if (!p) return 'assets/iffco_urea.jpg';
+  if (p.category === 'Chemicals' || p.category === 'Growth Bio' || (p.unit && (p.unit.includes('ml') || p.unit.includes('Litre') || p.unit.includes('Bottle')))) {
+    return 'assets/agrochemical_bottle.jpg';
+  }
+  if (p.id === 'PROD-002' || p.id === 'PROD-003' || (p.brand && p.brand.toLowerCase().includes('coromandel'))) {
+    return 'assets/coromandel_gromor.jpg';
+  }
+  return 'assets/iffco_urea.jpg';
+}
+
 function loadData() {
   try {
     const savedProducts = localStorage.getItem('kisan_products');
@@ -268,12 +279,8 @@ function loadData() {
 
     products = (Array.isArray(parsedProducts) && parsedProducts.length > 0) ? parsedProducts : [...initialProducts];
     products.forEach(p => {
-      if (p.id === 'PROD-001' && (!p.imageUrl || !p.imageUrl.startsWith('assets/'))) {
-        p.imageUrl = 'assets/iffco_urea.jpg';
-      } else if (p.id === 'PROD-002' && (!p.imageUrl || !p.imageUrl.startsWith('assets/'))) {
-        p.imageUrl = 'assets/coromandel_gromor.jpg';
-      } else if (p.id === 'PROD-004' && (!p.imageUrl || !p.imageUrl.startsWith('assets/'))) {
-        p.imageUrl = 'assets/agrochemical_bottle.jpg';
+      if (!p.imageUrl || p.imageUrl.includes('unsplash.com') || p.imageUrl === 'undefined' || p.imageUrl === 'null' || !p.imageUrl.trim()) {
+        p.imageUrl = getProductFallbackImage(p);
       }
     });
     customers = (Array.isArray(parsedCustomers) && parsedCustomers.length > 0 && parsedCustomers[0].purchases) ? parsedCustomers : [...initialCustomers];
@@ -1341,8 +1348,8 @@ function handleAddProductWithPhoto(e) {
     dosageTa: "விவசாய ஆலோசகரின் பரிந்துரைப்படி இடவும்.",
     msdsInfo: "Store in cool dry place. Keep away from direct sunlight.",
     rating: 5.0,
-    imageIcon: category === 'Fertilizers' ? '' : '',
-    imageUrl: tempUploadedImageBase64
+    imageIcon: category === 'Fertilizers' ? '🌾' : '🧪',
+    imageUrl: (tempUploadedImageBase64 && tempUploadedImageBase64.trim()) ? tempUploadedImageBase64 : (category === 'Chemicals' ? 'assets/agrochemical_bottle.jpg' : 'assets/iffco_urea.jpg')
   };
 
   products.unshift(newProd);
@@ -1353,7 +1360,7 @@ function handleAddProductWithPhoto(e) {
   document.getElementById('imagePreviewBox').style.display = 'none';
   tempUploadedImageBase64 = '';
 
-  showToast('Product Saved with Image!', `${name} added to shop catalog (${cropList.join(', ')}).`, '');
+  showToast('Product Saved with Image!', `${name} added to shop catalog (${cropList.join(', ')}).`, '🌾');
 }
 
 function renderCrudProductsTable() {
@@ -1362,10 +1369,14 @@ function renderCrudProductsTable() {
 
   tbody.innerHTML = products.map(p => {
     const prodName = (currentLang === 'ta' && p.nameTa) ? p.nameTa : p.name;
+    const fallbackImg = getProductFallbackImage(p);
+    const prodImg = (p.imageUrl && p.imageUrl.trim() && p.imageUrl !== 'undefined' && p.imageUrl !== 'null') ? p.imageUrl : fallbackImg;
     return `
       <tr>
         <td>
-          <img src="${p.imageUrl}" style="width: 44px; height: 44px; object-fit: cover; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+          <img src="${prodImg}" 
+               onerror="this.onerror=null; this.src='${fallbackImg}';"
+               style="width: 44px; height: 44px; object-fit: cover; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
         </td>
         <td>
           <strong>${prodName}</strong><br>
@@ -1399,8 +1410,14 @@ function openEditProductModal(productId) {
   document.getElementById('editProdStock').value = prod.stock;
   document.getElementById('editProdCat').value = prod.category;
 
-  tempEditImageBase64 = prod.imageUrl;
-  document.getElementById('editImagePreviewImg').src = prod.imageUrl;
+  const fallbackImg = getProductFallbackImage(prod);
+  const prodImg = (prod.imageUrl && prod.imageUrl.trim() && prod.imageUrl !== 'undefined' && prod.imageUrl !== 'null') ? prod.imageUrl : fallbackImg;
+  tempEditImageBase64 = prodImg;
+  const previewImg = document.getElementById('editImagePreviewImg');
+  if (previewImg) {
+    previewImg.src = prodImg;
+    previewImg.onerror = function() { this.onerror = null; this.src = fallbackImg; };
+  }
 
   document.getElementById('editProductModal').classList.add('active');
   lockBodyScroll();
@@ -1840,18 +1857,20 @@ function renderStockGrid() {
     const prodName = (currentLang === 'ta' && p.nameTa) ? p.nameTa : p.name;
     const prodUnit = (currentLang === 'ta' && p.unitTa) ? p.unitTa : p.unit;
     const cropList = (currentLang === 'ta' && p.cropSuitabilityTa) ? p.cropSuitabilityTa : p.cropSuitability;
+    const fallbackImg = getProductFallbackImage(p);
+    const prodImg = (p.imageUrl && p.imageUrl.trim() && p.imageUrl !== 'undefined' && p.imageUrl !== 'null') ? p.imageUrl : fallbackImg;
 
     return `
       <div class="product-card">
         <div>
           <!-- Direct Chemical / Fertilizer Image Display -->
           <div style="width: 100%; height: 180px; border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 14px; border: 1px solid var(--border-color); background: #f5f5f7; position: relative;">
-            <img src="${p.imageUrl || 'assets/iffco_urea.jpg'}" 
+            <img src="${prodImg}" 
                  alt="${prodName} - ${p.brand} ${p.category} ${prodUnit}" 
                  loading="lazy"
                  decoding="async"
                  style="width: 100%; height: 100%; object-fit: cover;"
-                 onerror="this.onerror=null; this.src='assets/iffco_urea.jpg';">
+                 onerror="this.onerror=null; this.src='${fallbackImg}';">
             <span class="product-badge ${badgeClass}">${badgeText}</span>
             <span style="position: absolute; bottom: 10px; left: 10px; background: rgba(18, 18, 20, 0.85); color: white; padding: 3px 10px; border-radius: var(--radius-pill); font-size: 11px; font-weight: 600;">
               ${p.category}
@@ -1913,16 +1932,38 @@ function showProductModal(prodId) {
   const prodUnit = (currentLang === 'ta' && p.unitTa) ? p.unitTa : p.unit;
   const prodDosage = (currentLang === 'ta' && p.dosageTa) ? p.dosageTa : p.dosage;
 
+  const fallbackImg = getProductFallbackImage(p);
+  const prodImg = (p.imageUrl && p.imageUrl.trim() && p.imageUrl !== 'undefined' && p.imageUrl !== 'null') ? p.imageUrl : fallbackImg;
+
+  let badgeClass = 'badge-instock';
+  let badgeText = t('badgeInStock');
+  if (p.stock <= p.minStockThreshold && p.stock > 0) {
+    badgeClass = 'badge-lowstock';
+    badgeText = t('badgeLowStock');
+  } else if (p.stock === 0) {
+    badgeClass = 'badge-outstock';
+    badgeText = t('badgeOutStock');
+  }
+
   document.getElementById('prodModalTitle').textContent = prodName;
   document.getElementById('prodModalBody').innerHTML = `
-    <div style="width: 100%; height: 180px; border-radius: var(--radius-md); overflow: hidden; margin-bottom: 16px; border: 1px solid var(--border-color);">
-      <img src="${p.imageUrl}" alt="${prodName} - ${p.brand} ${p.category} ${prodUnit}" style="width: 100%; height: 100%; object-fit: cover;">
+    <div style="width: 100%; height: 200px; border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 16px; border: 1px solid var(--border-color); background: var(--bg-card-subtle); position: relative; display: flex; align-items: center; justify-content: center;">
+      <img src="${prodImg}" 
+           alt="${prodName} - ${p.brand} ${p.category} ${prodUnit}" 
+           loading="eager"
+           decoding="async"
+           style="width: 100%; height: 100%; object-fit: cover; display: block;"
+           onerror="this.onerror=null; this.src='${fallbackImg}';">
+      <span class="product-badge ${badgeClass}" style="position: absolute; top: 12px; right: 12px;">${badgeText}</span>
+      <span style="position: absolute; bottom: 12px; left: 12px; background: rgba(18, 18, 20, 0.85); color: white; padding: 4px 12px; border-radius: var(--radius-pill); font-size: 11.5px; font-weight: 600; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);">
+        ${p.category}
+      </span>
     </div>
 
     <div style="display: flex; gap: 16px; align-items: center; margin-bottom: 16px;">
       <div>
         <div style="font-size: 13px; font-weight: 600; color: var(--primary-color);">${p.brand} • ${p.category}</div>
-        <div style="font-size: 20px; font-weight: 700; color: var(--text-primary);">₹${p.price} <span style="font-size: 12px; color: var(--text-muted);">per ${prodUnit}</span></div>
+        <div style="font-size: 20px; font-weight: 700; color: var(--text-primary);">₹${p.price.toLocaleString('en-IN')} <span style="font-size: 12px; color: var(--text-muted);">per ${prodUnit}</span></div>
       </div>
     </div>
 

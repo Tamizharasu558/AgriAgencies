@@ -319,7 +319,7 @@ const initialProducts = [
     msdsInfo: "Highly water soluble. Store on wooden pallets elevated from concrete ground.",
     rating: 4.7,
     imageIcon: "",
-    imageUrl: "https://images.unsplash.com/photo-1628352081506-83c43123ed6d?w=400&auto=format&fit=crop&q=60" // Red Potash Granules / Bag
+    imageUrl: "assets/coromandel_gromor.jpg"
   },
   {
     id: "PROD-004",
@@ -363,7 +363,7 @@ const initialProducts = [
     msdsInfo: "Chemical classification: Azoxystrobin + Difenoconazole. Wear eye protection mask.",
     rating: 4.8,
     imageIcon: "",
-    imageUrl: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=400&auto=format&fit=crop&q=60" // Agrochemical bottle
+    imageUrl: "assets/agrochemical_bottle.jpg"
   },
   {
     id: "PROD-006",
@@ -385,7 +385,7 @@ const initialProducts = [
     msdsInfo: "Carbendazim 12% + Mancozeb 63% WP. Avoid skin contact.",
     rating: 4.6,
     imageIcon: "",
-    imageUrl: "https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=400&auto=format&fit=crop&q=60" // Chemical pack
+    imageUrl: "assets/agrochemical_bottle.jpg"
   },
   {
     id: "PROD-007",
@@ -407,7 +407,7 @@ const initialProducts = [
     msdsInfo: "Systemic insecticide. Avoid spraying during honeybee active hours.",
     rating: 4.5,
     imageIcon: "",
-    imageUrl: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&auto=format&fit=crop&q=60"
+    imageUrl: "assets/agrochemical_bottle.jpg"
   },
   {
     id: "PROD-008",
@@ -429,7 +429,7 @@ const initialProducts = [
     msdsInfo: "100% Eco-friendly, organic earthworm compost. No chemicals.",
     rating: 4.9,
     imageIcon: "",
-    imageUrl: "https://images.unsplash.com/photo-1585314062340-f1a5a7c9328d?w=400&auto=format&fit=crop&q=60"
+    imageUrl: "assets/iffco_urea.jpg"
   },
   {
     id: "PROD-009",
@@ -451,7 +451,7 @@ const initialProducts = [
     msdsInfo: "Non-toxic phytohormone booster. Store in dark cool area.",
     rating: 4.7,
     imageIcon: "",
-    imageUrl: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=400&auto=format&fit=crop&q=60"
+    imageUrl: "assets/agrochemical_bottle.jpg"
   }
 ];
 
