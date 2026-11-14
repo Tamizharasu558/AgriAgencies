@@ -610,16 +610,17 @@ const initialNotifications = [
 const businessDetails = {
   legalName: "KisanAgri Agencies Pvt. Ltd.",
   tradeName: "KisanAgri Hub & Input Center",
-  proprietor: "P. Tamizharasu",
-  fcoLicense: "FCO/TN/ERD/RET-2024/04882",
-  cibrcLicense: "CIB-RC/INSECT/TN-8921/2024",
-  seedLicense: "SDL/ERD/2024/1104",
-  gstin: "33AAACK8821P1ZP",
-  address: "14/B, Main Agricultural Market Road, Near Uzhavar Sandhai, Erode Rural, Tamil Nadu - 638001, India",
+  proprietor: "Palanisamy V S",
+  licenseNo: "GPM 111/2022-23",
+  fcoLicense: "GPM 111/2022-23",
+  cibrcLicense: "GPM 111/2022-23",
+  seedLicense: "GPM 111/2022-23",
+  gstin: "33AEQFS7305NIZG",
+  address: "1H/1, 2B, Pariyur Road, Gobi T.K. 638476 - Erode (Dt), Tamil Nadu, India",
   hours: "Monday – Saturday: 7:00 AM – 8:00 PM | Sunday: 7:00 AM – 1:00 PM (IST)",
-  phone: "+91 98765 43210",
+  phone: "+91 98654 20178",
   email: "contact@kisanagri.in",
-  grievanceOfficer: "P. Tamizharasu (Authorized Nodal & Grievance Officer)",
+  grievanceOfficer: "Palanisamy V S (Proprietor & Grievance Officer)",
   grievanceEmail: "grievance@kisanagri.in"
 };
 
@@ -945,12 +946,10 @@ const policyDocuments = {
       <div class="license-info-card">
         <strong>Legal Enterprise Name:</strong> ${businessDetails.legalName}<br>
         <strong>Commercial Brand:</strong> ${businessDetails.tradeName}<br>
-        <strong>Authorized Dealer / Proprietor:</strong> ${businessDetails.proprietor}<br>
-        <strong>Fertilizer Retail License (FCO 1985):</strong> <span class="license-badge-pill">${businessDetails.fcoLicense}</span><br>
-        <strong>Pesticide Retail License (CIB&RC 1968):</strong> <span class="license-badge-pill">${businessDetails.cibrcLicense}</span><br>
-        <strong>Seeds Distribution License:</strong> <span class="license-badge-pill">${businessDetails.seedLicense}</span><br>
-        <strong>Goods & Services Tax (GSTIN):</strong> <strong>${businessDetails.gstin}</strong><br>
-        <strong>Registered Physical Retail Store:</strong> ${businessDetails.address}<br>
+        <strong>Proprietor:</strong> ${businessDetails.proprietor}<br>
+        <strong>License NO:</strong> <span class="license-badge-pill">${businessDetails.licenseNo}</span><br>
+        <strong>Goods & Services Tax (GST NO / GSTIN):</strong> <strong>${businessDetails.gstin}</strong><br>
+        <strong>Location / Store Address:</strong> ${businessDetails.address}<br>
         <strong>Customer Helpdesk & Order Helpline:</strong> ${businessDetails.phone} | <a href="mailto:${businessDetails.email}">${businessDetails.email}</a><br>
         <strong>Store Working Hours:</strong> ${businessDetails.hours}
       </div>
